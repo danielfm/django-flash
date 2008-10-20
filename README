@@ -1,0 +1,79 @@
+Django-Flash
+------------
+    version 1.0. October 20, 2008.
+
+Django-Flash adds a Rails-like flash scope support to Django 1.0+.
+
+
+Installation
+------------
+
+First, drop this folder ('django_flash') somewhere inside your PYTHONPATH in
+order to make its classes and methods usable by other Python scripts.
+
+Finally you need to plug Django-Flash in your Django project. To do this,
+open your project's settings.py and add 'django_flash.context_processors.flash'
+to the TEMPLATE_CONTEXT_PROCESSORS tuple. Also add
+'django_flash.middleware.FlashMiddleware' to the MIDDLEWARE_CLASSES tuple.
+
+But be careful: since Django-Flash manipulates the HttpRequest session attribute,
+make sure to add 'django.contrib.sessions.middleware.SessionMiddleware' to your
+MIDDLEWARE_CLASSES tuple as well, BEFORE 'django_flash.context_processors.flash'!
+
+Here goes a sample settings.py file that shows exactly what you have to do:
+
+# ...myother settings...
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # other context processors...
+    'django_flash.context_processors.flash',
+)
+
+MIDDLEWARE_CLASSES = (
+    # ...other middleware classes...
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_flash.middleware.FlashMiddleware',
+    # ...more middleware classes...
+)
+
+
+Using Django-Flash
+------------------
+
+Here goes an example on how to actually use the the flash context:
+
+# ...some views methods...
+def some_view(request):
+    # ...Do some work here...
+    if success:
+        request.flash = "Work done successfully!"
+        return HttpResponseRedirect('http://success/url')
+    else:
+        request.flash = "The task could't be finished!"
+        return HttpResponseRedirect('http://ooooops/url')
+
+As you can see, all you have to do is set a 'flash' attribute in the request
+object. Whatever you put in it will become available in a 'flash' context
+variable when this user issue the next request, so you can use it in your
+templates, like this:
+
+<html>
+    <head>...</head>
+    <body>
+        <!-- Print the content inside the 'flash' scope, if it exists -->
+        {% if flash %}
+            <div id="flash_message_panel">
+                {{ flash }}
+            </div>
+        {% endif %}
+    </body>
+</html>
+
+
+Authors
+-------
+
+Name:    Daniel Fernandes Martins <daniel.tritone@gmail.com>
+Company: Destaquenet Technology Solutions <http://www.destaquenet.com/>
+
+
+--EOF
