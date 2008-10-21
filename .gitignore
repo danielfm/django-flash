@@ -1,2 +1,2 @@
 # Python bytecodes
-.pyc
+*.pyc
