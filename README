@@ -7,8 +7,8 @@ django-flash adds a Rails-like flash scope support to Django 1.0+.
 Installation
 ------------
 
-First, drop copy the 'django_flash' folder to your PYTHONPATH in order to make
-its classes and methods usable by other Python scripts.
+First, copy the 'django_flash' folder to your PYTHONPATH in order to make its
+classes and methods usable by other Python scripts.
 
 Then, you need to plug django-flash in your Django project. To do this,
 open your project's settings.py and add 'django_flash.context_processors.flash'
