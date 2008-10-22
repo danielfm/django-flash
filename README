@@ -1,23 +1,22 @@
-Django-Flash
+django-flash
 ------------
-    version 1.0. October 20, 2008.
 
-Django-Flash adds a Rails-like flash scope support to Django 1.0+.
+django-flash adds a Rails-like flash scope support to Django 1.0+.
 
 
 Installation
 ------------
 
-First, drop this folder ('django_flash') somewhere inside your PYTHONPATH in
-order to make its classes and methods usable by other Python scripts.
+First, drop copy the 'django_flash' folder to your PYTHONPATH in order to make
+its classes and methods usable by other Python scripts.
 
-Finally you need to plug Django-Flash in your Django project. To do this,
+Then, you need to plug django-flash in your Django project. To do this,
 open your project's settings.py and add 'django_flash.context_processors.flash'
 to the TEMPLATE_CONTEXT_PROCESSORS tuple. Also add
 'django_flash.middleware.FlashMiddleware' to the MIDDLEWARE_CLASSES tuple.
 
-But be careful: since Django-Flash manipulates the HttpRequest session attribute,
-make sure to add 'django.contrib.sessions.middleware.SessionMiddleware' to your
+Important: since django-flash manipulates the HttpRequest session, make sure to
+add 'django.contrib.sessions.middleware.SessionMiddleware' to your
 MIDDLEWARE_CLASSES tuple as well, BEFORE 'django_flash.context_processors.flash'!
 
 Here goes a sample settings.py file that shows exactly what you have to do:
@@ -36,7 +35,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 
-Using Django-Flash
+Using django-flash
 ------------------
 
 Here goes an example on how to actually use the the flash context:
