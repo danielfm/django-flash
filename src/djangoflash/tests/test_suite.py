@@ -4,14 +4,23 @@
 Test cases used to check the behavior of django-flash classes.
 """
 
+import unittest
+
 from django.http import HttpRequest, HttpResponse
-from django.test import TestCase
 
-import django_flash.context_processors as context_processors
-from django_flash.middleware import FlashMiddleware
+import djangoflash.context_processors as context_processors
+from djangoflash.middleware import FlashMiddleware
 
 
-class FlashContextProcessorTestCase(TestCase):
+# Pointing to an empty module to make Django objects "think"
+# they are inside a regular Django project
+
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = \
+    'djangoflash.tests.django_project_settings'
+
+
+class FlashContextProcessorTestCase(unittest.TestCase):
     """
     FlashContextProcessor test case.
     """
@@ -37,7 +46,7 @@ class FlashContextProcessorTestCase(TestCase):
         self.assertEqual('Something', context['flash'])
 
 
-class FlashMiddlewareTestCase(TestCase):
+class FlashMiddlewareTestCase(unittest.TestCase):
     """
     FlashMiddleware test case.
     """
