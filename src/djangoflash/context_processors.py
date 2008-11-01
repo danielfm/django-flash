@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-This context processor is responsible to manage the 'flash' session attribute and
+"""This context processor is responsible to manage the 'flash' session attribute and
 to expose its value to the view's context.
 """
 

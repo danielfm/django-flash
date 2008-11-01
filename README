@@ -1,42 +1,62 @@
 django-flash
 ------------
 
-django-flash adds a Rails-like flash scope support to Django 1.0+.
+    http://github.com/danielfm/django-flash/tree
+
+django-flash adds a Rails-like flash scope support to Django.
 
 
 Installation
 ------------
 
-First, copy the 'django_flash' folder to your PYTHONPATH in order to make its
-classes and methods usable by other Python scripts.
+The easiest way to install django-flash is via EasyInstall[1]. Follow these[2]
+instructions to install EasyInstall if you don't have it already.
 
-Then, you need to plug django-flash in your Django project. To do this,
-open your project's settings.py and add 'django_flash.context_processors.flash'
-to the TEMPLATE_CONTEXT_PROCESSORS tuple. Also add
-'django_flash.middleware.FlashMiddleware' to the MIDDLEWARE_CLASSES tuple.
+Then, execute the following command line to install the latest stable version
+of django-flash:
 
-Important: since django-flash manipulates the HttpRequest session, make sure to
-add 'django.contrib.sessions.middleware.SessionMiddleware' to your
-MIDDLEWARE_CLASSES tuple as well, BEFORE 'django_flash.context_processors.flash'!
+    $ sudo easy_install django-flash
+
+If you use Git and want to get the latest *development* version:
+
+    $ git clone git://github.com/danielfm/django-flash.git
+    $ cd django-flash
+    $ sudo python setup.py install
+
+Or get the latest *development* version as a tarball:
+
+    $ wget http://github.com/danielfm/django-flash/tarball/master
+    $ tar zxf danielfm-django-flash-XXXXXXXXXXXXXXXX.tar.gz
+    $ cd danielfm-django-flash-XXXXXXXXXXXXXXXX
+    $ sudo python setup.py install
+
+
+Using django-flash
+------------------
+
+To plug django-flash to your Django project, open your project's 'settings.py'
+file and add 'djangoflash.context_processors.flash' to the
+TEMPLATE_CONTEXT_PROCESSORS tuple. Also add
+'djangoflash.middleware.FlashMiddleware' to the MIDDLEWARE_CLASSES tuple.
+
+Important: since django-flash manipulates the HttpRequest session, make sure
+to add 'django.contrib.sessions.middleware.SessionMiddleware' to your
+MIDDLEWARE_CLASSES tuple BEFORE 'djangoflash.context_processors.flash'!
 
 Here goes a sample settings.py file that shows exactly what you have to do:
 
 # ...myother settings...
 TEMPLATE_CONTEXT_PROCESSORS = (
     # other context processors...
-    'django_flash.context_processors.flash',
+    'djangoflash.context_processors.flash',
 )
 
 MIDDLEWARE_CLASSES = (
     # ...other middleware classes...
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django_flash.middleware.FlashMiddleware',
+    'djangoflash.middleware.FlashMiddleware',
     # ...more middleware classes...
 )
-
-
-Using django-flash
-------------------
 
 Here goes an example on how to actually use the the flash context:
 
@@ -44,15 +64,15 @@ Here goes an example on how to actually use the the flash context:
 def some_view(request):
     # ...Do some work here...
     if success:
-        request.flash = "Work done successfully!"
-        return HttpResponseRedirect('http://success/url')
-    else:
-        request.flash = "The task could't be finished!"
-        return HttpResponseRedirect('http://ooooops/url')
+        # There are several ways to use the 'flash' scope
+        request.flash = 'Success'
+        request.flash['some_key'] = MyObject()
+        request.flash.some_key = ['an', 'array', 'here']
+    return HttpResponseRedirect('http://some/url/')
 
-As you can see, all you have to do is set a 'flash' attribute in the request
+As you can see, all you have to do is use the 'flash' attribute in the request
 object. Whatever you put in it will become available in a 'flash' context
-variable when this user issue the next request, so you can use it in your
+variable when this user issue the very next request, so you can use it in your
 templates, like this:
 
 <html>
@@ -60,12 +80,20 @@ templates, like this:
     <body>
         <!-- Print the content inside the 'flash' scope, if it exists -->
         {% if flash %}
+            <!-- 'flash' scope can hold any object, not just strings! -->
             <div id="flash_message_panel">
                 {{ flash }}
             </div>
         {% endif %}
     </body>
 </html>
+
+
+Links
+-----
+
+[1] EasyInstall      - http://peak.telecommunity.com/DevCenter/EasyInstall
+[2] Setuptools       - http://pypi.python.org/pypi/setuptools
 
 
 Authors
