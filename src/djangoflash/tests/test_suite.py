@@ -30,7 +30,7 @@ class FlashContextProcessorTestCase(unittest.TestCase):
         self.request.session = {}
     
     def test_without_flash_message(self):
-        "Flash message shouldn't be accessible when not previously defined."
+        "Flash message should not be accessible when not previously defined."
         context = context_processors.flash(self.request)
         self.assertFalse(context['flash'])
     
@@ -117,21 +117,21 @@ class FlashMiddlewareTestCase(unittest.TestCase):
         self.assertEquals('def', self.request.session['flash']['abc'])
     
     def test_flash_with_empty_map_object(self):
-        "Flash message set to a map object should work as expected."
+        "Flash message set to an empty map object should work as expected."
         def empty_map_flash_message():
             self.request.flash = {}
         self._process_request(empty_map_flash_message)
         self.assertFalse(self.request.session.has_key('flash'))
     
     def test_flash_with_array_object(self):
-        "Flash message set to a map object should work as expected."
+        "Flash message set to an array object should work as expected."
         def array_flash_message():
             self.request.flash = ['abc']
         self._process_request(array_flash_message)
         self.assertEqual('abc', self.request.session['flash'][0])
     
     def test_flash_with_empty_array_object(self):
-        "Flash message set to a map object should work as expected."
+        "Flash message set to an empty array object should work as expected."
         def empty_array_flash_message():
             self.request.flash = []
         self._process_request(empty_array_flash_message)
