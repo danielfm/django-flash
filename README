@@ -3,7 +3,7 @@ django-flash
 
     http://github.com/danielfm/django-flash/tree
 
-django-flash adds a Rails-like flash scope support to Django.
+django-flash adds a Rails-like flash context support to Django.
 
 
 Installation
@@ -34,18 +34,10 @@ Or get the latest *development* version as a tarball:
 Using django-flash
 ------------------
 
-To plug django-flash to your Django project, open your project's 'settings.py'
-file and add 'djangoflash.context_processors.flash' to the
-TEMPLATE_CONTEXT_PROCESSORS tuple. Also add
-'djangoflash.middleware.FlashMiddleware' to the MIDDLEWARE_CLASSES tuple.
+The first thing to do is plug django-flash to your Django project. To do this,
+open your project's 'settings.py' file and do the following changes:
 
-Important: since django-flash manipulates the HttpRequest session, make sure
-to add 'django.contrib.sessions.middleware.SessionMiddleware' to your
-MIDDLEWARE_CLASSES tuple BEFORE 'djangoflash.context_processors.flash'!
-
-Here goes a sample settings.py file that shows exactly what you have to do:
-
-# ...myother settings...
+# ...some settings...
 TEMPLATE_CONTEXT_PROCESSORS = (
     # other context processors...
     'djangoflash.context_processors.flash',
@@ -57,30 +49,35 @@ MIDDLEWARE_CLASSES = (
     'djangoflash.middleware.FlashMiddleware',
     # ...more middleware classes...
 )
+# ...more settings...
+
+After doing that all HttpRequest objects received by your views will have an
+extra attribute called 'flash' in which you can store the data you want to
+be available to the next request.
 
 Here goes an example on how to actually use the the flash context:
 
-# ...some views methods...
+# ...some views...
 def some_view(request):
-    # ...Do some work here...
+    # ...do some work here...
     if success:
-        # There are several ways to use the 'flash' scope
+        # There are several ways to use the 'flash' context
         request.flash = 'Success'
         request.flash['some_key'] = MyObject()
         request.flash.some_key = ['an', 'array', 'here']
     return HttpResponseRedirect('http://some/url/')
+# ...more views...
 
-As you can see, all you have to do is use the 'flash' attribute in the request
-object. Whatever you put in it will become available in a 'flash' context
-variable when this user issue the very next request, so you can use it in your
-templates, like this:
+Os dados que forem inseridos no contexto flash poderão ser acessados na próxima requisição. Por exemplo, o código abaixo mostra como acessar os dados do contexto flash a partir de um template HTML: 
+
+Whatever you put in it will become available to the next request. For example,
+the code below shows how to access data stored in the 'flash' context from a
+HTML template:
 
 <html>
     <head>...</head>
     <body>
-        <!-- Print the content inside the 'flash' scope, if it exists -->
         {% if flash %}
-            <!-- 'flash' scope can hold any object, not just strings! -->
             <div id="flash_message_panel">
                 {{ flash }}
             </div>
