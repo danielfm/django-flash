@@ -15,7 +15,7 @@ instructions to install EasyInstall if you don't have it already.
 Then, execute the following command line to install the latest stable version
 of django-flash:
 
-    $ sudo easy_install djangoflash
+    $ sudo easy_install django-flash
 
 If you use Git and want to get the latest *development* version:
 

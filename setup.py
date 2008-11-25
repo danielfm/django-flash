@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'djangoflash',
+    name = 'django-flash',
     version = '1.2',
     author = 'Daniel Fernandes Martins',
     author_email = 'daniel.tritone@gmail.com',
