@@ -9,6 +9,8 @@ To make this work, make sure to register this middleware after the
 settings.py file.
 """
 
+FLASH_KEY = 'flash'
+
 class _FlashScope(dict):
     """This class is just a dictionary with steroids, that also allows you to
     manipulate its values using dynamic attributes.
@@ -29,6 +31,8 @@ class FlashMiddleware(object):
     """
     
     def process_request(request):
+        if request.session.has_key(FLASH_KEY):
+            request.flash
         request.flash = _FlashScope()
     
     process_request = staticmethod(process_request)
@@ -42,7 +46,7 @@ class FlashMiddleware(object):
             if request.flash:
                 if not hasattr(request.flash, '__len__') or len(request.flash) == 0:
                     return response
-                request.session['flash'] = request.flash
+                request.session[FLASH_KEY] = request.flash
         except AttributeError:
             # It's okay... really
             pass

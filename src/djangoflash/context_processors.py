@@ -4,13 +4,14 @@
 to expose its value to the view's context.
 """
 
+from djangoflash.middleware import FLASH_KEY
+
+FLASH_CONTEXT_VAR = 'flash'
+
 def flash(request):
     """
     Add the variable 'flash' to the request context, if it exists.
     """
-    if 'flash' in request.session:
-        message = request.session['flash']
-        del request.session['flash']
-        
-        return {'flash': message}
-    return {'flash': None}
+    if FLASH_KEY in request.session:
+        return {FLASH_CONTEXT_VAR: request.session.pop(FLASH_KEY)}
+    return {FLASH_CONTEXT_VAR: None}

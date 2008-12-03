@@ -9,7 +9,7 @@ import unittest
 from django.http import HttpRequest, HttpResponse
 
 import djangoflash.context_processors as context_processors
-from djangoflash.middleware import FlashMiddleware
+from djangoflash.middleware import FlashMiddleware, FLASH_KEY
 
 
 # Pointing to an empty module to make Django objects "think"
@@ -36,11 +36,11 @@ class FlashContextProcessorTestCase(unittest.TestCase):
     
     def test_with_flash_message(self):
         "Flash message should be accessible when previously defined."
-        self.request.session['flash'] = 'Something'
-        self.assertTrue(self.request.session.has_key('flash'))
+        self.request.session[FLASH_KEY] = 'Something'
+        self.assertTrue(self.request.session.has_key(FLASH_KEY))
         
         context = context_processors.flash(self.request)
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
         self.assertTrue(context.has_key('flash'))
         self.assertEqual('Something', context['flash'])
 
@@ -72,67 +72,67 @@ class FlashMiddlewareTestCase(unittest.TestCase):
     def test_without_flash_message(self):
         "Flash message should not be accessible when not previously defined."
         self._process_request()
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
     
     def test_none_flash_message(self):
         "Flash message set to None should not be available at the session."
         def empty_message():
             self.request.flash = None
         self._process_request(empty_message)
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
     
     def test_empty_flash_message(self):
         "Flash message set to '' should not be available at the session."
         def empty_message():
             self.request.flash = ''
         self._process_request(empty_message)
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
     
     def test_with_flash_message(self):
         "Flash message should be accessible when previously defined."
         def string_flash_message():
             self.request.flash = 'Hey'
         self._process_request(string_flash_message)
-        self.assertEquals('Hey', self.request.session['flash'])
+        self.assertEquals('Hey', self.request.session[FLASH_KEY])
     
     def test_flash_with_map_syntax(self):
         "Flash attribute should support map syntax, like flash['property']."
         def map_syntax_flash_message():
             self.request.flash['something'] = 'Yikes'
         self._process_request(map_syntax_flash_message)
-        self.assertEquals('Yikes', self.request.session['flash']['something'])
+        self.assertEquals('Yikes', self.request.session[FLASH_KEY]['something'])
     
     def test_flash_with_member_syntax(self):
         "Flash attribute should support member syntax, like flash.property."
         def attribute_syntax_flash_message():
             self.request.flash.something = 'Outch'
         self._process_request(attribute_syntax_flash_message)
-        self.assertEquals('Outch', self.request.session['flash'].something)
+        self.assertEquals('Outch', self.request.session[FLASH_KEY].something)
     
     def test_flash_with_map_object(self):
         "Flash message set to a map object should work as expected."
         def map_flash_message():
             self.request.flash = {'abc': 'def'}
         self._process_request(map_flash_message)
-        self.assertEquals('def', self.request.session['flash']['abc'])
+        self.assertEquals('def', self.request.session[FLASH_KEY]['abc'])
     
     def test_flash_with_empty_map_object(self):
         "Flash message set to an empty map object should work as expected."
         def empty_map_flash_message():
             self.request.flash = {}
         self._process_request(empty_map_flash_message)
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
     
     def test_flash_with_array_object(self):
         "Flash message set to an array object should work as expected."
         def array_flash_message():
             self.request.flash = ['abc']
         self._process_request(array_flash_message)
-        self.assertEqual('abc', self.request.session['flash'][0])
+        self.assertEqual('abc', self.request.session[FLASH_KEY][0])
     
     def test_flash_with_empty_array_object(self):
         "Flash message set to an empty array object should work as expected."
         def empty_array_flash_message():
             self.request.flash = []
         self._process_request(empty_array_flash_message)
-        self.assertFalse(self.request.session.has_key('flash'))
+        self.assertFalse(self.request.session.has_key(FLASH_KEY))
