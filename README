@@ -68,8 +68,6 @@ def some_view(request):
     return HttpResponseRedirect('http://some/url/')
 # ...more views...
 
-Os dados que forem inseridos no contexto flash poderão ser acessados na próxima requisição. Por exemplo, o código abaixo mostra como acessar os dados do contexto flash a partir de um template HTML: 
-
 Whatever you put in it will become available to the next request. For example,
 the code below shows how to access data stored in the 'flash' context from a
 HTML template:
