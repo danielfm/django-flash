@@ -62,9 +62,9 @@ def some_view(request):
     # ...do some work here...
     if success:
         # There are several ways to use the 'flash' context
-        request.flash = 'Success'
         request.flash['some_key'] = MyObject()
         request.flash.some_key = ['an', 'array', 'here']
+        request.flash = 'Success'
     return HttpResponseRedirect('http://some/url/')
 # ...more views...
 
