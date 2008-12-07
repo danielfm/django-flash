@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'django-flash',
-    version = '1.2',
+    version = '1.3',
     author = 'Daniel Fernandes Martins',
     author_email = 'daniel.tritone@gmail.com',
     description = 'Rails-like flash scope support for Django.',
@@ -25,6 +25,7 @@ setup(
     install_requires = ['Django>=1.0_final'],
     packages = find_packages('src'),
     package_dir = {'':'src'},
-    test_suite = 'djangoflash.tests.test_suite',
+    zip_safe = False,
+    test_suite = 'djangoflash.tests.suite',
 )
 

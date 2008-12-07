@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
-"""This context processor is responsible to manage the 'flash' session attribute and
-to expose its value to the view's context.
+"""This context processor exposes the FlashScope object to view's templates.
+The FlashScope object is the one who properly manages the flash context.
+
+To install it to your Django project, modify your project's settings.py
+like this:
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    ...
+    'djangoflash.context_processors.flash',
+    ...
+)
 """
 
-from djangoflash.middleware import FLASH_KEY
-
-FLASH_CONTEXT_VAR = 'flash'
-
 def flash(request):
-    """
-    Add the variable 'flash' to the request context, if it exists.
-    """
-    if FLASH_KEY in request.session:
-        return {FLASH_CONTEXT_VAR: request.session.pop(FLASH_KEY)}
-    return {FLASH_CONTEXT_VAR: None}
+    "Exposes the FlashScope object under the 'flash' context variable."
+    return {'flash':request.flash}

@@ -37,47 +37,64 @@ Using django-flash
 The first thing to do is plug django-flash to your Django project. To do this,
 open your project's 'settings.py' file and do the following changes:
 
-# ...some settings...
-TEMPLATE_CONTEXT_PROCESSORS = (
-    # other context processors...
-    'djangoflash.context_processors.flash',
-)
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'djangoflash.context_processors.flash',
+    )
 
-MIDDLEWARE_CLASSES = (
-    # ...other middleware classes...
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'djangoflash.middleware.FlashMiddleware',
-    # ...more middleware classes...
-)
-# ...more settings...
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'djangoflash.middleware.FlashMiddleware',
+    )
 
 After doing that all HttpRequest objects received by your views will have an
-extra attribute called 'flash' in which you can store the data you want to
-be available to the next request.
+extra attribute called 'flash'.
 
 Here goes an example on how to actually use the the flash context:
 
-# ...some views...
-def some_view(request):
-    # ...do some work here...
-    if success:
-        # There are several ways to use the 'flash' context
-        request.flash['some_key'] = MyObject()
-        request.flash.some_key = ['an', 'array', 'here']
-        request.flash = 'Success'
-    return HttpResponseRedirect('http://some/url/')
-# ...more views...
+    def my_view(request):
+        #
+        # It's like a dictionary...
+        #
+        
+        # Add a string to the flash context
+        request.flash['key'] = 'value'
+        request.flash.put(another_key='another value')
+        
+        # Check if a value is available at the flash context
+        print 'key' in request.flash
+        
+        # Get an object from the flash context
+        print request.flash['key']
+        print request.flash.get('key', 'default value')
+        
+        # Remove an object from the flash scope
+        del request.flash['key']
+        
+        
+        #
+        # ...but it's not only a dictionary!
+        #
+        
+        # Keep an object in the flash context for one more request
+        request.flash.keep('key')
+        
+        # Keep all objects in the flash context for one more request
+        request.flash.keep()
+        
+        # Add an object to the flash context, but make it available for use
+        # at THIS request
+        request.flash.now(key='value')
+        
+        return HttpResponseRedirect('/some/url/')
 
-Whatever you put in it will become available to the next request. For example,
-the code below shows how to access data stored in the 'flash' context from a
-HTML template:
+To access the flash context from a HTML template:
 
 <html>
     <head>...</head>
     <body>
         {% if flash %}
             <div id="flash_message_panel">
-                {{ flash }}
+                {{ flash.key }}
             </div>
         {% endif %}
     </body>

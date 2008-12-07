@@ -1,56 +1,60 @@
 # -*- coding: utf-8 -*-
 
-"""This middleware class searches for a request attribute called 'flash' in the
-request object. If this attribute exists during the response phase, a session
-attribute called 'flash' is registered in user's session.
+"""This middleware uses the FlashScope class to manage the flash context.
+The FlashMiddleware class runs on both request and response.
 
-To make this work, make sure to register this middleware after the
-'django.contrib.sessions.middleware.SessionMiddleware' middleware in your
-settings.py file.
+To plug it to your Django project, modify your project's settings.py like
+this:
+
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'djangoflash.middleware.FlashMiddleware',
+)
+
+Make sure to put the FlashMiddleware *after* the SessionMiddleware.
 """
 
-FLASH_KEY = 'flash'
-
-class _FlashScope(dict):
-    """This class is just a dictionary with steroids, that also allows you to
-    manipulate its values using dynamic attributes.
-    """
-    def __getattr__(self, key):
-        "Get a value from the map."
-        return self[key]
-    
-    def __setattr__(self, key, value):
-        "Set a value on the map."
-        self[key] = value
+from djangoflash.models import FlashScope
 
 
 class FlashMiddleware(object):
+    """This middleware class adds a Rails-like 'flash' scope to the
+    request object.
     """
-    This middleware class adds a Rails-like 'flash' scope, used to make it
-    easier to apply the 'Redirect After Post' pattern.
-    """
     
-    def process_request(request):
-        if request.session.has_key(FLASH_KEY):
-            request.flash
-        request.flash = _FlashScope()
-    
-    process_request = staticmethod(process_request)
-    
-    def process_response(request, response):
-        """
-        Add the flash message to the session, if it exists in the request
+    def get_context_from_request(self, request):
+        """Gets the FlashScope object from the request and returns it. If this
+        object couldn't be found, the method returns a brand new FlashScope
         object.
         """
-        try:
-            if request.flash:
-                if not hasattr(request.flash, '__len__') or len(request.flash) == 0:
-                    return response
-                request.session[FLASH_KEY] = request.flash
-        except AttributeError:
-            # It's okay... really
-            pass
-        
-        return response
+        context = None
+        if hasattr(request, 'flash'):
+            context = request.flash
+            if not isinstance(context, FlashScope):
+                raise TypeError('Invalid Flash scope object: %s' % \
+                    repr(context))
+        if not context:
+            context = FlashScope()
+        return context
     
-    process_response = staticmethod(process_response)
+    def get_context_from_session(self, request):
+        """Gets the FlashScope object from the session and increments the
+        age of flash-scoped objects. If this object couldn't be found, the
+        method returns a brand new FlashScope object.
+        """
+        context = None
+        if 'flash' in request.session:
+            context = request.session['flash']
+            context.increment_age()
+        else:
+            context = FlashScope()
+        return context
+    
+    def process_request(self, request):
+        "Called by Django when a request arrives."
+        request.flash = self.get_context_from_session(request)
+    
+    def process_response(self, request, response):
+        "Called by Django when a response is sent."
+        request.session['flash'] = self.get_context_from_request(request)
+        return response
