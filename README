@@ -92,7 +92,7 @@ To access the flash context from a HTML template:
 <html>
     <head>...</head>
     <body>
-        {% if flash %}
+        {% if flash.key %}
             <div id="flash_message_panel">
                 {{ flash.key }}
             </div>
