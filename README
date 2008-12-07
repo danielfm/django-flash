@@ -89,16 +89,16 @@ Here goes an example on how to actually use the the flash context:
 
 To access the flash context from a HTML template:
 
-<html>
-    <head>...</head>
-    <body>
-        {% if flash.key %}
-            <div id="flash_message_panel">
-                {{ flash.key }}
-            </div>
-        {% endif %}
-    </body>
-</html>
+    <html>
+        <head>...</head>
+        <body>
+            {% if flash.key %}
+                <div id="flash_message_panel">
+                    {{ flash.key }}
+                </div>
+            {% endif %}
+        </body>
+    </html>
 
 
 Links
