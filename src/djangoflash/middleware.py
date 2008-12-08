@@ -43,7 +43,7 @@ class FlashMiddleware(object):
         method returns a brand new FlashScope object.
         """
         context = None
-        if 'flash' in request.session:
+        if hasattr(request, 'session') and 'flash' in request.session:
             context = request.session['flash']
             context.increment_age()
         else:
