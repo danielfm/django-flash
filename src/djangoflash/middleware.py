@@ -56,5 +56,6 @@ class FlashMiddleware(object):
     
     def process_response(self, request, response):
         "Called by Django when a response is sent."
-        request.session['flash'] = self.get_context_from_request(request)
+        if hasattr(request, 'session'):
+            request.session['flash'] = self.get_context_from_request(request)
         return response
