@@ -154,7 +154,10 @@ class DjangoFlashTestCase(TestCase):
         "Try to access a 'now' flash variable in the same request."
         self.response = self.client.get(reverse(views.now))
         self.assertEqual('Nice!', self.response.context['flash']['message'])
-        
+    
+    def test_now_expiration(self):
+        "Try to access a 'now' flash variable in the next request."
+        self.response = self.client.get(reverse(views.now))
         self.response = self.client.get(reverse(views.render_template))
         self.assertTrue(self.response.context['flash'].is_empty())
     
