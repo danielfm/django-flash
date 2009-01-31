@@ -63,13 +63,24 @@ class FlashScopeTestCase(TestCase):
         del self.scope['key']
         self.assertTrue('key' not in self.scope)
     
-    def test_is_empty(self):
-        "Only active flash scoped objects should be considered at is_empty()."
+    def test_is_current_empty(self):
+        "Current flash scoped objects should be considered at is_current_empty()"
         self.scope['key'] = 'value'
-        self.assertTrue(self.scope.is_empty())
+        self.assertFalse(self.scope.is_current_empty())
         
         self.scope.increment_age()
-        self.assertFalse(self.scope.is_empty())
+        self.assertFalse(self.scope.is_current_empty())
+        
+        self.scope.increment_age()
+        self.assertTrue(self.scope.is_current_empty())
+    
+    def test_is_active_empty(self):
+        "Only active flash scoped objects should be considered at is_active_empty()."
+        self.scope['key'] = 'value'
+        self.assertTrue(self.scope.is_active_empty())
+        
+        self.scope.increment_age()
+        self.assertFalse(self.scope.is_active_empty())
     
     def test_has_inactive_key(self):
         "Inactive flash scoped objects should return False at has_key()."
@@ -146,7 +157,7 @@ class DjangoFlashTestCase(TestCase):
     
     def test_dict_syntax(self):
         "Map syntax should be available to put objects in flash context."
-        self.response = self.client.get(reverse(views.dict_syntax))
+        self.response = self.client.post(reverse(views.dict_syntax))
         self.response = self.client.get(reverse(views.render_template))
         self.assertEqual('Oops', self.response.context['flash']['message'])
     
@@ -159,18 +170,18 @@ class DjangoFlashTestCase(TestCase):
         "Try to access a 'now' flash variable in the next request."
         self.response = self.client.get(reverse(views.now))
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_flash_early_access(self):
         "Try to access a flash variable too soon."
         self.response = self.client.get(reverse(views.flash_early_access))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
         
         self.response = self.client.get(reverse(views.render_template))
         self.assertEqual('Oops', self.response.context['flash']['message'])
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_variable_lifecycle(self):
         "Test flash context management with one variable."
@@ -180,7 +191,7 @@ class DjangoFlashTestCase(TestCase):
         self.assertEqual('Something funny', self.response.context['flash']['message'])
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_several_variables_lifecycle(self):
         "Test flash context management with two variables in several requests."
@@ -194,7 +205,7 @@ class DjangoFlashTestCase(TestCase):
         self.assertFalse(self.response.context['flash'].has_key('another_message'))
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_keep_variables(self):
         "Keep a flash scoped object for one more request."
@@ -208,7 +219,7 @@ class DjangoFlashTestCase(TestCase):
         self.assertEqual('Something funny', self.response.context['flash']['message'])
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_keep_invalid_variables(self):
         "Try to keep an invalid flash scoped object for one more request."
@@ -218,7 +229,7 @@ class DjangoFlashTestCase(TestCase):
         self.assertEqual('Something funny', self.response.context['flash']['message'])
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())
     
     def test_keep_all_variables(self):
         "Keep all flash scoped objects for one more request."
@@ -232,4 +243,4 @@ class DjangoFlashTestCase(TestCase):
         self.assertEqual('Something funny', self.response.context['flash']['message'])
         
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(self.response.context['flash'].is_empty())
+        self.assertTrue(self.response.context['flash'].is_active_empty())

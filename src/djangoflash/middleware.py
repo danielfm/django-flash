@@ -27,27 +27,23 @@ class FlashMiddleware(object):
         object couldn't be found, the method returns a brand new FlashScope
         object.
         """
-        context = None
+        context = FlashScope()
         if hasattr(request, 'flash'):
             context = request.flash
             if not isinstance(context, FlashScope):
                 raise TypeError('Invalid Flash scope object: %s' % \
                     repr(context))
-        if not context:
-            context = FlashScope()
         return context
     
     def get_context_from_session(self, request):
         """Gets the FlashScope object from the session and increments the
         age of flash-scoped objects. If this object couldn't be found, the
         method returns a brand new FlashScope object.
-        """
-        context = None
+        """ 
+        context = FlashScope()
         if hasattr(request, 'session') and 'flash' in request.session:
             context = request.session['flash']
             context.increment_age()
-        else:
-            context = FlashScope()
         return context
     
     def process_request(self, request):
@@ -57,5 +53,7 @@ class FlashMiddleware(object):
     def process_response(self, request, response):
         "Called by Django when a response is sent."
         if hasattr(request, 'session'):
-            request.session['flash'] = self.get_context_from_request(request)
+            context = self.get_context_from_request(request)
+            if not context.is_current_empty():
+                request.session['flash'] = context
         return response

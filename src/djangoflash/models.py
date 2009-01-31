@@ -92,11 +92,17 @@ class FlashScope(object):
         if self._current.has_key(key):
             del self._current[key]
     
-    def is_empty(self):
+    def is_active_empty(self):
         """Returns true if there's at least one active (not expired)
         flash scoped object. 
         """
         return len(self._current) == 0
+    
+    def is_current_empty(self):
+        """Returns true if there's at least one flash scoped object to be
+        activated on one of the following requests.
+        """
+        return len(self._session) == 0
     
     def keys(self):
         "Returns the keys of all active (not expired) flash scoped objects."
