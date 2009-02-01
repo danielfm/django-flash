@@ -3,27 +3,33 @@ django-flash
 
     http://github.com/danielfm/django-flash/tree
 
-django-flash adds a Rails-like flash context support to Django.
+Django-flash is a simple extension to the Django framework which enables the
+use of the so called flash scope, first introduced by Ruby on Rails a few
+years ago.
+
+This is an open source project licenced under the terms of the Lesser General
+Public License v3.0 and sponsored by Destaquenet Technology Solutions, a
+brazilian software development and consultancy startup.
 
 
 Installation
 ------------
 
-The easiest way to install django-flash is via EasyInstall[1]. Follow these[2]
-instructions to install EasyInstall if you don't have it already.
+The easiest way to install django-flash is via EasyInstall. Follow these
+instructions to install EasyInstall if you don’t have it already.
 
-Then, execute the following command line to install the latest stable version
-of django-flash:
+Then, execute the following command line to download and install the latest
+stable version from CheeseShop:
 
     $ sudo easy_install django-flash
 
-If you use Git and want to get the latest *development* version:
+If you use git and want to get the latest development version:
 
     $ git clone git://github.com/danielfm/django-flash.git
     $ cd django-flash
     $ sudo python setup.py install
 
-Or get the latest *development* version as a tarball:
+Or get the latest development version as a tarball:
 
     $ wget http://github.com/danielfm/django-flash/tarball/master
     $ tar zxf danielfm-django-flash-XXXXXXXXXXXXXXXX.tar.gz
@@ -31,88 +37,73 @@ Or get the latest *development* version as a tarball:
     $ sudo python setup.py install
 
 
-Using django-flash
-------------------
+Configuring your Django project
+-------------------------------
 
-The first thing to do is plug django-flash to your Django project. To do this,
-open your project's 'settings.py' file and do the following changes:
+The first thing to do is plug django-flash to your Django project. To do
+this, open your project’s settings.py file and do the following changes:
 
     TEMPLATE_CONTEXT_PROCESSORS = (
         'djangoflash.context_processors.flash',
     )
 
     MIDDLEWARE_CLASSES = (
+        # django-flash depends on the SessionMiddleware
         'django.contrib.sessions.middleware.SessionMiddleware',
+        
         'djangoflash.middleware.FlashMiddleware',
     )
 
-After doing that all HttpRequest objects received by your views will have an
-extra attribute called 'flash'.
+That’s all the required configuration.
 
-Here goes an example on how to actually use the the flash context:
+
+Using django-flash
+------------------
+
+Once plugged to your project, django-flash automatically adds a flash property
+to the HttpRequest objects received by your view methods. This property points
+to an instance of djangoflash.models.FlashScope.
+
+Here goes some examples on how to manipulate this scope:
 
     def my_view(request):
-        #
-        # It's like a dictionary...
-        #
-        
-        # Add a string to the flash context
+        # Puts a string to the flash scope
         request.flash['key'] = 'value'
-        request.flash.put(another_key='another value')
-        
-        # Check if a value is available at the flash context
-        print 'key' in request.flash
-        
-        # Get an object from the flash context
-        print request.flash['key']
-        print request.flash.get('key', 'default value')
-        
-        # Remove an object from the flash scope
+
+        # Same as above
+        request.flash.put(key='value')
+
+        # Checks if the object is available at the flash scope
+        'key' in request.flash
+
+        # Gets an object from the flash scope
+        request.flash['key']
+
+        # Same as above, but returns a default value if the key doesn't exists
+        request.flash.get('key', 'default value')
+
+        # Removes an object from the flash scope
         del request.flash['key']
-        
-        
-        #
-        # ...but it's not only a dictionary!
-        #
-        
-        # Keep an object in the flash context for one more request
-        request.flash.keep('key')
-        
-        # Keep all objects in the flash context for one more request
-        request.flash.keep()
-        
-        # Add an object to the flash context, but make it available for use
-        # at THIS request
-        request.flash.now(key='value')
-        
-        return HttpResponseRedirect('/some/url/')
-
-To access the flash context from a HTML template:
-
-    <html>
-        <head>...</head>
-        <body>
-            {% if flash.key %}
-                <div id="flash_message_panel">
-                    {{ flash.key }}
-                </div>
-            {% endif %}
-        </body>
-    </html>
 
 
-Links
------
-
-[1] EasyInstall - http://peak.telecommunity.com/DevCenter/EasyInstall
-[2] Setuptools  - http://pypi.python.org/pypi/setuptools
+Although we are using plain string values, you are free to use any pickleable
+object.
 
 
-Authors
+That's just the tip of the iceberg!
+-----------------------------------
+
+To learn everything about django-flash, take a look at the the complete
+documentation at:
+
+http://djangoflash.destaquenet.com/en/
+http://djangoflash.destaquenet.com/pt/ (portuguese version, comming soon!)
+
+
+Credits
 -------
-
-Name:    Daniel Fernandes Martins <daniel.tritone@gmail.com>
-Company: Destaquenet Technology Solutions <http://www.destaquenet.com/>
+    Author:  Daniel Fernandes Martins <daniel@destaquenet.com>
+    Company: Destaquenet Technology Solutions <http://www.destaquenet.com/>
 
 
 --EOF

@@ -4,6 +4,7 @@
 # Build directory
 build/*
 dist/*
+docs/build/*
 
 # Egg info directory
 *.egg-info

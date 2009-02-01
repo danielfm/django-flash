@@ -63,6 +63,17 @@ class FlashScopeTestCase(TestCase):
         del self.scope['key']
         self.assertTrue('key' not in self.scope)
     
+    def test_len(self):
+        """__len__() method should return the number of active objects."""
+        self.scope['key'] = 'value'
+        self.assertEqual(0, len(self.scope))
+        
+        self.scope.increment_age()
+        self.assertEqual(1, len(self.scope))
+        
+        self.scope.increment_age()
+        self.assertEqual(0, len(self.scope))
+    
     def test_is_current_empty(self):
         "Current flash scoped objects should be considered at is_current_empty()"
         self.scope['key'] = 'value'
@@ -244,3 +255,4 @@ class DjangoFlashTestCase(TestCase):
         
         self.response = self.client.get(reverse(views.render_template))
         self.assertTrue(self.response.context['flash'].is_active_empty())
+        

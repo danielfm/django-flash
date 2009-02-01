@@ -5,11 +5,8 @@ provided by this module.
 
 The following Python code shows its main features:
 
-    flash = FlashScope()
-    
-    #
     # It's pretty much a dictionary...
-    #
+    flash = FlashScope()
     
     # Add a string to the flash context
     flash['key'] = 'value'
@@ -24,11 +21,6 @@ The following Python code shows its main features:
     
     # Remove an object from the flash scope
     del flash['key']
-    
-    
-    #
-    # ...but it's not only a dictionary!
-    #
     
     # Keep an object in the flash context for one more request
     flash.keep('key')
@@ -55,108 +47,111 @@ the context or update the list of objects available to the ongoing request):
     print 'key' in flash   # -> True (object is now active)
     
     # Third request
+    flash.increment_age()
     print 'key' in flash   # -> False (expired object)
 """
 
 
 class FlashScope(object):
-    """This is a dictionary-like object used to manage the flash context.
+    """This is a dict-like object used to manage the flash context.
     """
     
     def __init__(self):
         "Creates a new instance of FlashScope."
-        self._session = {}
-        self._session_age = {}  # Stores the "age" of each flash scoped object
-        self._current = {}      # Stores just the active flash scoped objects
+        self._current = {}
+        self._current_age = {}  # Stores the "age" of each flash-scoped object
+        self._active = {}      # Stores just the active flash-scoped objects
     
     def __contains__(self, key):
-        """Returns True if there's an active (not expired) flash scoped object
-        under the given key.
+        """Returns True if there's an active flash-scoped object under
+        the given key.
         """
-        return key in self._current
+        return key in self._active
     
     def __getitem__(self, key):
-        """Retrieves an active (not expired) flash scoped object.
+        """Retrieves an active flash-scoped object.
         """
-        return self._current[key]
+        return self._active[key]
     
     def __setitem__(self, key, value):
         "Puts an object into the flash context."
-        self._session[key] = value
-        self._session_age[key] = 0
+        self._current[key] = value
+        self._current_age[key] = 0
     
     def __delitem__(self, key):
-        "Removes a flash scoped object."
-        del self._session[key]
-        del self._session_age[key]
-        if self._current.has_key(key):
-            del self._current[key]
+        "Removes a flash-scoped object."
+        del self._current[key]
+        del self._current_age[key]
+        if self._active.has_key(key):
+            del self._active[key]
+    
+    def __len__(self):
+        "Returns the number of active flash-scoped objects."
+        return len(self._active)
     
     def is_active_empty(self):
-        """Returns true if there's at least one active (not expired)
-        flash scoped object. 
+        "Returns true if there's at least one active flash-scoped object."
+        return len(self) == 0
+    
+    def is_current_empty(self):
+        """Returns true if there's at least one flash-scoped object to be
+        activated on one of the following requests.
         """
         return len(self._current) == 0
     
-    def is_current_empty(self):
-        """Returns true if there's at least one flash scoped object to be
-        activated on one of the following requests.
-        """
-        return len(self._session) == 0
-    
     def keys(self):
-        "Returns the keys of all active (not expired) flash scoped objects."
-        return self._current.keys()
+        "Returns the keys of all active flash-scoped objects."
+        return self._active.keys()
     
     def items(self):
-        """Returns the list of all active (not expired) flash scoped objects
-        as tuples (key, value).
+        """Returns the list of all active flash-scoped objects as
+        tuples (key, value).
         """
-        return self._current.items()
+        return self._active.items()
     
     def get(self, key, default=None):
-        """Gets the active (not expired) flash scoped object under the given
-        key. If the key doesn't exists, the default value is returned instead.
+        """Gets the active flash-scoped object under the given key. If the
+        key doesn't exists, the default value is returned instead.
         """
-        return self._current.get(key, default)
+        return self._active.get(key, default)
     
     def pop(self, key, *args):
-        """Removes and returns the active (not expired) flash scoped object
-        under the given key.
+        """Removes and returns the active flash-scoped object under the
+        given key.
         """
-        value = self._current.pop(key, *args)
-        del self._session_age[key]
-        if self._current.has_key(key):
-            del self._current[key]
+        value = self._active.pop(key, *args)
+        del self._current_age[key]
+        if self._active.has_key(key):
+            del self._active[key]
         return value
     
     def has_key(self, key):
-        """Returns True if there's an active (not expired) flash scoped object
-        under the given key.
+        """Returns True if there's an active flash-scoped object under the
+        given key.
         """
-        return self._current.has_key(key)
+        return self._active.has_key(key)
     
     def values(self):
-        "Returns the list of all active (not expired) flash scoped objects."
-        return self._current.values()
+        "Returns the list of all active flash-scoped objects."
+        return self._active.values()
     
     def iterkeys(self):
-        """Returns an iterator over the keys of all active (not expired)
-        flash scoped objects.
+        """Returns an iterator over the keys of all active flash-scoped
+        objects.
         """
-        return self._current.iterkeys()
+        return self._active.iterkeys()
     
     def itervalues(self):
-        """Returns an iterator over the values of all active (not expired)
-        flash scoped objects.
+        """Returns an iterator over the values of all active flash-scoped
+        objects.
         """
-        return self._current.itervalues()
+        return self._active.itervalues()
     
     def iteritems(self):
         """Returns an iterator over the items (key, value) of all active
-        (not expired) flash scoped objects.
+        flash-scoped objects.
         """
-        return self._current.iteritems()
+        return self._active.iteritems()
     
     def put(self, **kwargs):
         """Puts an object into the flash context. This method is an alias to
@@ -167,37 +162,37 @@ class FlashScope(object):
     
     def now(self, **kwargs):
         """Puts an object into the active flash context. Use this method
-        when you need to make a flash scoped object available to the same
+        when you need to make a flash-scoped object available to the same
         request; otherwise you would have to wait for the next request
         for this object to be available for use.
         """
         for key, value in kwargs.items():
-            self._current[key] = value
+            self._active[key] = value
     
     def keep(self, *args):
-        """Stops the given flash scoped object from being expired, at least
+        """Stops the given flash-scoped object from being expired, at least
         for one more request. If this method is called with no arguments,
-        it acts on all flash scoped objects.
+        it acts on all flash-scoped objects.
         """
-        for key, value in self._session_age.items():
+        for key, value in self._current_age.items():
             if not args or key in args:
                 if value > 0:
-                    self._session_age[key] -= 1
+                    self._current_age[key] -= 1
     
-    def _update_current(self):
+    def _update_active(self):
         "Recreates the active flash scope."
-        self._current = {}
-        for key in self._session_age.keys():
-            if not self._session_age[key] == 0:
-                self._current[key] = self._session[key]
+        self._active = {}
+        for key in self._current_age.keys():
+            if not self._current_age[key] == 0:
+                self._active[key] = self._current[key]
     
     def increment_age(self):
-        """Increment the age of flash scoped objects by 1. After that, all
+        """Increment the age of flash-scoped objects by 1. After that, all
         objects with age >= 2 are removed from the flash scope.
         """
-        for key, value in self._session_age.items():
+        for key, value in self._current_age.items():
             if value+1 < 2:
-                self._session_age[key] += 1
+                self._current_age[key] += 1
             else:
                 del self[key]
-        self._update_current()
+        self._update_active()
