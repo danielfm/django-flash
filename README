@@ -96,9 +96,13 @@ That's just the tip of the iceberg!
 To learn everything about django-flash, take a look at the the complete
 documentation at:
 
-http://djangoflash.destaquenet.com/en/
-http://djangoflash.destaquenet.com/pt/ (portuguese version, comming soon!)
+English:
+    http://djangoflash.destaquenet.com/en/
+    http://djangoflash.destaquenet.com/en/django-flash.pdf
 
+Portuguese:
+    http://djangoflash.destaquenet.com/pt/ (portuguese version, comming soon!)
+    http://djangoflash.destaquenet.com/pt/django-flash.pdf
 
 Credits
 -------

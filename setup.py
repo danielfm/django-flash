@@ -23,6 +23,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP'
     ],
     install_requires = ['Django>=1.0_final'],
+    include_package_data = True,
     packages = find_packages('src'),
     package_dir = {'':'src'},
     zip_safe = False,
