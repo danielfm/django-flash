@@ -94,8 +94,8 @@ Although we are using plain ``string`` values, you are free to use any
 *pickleable* object.
 
 
-Flash-scoped objects default lifecycle
-``````````````````````````````````````
+Flash-scoped objects: default lifecycle
+```````````````````````````````````````
 
 First let's see a basic example of how ``django-flash`` controls the
 flash-scoped objects lifecycle. Consider the following view methods::
@@ -145,8 +145,8 @@ the same time, the flash-scoped object added by ``first_view`` was
 automatically removed from the flash scope.
 
 
-Controlling flash-scoped objects lifecycle
-``````````````````````````````````````````
+Lifecycle management
+````````````````````
 
 By default, values stored into the flash scope during the processing of a
 request will be available during the processing of the immediately following
