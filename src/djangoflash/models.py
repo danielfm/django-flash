@@ -162,7 +162,7 @@ class FlashScope(object):
         """Puts an object into the flash context. This method is an alias to
         __setitem__(self, key, value).
         """
-        for key,value in kwargs.items():
+        for key, value in kwargs.items():
             self[key] = value
     
     def now(self, **kwargs):
@@ -171,7 +171,7 @@ class FlashScope(object):
         request; otherwise you would have to wait for the next request
         for this object to be available for use.
         """
-        for key,value in kwargs.items():
+        for key, value in kwargs.items():
             self._current[key] = value
     
     def keep(self, *args):
@@ -187,7 +187,7 @@ class FlashScope(object):
     def _update_current(self):
         "Recreates the active flash scope."
         self._current = {}
-        for key, value in self._session_age.items():
+        for key in self._session_age.keys():
             if not self._session_age[key] == 0:
                 self._current[key] = self._session[key]
     
