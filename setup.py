@@ -11,7 +11,7 @@ setup(
     license = 'LGPL',
     platforms = ['Any'],
     keywords = ['django', 'flash', 'session', 'scope', 'contrib'],
-    url = 'http://github.com/danielfm/django-flash/tree/master',
+    url = 'http://djangoflash.destaquenet.com/en/',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

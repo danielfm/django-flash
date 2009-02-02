@@ -2,8 +2,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-``django-flash`` -- Rails-like flash scope support for Django
-=============================================================
+Django-flash --- Rails-like flash scope support for Django
+==============================================================
 
 Django-flash is a simple extension to the Django_ framework which enables the
 use of the so called flash scope, first introduced by `Ruby on Rails`_ a
@@ -18,7 +18,7 @@ consultancy startup.
 Installation
 ------------
 
-The easiest way to install ``django-flash`` is via EasyInstall_. Follow
+The easiest way to install Django-flash is via EasyInstall_. Follow
 `these <http://pypi.python.org/pypi/setuptools>`_ instructions to install
 EasyInstall if you don't have it already.
 
@@ -27,7 +27,8 @@ stable version from CheeseShop_::
 
     $ easy_install django-flash
 
-If you use git_ and want to get the latest *development* version::
+If you use git_ and want to get the latest *development* version from the
+project website, at Github_::
 
     $ git clone git://github.com/danielfm/django-flash.git
     $ cd django-flash
@@ -44,7 +45,7 @@ Or get the latest *development* version as a tarball::
 Configuration
 -------------
 
-In order to plug ``django-flash`` to your Django_ project, open your project's
+In order to plug Django-flash to your Django_ project, open your project's
 ``settings.py`` file and do the following changes::
 
     TEMPLATE_CONTEXT_PROCESSORS = (
@@ -61,12 +62,13 @@ In order to plug ``django-flash`` to your Django_ project, open your project's
 That's all the required configuration.
 
 
-Using ``django-flash``
+Using Django-flash
 ----------------------
 
-Once plugged to your project, ``django-flash`` automatically adds a ``flash``
-property to the ``HttpRequest`` objects received by your view methods. This
-property points to an instance of :class:`djangoflash.models.FlashScope`.
+Once plugged to your project, Django-flash automatically adds a ``flash``
+attribute to the :class:`django.http.HttpRequest` objects received by your view
+methods. This property points to an instance of
+:class:`FlashScope`.
 
 Here goes some examples on how to manipulate this scope::
 
@@ -90,14 +92,14 @@ Here goes some examples on how to manipulate this scope::
         del request.flash['key']
 
 
-Although we are using plain ``string`` values, you are free to use any
+Although we are using plain strings values, you are free to use any
 *pickleable* object.
 
 
 Flash-scoped objects: default lifecycle
 ```````````````````````````````````````
 
-First let's see a basic example of how ``django-flash`` controls the
+First let's see a basic example of how Django-flash controls the
 flash-scoped objects lifecycle. Consider the following view methods::
 
     # URL: http://server/app/first
@@ -182,7 +184,7 @@ We can prevent a flash-scoped object from being removed by using the
 
 
 You can also keep *all* active flash-scoped objects by calling the
-``keep`` method with no args::
+``keep`` method with no arguments::
 
     def second_view(request):
         request.flash.keep()
@@ -218,11 +220,8 @@ next request::
 Accessing flash-scoped objects from view templates
 ``````````````````````````````````````````````````
 
-We already know that we can use the ``request.flash`` object to access the
-flash scope. But what about the view templates?
-
-Fortunately, it's dead simple to access flash-scoped objects from a view
-template::
+We already know how to access the flash scope from a view method. But what
+about the view templates? ::
 
     <html>
     <head>
@@ -271,7 +270,11 @@ Credits
 Table of Contents
 -----------------
 
+.. toctree::
+   :maxdepth: 2
+
 * :ref:`genindex`
+* :ref:`modindex`
 * :ref:`search`
 
 
@@ -282,5 +285,6 @@ Table of Contents
 .. _Destaquenet Technology Solutions: http://www.destaquenet.com/
 .. _EasyInstall: http://peak.telecommunity.com/DevCenter/EasyInstall
 .. _CheeseShop: http://pypi.python.org/pypi
+.. _Github: http://github.com/danielfm/django-flash/tree/master
 .. _git: http://git-scm.com/
 
