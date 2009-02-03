@@ -1,32 +1,35 @@
 # -*- coding: utf-8 -*-
 
-"""This middleware uses the FlashScope class to manage the flash context.
-The FlashMiddleware class runs on both request and response.
+"""This module provides the :class:`FlashMiddleware` class, which is
+responsible manage the flash context when HTTP requests arrives.
 
-To plug it to your Django project, modify your project's settings.py like
-this:
+To plug it to your Django project, modify your project's ``settings.py`` like
+this::
 
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'djangoflash.middleware.FlashMiddleware',
-)
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'djangoflash.middleware.FlashMiddleware',
+    )
 
-Make sure to put the FlashMiddleware *after* the SessionMiddleware.
+Make sure to put the :class:`FlashMiddleware` *after* the
+class:`SessionMiddleware`.
 """
 
 from djangoflash.models import FlashScope
 
 
 class FlashMiddleware(object):
-    """This middleware class adds a Rails-like 'flash' scope to the
-    request object.
+    """This middleware is responsible retrieve
+    :class:`djangoflash.models.FlashScope` objects from the user's session
+    or create them if necessary, as well as handle the expiration of old
+    flash-scoped objects.
     """
     
     @staticmethod
     def get_context_from_request(request):
-        """Gets the FlashScope object from the request and returns it. If this
-        object couldn't be found, the method returns a brand new FlashScope
-        object.
+        """Gets the :class:`FlashScope` object from the request and returns
+        it. If it couldn't be found, the method returns a brand new
+        :class:`FlashScope` object.
         """
         context = FlashScope()
         if hasattr(request, 'flash'):
@@ -38,9 +41,9 @@ class FlashMiddleware(object):
     
     @staticmethod
     def get_context_from_session(request):
-        """Gets the FlashScope object from the session and increments the
-        age of flash-scoped objects. If this object couldn't be found, the
-        method returns a brand new FlashScope object.
+        """Gets the :class:`FlashScope` object from the user's session and
+        increments the age of flash-scoped objects. If this object couldn't
+        be found, this method returns a brand new :class:`FlashScope` object.
         """ 
         context = FlashScope()
         if hasattr(request, 'session') and 'flash' in request.session:
@@ -50,12 +53,16 @@ class FlashMiddleware(object):
     
     @staticmethod
     def process_request(request):
-        "Called by Django when a request arrives."
+        """This method is called by the Django framework when a request
+        arrives. You don't have to call it yourself.
+        """
         request.flash = FlashMiddleware.get_context_from_session(request)
     
     @staticmethod
     def process_response(request, response):
-        "Called by Django when a response is sent."
+        """This method is called by the Django framework when a response is
+        sent back to the user.
+        """
         if hasattr(request, 'session'):
             context = FlashMiddleware.get_context_from_request(request)
             if not context.is_current_empty():

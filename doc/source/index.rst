@@ -63,12 +63,12 @@ That's all the required configuration.
 
 
 Using Django-flash
-----------------------
+------------------
 
 Once plugged to your project, Django-flash automatically adds a ``flash``
 attribute to the :class:`django.http.HttpRequest` objects received by your view
 methods. This property points to an instance of
-:class:`FlashScope`.
+:class:`djangoflash.models.FlashScope`.
 
 Here goes some examples on how to manipulate this scope::
 
@@ -95,6 +95,8 @@ Here goes some examples on how to manipulate this scope::
 Although we are using plain strings values, you are free to use any
 *pickleable* object.
 
+
+.. _flash-default-lifecycle:
 
 Flash-scoped objects: default lifecycle
 ```````````````````````````````````````
@@ -272,6 +274,8 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 2
+   
+   modules
 
 * :ref:`genindex`
 * :ref:`modindex`
