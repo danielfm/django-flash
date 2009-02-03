@@ -11,4 +11,3 @@
 .. autoclass:: FlashScope
    :show-inheritance:
    :members:
-
