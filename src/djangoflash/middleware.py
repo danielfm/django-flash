@@ -19,7 +19,7 @@ from djangoflash.models import FlashScope
 
 
 class FlashMiddleware(object):
-    """This middleware is responsible retrieve
+    """This middleware is responsible to retrieve
     :class:`djangoflash.models.FlashScope` objects from the user's session
     or create them if necessary, as well as handle the expiration of old
     flash-scoped objects.
