@@ -15,6 +15,9 @@ This is an open source project licenced under the terms of the
 consultancy startup.
 
 
+  :Author: Daniel Fernandes Martins <daniel@destaquenet.com>
+
+
 Installation
 ------------
 
@@ -45,7 +48,7 @@ Or get the latest *development* version as a tarball::
 Configuration
 -------------
 
-In order to plug Django-flash to your Django_ project, open your project's
+In order to plug Django-flash to your Django project, open your project's
 ``settings.py`` file and do the following changes::
 
     TEMPLATE_CONTEXT_PROCESSORS = (
@@ -260,26 +263,6 @@ It's also possible to iterate over all active flash-scoped objects using the
         {% endif %}
     </body>
     </html>
-
-
-Credits
--------
-
-  :Author: Daniel Fernandes Martins <daniel@destaquenet.com>
-  :Company: `Destaquenet Technology Solutions`_
-
-
-Table of Contents
------------------
-
-.. toctree::
-   :maxdepth: 2
-   
-   modules
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 
 .. _Lesser General Public License v3.0: http://www.gnu.org/licenses/lgpl-3.0.html

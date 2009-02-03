@@ -4,8 +4,9 @@
 to maintain the flash-scoped objects and control their lifecycle.
 
 .. testsetup::
-   
+
    from djangoflash.models import FlashScope
+
 """
 
 class FlashScope(object):
@@ -133,8 +134,8 @@ class FlashScope(object):
         .. note ::
         
            The flash-scoped objects added with :meth:`now` are *transient*,
-           that is, you **cannot** use the :meth:`keep` method to avoid the
-           expiration of thos objects.
+           that is, they are going to be removed from this flash scope even
+           if you :meth:`keep` them.
         
         Example usage:
         
@@ -148,6 +149,7 @@ class FlashScope(object):
            >>> flash.increment_age()
            >>> 'message' in flash
            False
+        
         """
         for key, value in kwargs.items():
             self._active[key] = value
@@ -160,7 +162,7 @@ class FlashScope(object):
         Example usage:
         
         .. doctest::
-        
+           
            >>> flash = FlashScope()
            >>> flash['message'] = 'My message'
            >>> flash.increment_age()
@@ -170,7 +172,8 @@ class FlashScope(object):
            >>> flash.increment_age()
            >>> 'message' in flash
            True
-       """
+        
+        """
         for key, value in self._current_age.items():
             if not args or key in args:
                 if value > 0:
