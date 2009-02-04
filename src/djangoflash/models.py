@@ -85,6 +85,8 @@ class FlashScope(object):
            >>> flash.is_current_empty()
            False
            >>> flash.increment_age()
+           >>> flash.is_current_empty()
+           False
            >>> flash.is_active_empty()
            False
            >>> flash['message']
