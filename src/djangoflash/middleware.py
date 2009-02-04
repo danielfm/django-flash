@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
 
-"""This module provides the :class:`FlashMiddleware` class, which is
+"""
+This module provides the :class:`FlashMiddleware` class, which is
 responsible manage the flash context when HTTP requests arrives.
 
-To plug it to your Django project, modify your project's ``settings.py`` like
-this::
+In order to plug Django-flash to your project, open your project's
+``settings.py`` file and do the following change::
 
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
         'djangoflash.middleware.FlashMiddleware',
     )
 
-Make sure to put the :class:`FlashMiddleware` *after* the
-class:`SessionMiddleware`.
+
+This is necessary because Django-flash relies on the user's session to store
+the contents of the flash scope, you need to declare those two middleware
+classes.
+
+.. warning::
+
+  The :class:`FlashMiddleware` class must be declared after the
+  :class:`SessionMiddleware` class.
 """
 
 from djangoflash.models import FlashScope
@@ -53,14 +61,14 @@ class FlashMiddleware(object):
     
     @staticmethod
     def process_request(request):
-        """This method is called by the Django framework when a request
+        """This method is called by the Django framework when a *request*
         arrives. You don't have to call it yourself.
         """
         request.flash = FlashMiddleware.get_context_from_session(request)
     
     @staticmethod
     def process_response(request, response):
-        """This method is called by the Django framework when a response is
+        """This method is called by the Django framework when a *response* is
         sent back to the user.
         """
         if hasattr(request, 'session'):

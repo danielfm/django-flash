@@ -11,3 +11,7 @@
 .. autoclass:: FlashScope
    :show-inheritance:
    :members:
+
+.. seealso::
+   :ref:`modulesindex`
+

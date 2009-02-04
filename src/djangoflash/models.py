@@ -56,11 +56,42 @@ class FlashScope(object):
     
     def is_active_empty(self):
         """Returns ``True`` if there's no *active* flash-scoped object.
+        
+        Example usage:
+        
+        .. doctest::
+           
+           >>> flash = FlashScope()
+           >>> flash['message'] = 'My message'
+           >>> flash.is_active_empty()
+           True
+           >>> flash.increment_age()
+           >>> flash.is_active_empty()
+           False
+           >>> flash['message']
+           'My message'
         """
         return len(self) == 0
     
     def is_current_empty(self):
         """Returns ``True`` if there's no flash-scoped objects at all.
+        
+        Example usage:
+        
+        .. doctest::
+           
+           >>> flash = FlashScope()
+           >>> flash['message'] = 'My message'
+           >>> flash.is_current_empty()
+           False
+           >>> flash.increment_age()
+           >>> flash.is_active_empty()
+           False
+           >>> flash['message']
+           'My message'
+           >>> flash.increment_age()
+           >>> flash.is_current_empty()
+           True
         """
         return len(self._current) == 0
     
@@ -157,7 +188,7 @@ class FlashScope(object):
     def keep(self, *args):
         """Prevents the given non-transient flash-scoped objects from being
         expired in the next request. If this method is called with no
-        arguments, it acts on all flash-scoped objects.
+        *args*, it acts on all flash-scoped objects.
         
         Example usage:
         

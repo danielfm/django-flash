@@ -4,3 +4,6 @@
 .. automodule:: djangoflash.context_processors
    :members:
    :synopsis: Django-flash context processors
+
+.. seealso::
+   :ref:`modulesindex`
