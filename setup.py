@@ -8,14 +8,14 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'django-flash',
-    version = '1.3.4',
+    version = '1.3.5',
     author = 'Daniel Fernandes Martins',
     author_email = 'daniel.tritone@gmail.com',
-    description = 'Rails-like flash context support for Django.',
+    description = 'Rails-like flash scope support for Django.',
     license = 'LGPL',
     platforms = ['Any'],
     keywords = ['django', 'flash', 'session', 'scope', 'contrib'],
-    url = 'http://djangoflash.destaquenet.com/en/',
+    url = 'http://djangoflash.destaquenet.com/',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
