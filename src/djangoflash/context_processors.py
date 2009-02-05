@@ -16,9 +16,11 @@ Doing this your view templates will be able to access the flash scope
 contents using the ``flash`` context variable.
 """
 
+CONTEXT_VAR = 'flash'
+
 def flash(request):
-    """This context processor gets the :class:`djangoflash.models.FlashScope`
-    object from the current *request* and adds it to the template context::
+    """This context processor gets the :class:`FlashScope` object from the
+    current *request* and adds it to the template context::
     
         <html>
             <head></head>
@@ -28,4 +30,4 @@ def flash(request):
         </html>
     
     """
-    return {'flash':request.flash}
+    return {CONTEXT_VAR:request.flash}

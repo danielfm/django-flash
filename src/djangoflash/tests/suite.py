@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+
+"""Project's test suite.
+"""
+
 import sys
 
 # Add the Django test project to system path
@@ -12,4 +17,5 @@ setup_test_environment()
 connection.creation.create_test_db()
 
 # Finally, add the tests to this suite
+from models import *
 from testproj.app.tests import *

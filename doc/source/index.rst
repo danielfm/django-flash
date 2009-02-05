@@ -24,6 +24,7 @@ Documentation contents
    configuration
    usage
    modules/index
+   changelog
 
 
 Indices and tables

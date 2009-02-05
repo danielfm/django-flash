@@ -3,14 +3,10 @@ from django.conf.urls.defaults import *
 from testproj.app import views
 
 urlpatterns = patterns('',
-    (r'^invalid-flash/$', views.invalid_flash),
-    (r'^flash-early-access/$', views.flash_early_access),
-    (r'^variable-lifecycle/$', views.variable_lifecycle),
-    (r'^several-variable-lifecycle/$', views.several_variables_lifecycle),
-    (r'^now/$', views.now),
-    (r'^dict-syntax/$', views.dict_syntax),
-    (r'^keep-variables/$', views.keep_variables),
-    (r'^keep-invalid-variables/$', views.keep_invalid_variables),
-    (r'^keep-all-variables/$', views.keep_all_variables),
     (r'^default/$', views.render_template),
+    (r'^set_flash_var/$', views.set_flash_var),
+    (r'^set_another_flash_var/$', views.set_another_flash_var),
+    (r'^set_now_var/$', views.set_now_var),
+    (r'^keep_var/$', views.keep_var),
+    (r'^discard_var/$', views.discard_var),
 )

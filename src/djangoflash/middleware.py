@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-This module provides the :class:`FlashMiddleware` class, which is
-responsible manage the flash context when HTTP requests arrives.
+This module provides the :class:`FlashMiddleware` class, which manages the
+flash context whenever a HTTP requests hits the server.
 
 In order to plug Django-flash to your project, open your project's
 ``settings.py`` file and do the following change::
@@ -13,9 +13,9 @@ In order to plug Django-flash to your project, open your project's
     )
 
 
-This is necessary because Django-flash relies on the user's session to store
-the contents of the flash scope, you need to declare those two middleware
-classes.
+You need to add the :class:`SessionMiddleware` because Django-flash relies on
+the user's session to store the contents of the flash scope, you need to
+declare those two middleware classes.
 
 .. warning::
 
@@ -24,13 +24,20 @@ classes.
 """
 
 from djangoflash.models import FlashScope
+from djangoflash.context_processors import CONTEXT_VAR
+
+
+SESSION_KEY = '_djflash_app'
 
 
 class FlashMiddleware(object):
-    """This middleware is responsible to retrieve
-    :class:`djangoflash.models.FlashScope` objects from the user's session
-    or create them if necessary, as well as handle the expiration of old
+    """This middleware puts/gets a :class:`djangoflash.models.FlashScope`
+    object to/from the user's session, and activates the expiration of old
     flash-scoped objects.
+    
+    .. note::
+    
+       This class is designed to be used by the Django framework itself.
     """
     
     @staticmethod
@@ -40,8 +47,8 @@ class FlashMiddleware(object):
         :class:`FlashScope` object.
         """
         context = FlashScope()
-        if hasattr(request, 'flash'):
-            context = request.flash
+        if hasattr(request, CONTEXT_VAR):
+            context = getattr(request, CONTEXT_VAR)
             if not isinstance(context, FlashScope):
                 raise TypeError('Invalid Flash scope object: %s' % \
                     repr(context))
@@ -50,21 +57,22 @@ class FlashMiddleware(object):
     @staticmethod
     def get_context_from_session(request):
         """Gets the :class:`FlashScope` object from the user's session and
-        increments the age of flash-scoped objects. If this object couldn't
-        be found, this method returns a brand new :class:`FlashScope` object.
+        :meth:`update` it. If this object couldn't be found, this method
+        returns a brand new :class:`FlashScope` object.
         """ 
         context = FlashScope()
-        if hasattr(request, 'session') and 'flash' in request.session:
-            context = request.session['flash']
-            context.increment_age()
+        if hasattr(request, 'session') and SESSION_KEY in request.session:
+            context = request.session[SESSION_KEY]
+            context.update()
         return context
     
     @staticmethod
     def process_request(request):
         """This method is called by the Django framework when a *request*
-        arrives. You don't have to call it yourself.
+        hits the server.
         """
-        request.flash = FlashMiddleware.get_context_from_session(request)
+        setattr(request, CONTEXT_VAR, \
+            FlashMiddleware.get_context_from_session(request))
     
     @staticmethod
     def process_response(request, response):
@@ -73,6 +81,8 @@ class FlashMiddleware(object):
         """
         if hasattr(request, 'session'):
             context = FlashMiddleware.get_context_from_request(request)
-            if not context.is_current_empty():
-                request.session['flash'] = context
+            if len(context) > 0:
+                request.session[SESSION_KEY] = context
+            elif SESSION_KEY in request.session:
+                del request.session[SESSION_KEY]
         return response

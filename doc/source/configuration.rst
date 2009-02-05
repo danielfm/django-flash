@@ -22,6 +22,6 @@ need to declare those two middleware classes.
 That's all the required configuration.
 
 .. warning::
-  The :class:`FlashMiddleware` class must be declared after the
-  :class:`SessionMiddleware` class.
+  The :class:`djangoflash.middleware.FlashMiddleware` class must be declared
+  after the :class:`SessionMiddleware` class.
 

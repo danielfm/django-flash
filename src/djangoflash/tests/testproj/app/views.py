@@ -10,38 +10,24 @@ def render_template(request):
     return render_to_response('simple.html', {}, \
         context_instance=RequestContext(request))
 
-def invalid_flash(request):
-    request.flash = 'Something funny'
+def set_flash_var(request):
+    request.flash['message'] = 'Message'
     return render_template(request)
 
-def dict_syntax(request):
-    request.flash['message'] = 'Oops'
+def set_another_flash_var(request):
+    request.flash['anotherMessage'] = 'Another message'
     return render_template(request)
 
-def flash_early_access(request):
-    request.flash.put(message = 'Oops')
+def set_now_var(request):
+    request.flash.now(message='Message')
     return render_template(request)
 
-def now(request):
-    request.flash.now(message='Nice!')
-    return render_template(request)
-
-def variable_lifecycle(request):
-    request.flash.put(message='Something funny')
-    return render_template(request)
-
-def several_variables_lifecycle(request):
-    request.flash['another_message'] = 'Something else'
-    return render_template(request)
-
-def keep_variables(request):
+def keep_var(request):
     request.flash.keep('message')
     return render_template(request)
 
-def keep_invalid_variables(request):
-    request.flash.keep('something else')
-    return render_template(request)
-
-def keep_all_variables(request):
-    request.flash.keep()
+def discard_var(request):
+    # Should behave the same way 'flash.now' does
+    request.flash['message'] = 'Message'
+    request.flash.discard('message')
     return render_template(request)

@@ -1,7 +1,0 @@
-include ez_setup.py
-
-include README
-include LICENSE
-
-recursive-include doc *
-recursive-include src/djangoflash/tests *
