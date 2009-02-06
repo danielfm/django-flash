@@ -41,13 +41,22 @@ class FlashScope(object):
     .. describe:: key not in f
 
        Equivalent to ``not key in f``.
+    
+    .. describe:: f.now[key] = value
+    
+       Sets ``f[key]`` to *value* and marks it as *used*.
+    
+    .. describe:: f.now(**items)
+    
+       Puts the given *items* into *f*.
     """
     
     def __init__(self):
-        """Return a new :class:`FlashScope` object.
+        """Returns a new :class:`FlashScope` object.
         """
         self._session = {}
         self._used = {}
+        self.now = _ImmediateFlashScopeAdapter(self)
     
     def __contains__(self, key):
         """Returns ``True`` if there's a value under the given *key*.
@@ -157,18 +166,16 @@ class FlashScope(object):
             self[key] = value
     
     def clear(self):
-        """Removes all items from the flash scope.
+        """Removes all items from this flash scope.
         """
         self._session.clear()
         self._used.clear()
     
-    def now(self, **kwargs):
-        """Puts a value that *won't* be available to the next action, only to
-        the current.
+    def put_immediate(self, key, value):
+        """Puts a value inside this flash scope and marks it as *used*.
         """
-        for key, value in kwargs.items():
-            self._session[key] = value
-            self._update_status(key)
+        self._session[key] = value
+        self._update_status(key)
     
     def discard(self, *keys):
         """Marks the entire current flash or a single value as *used*, so when
@@ -198,3 +205,40 @@ class FlashScope(object):
            unless you have a very good reason to do so.
         """
         self._update_status()
+
+
+class _ImmediateFlashScopeAdapter(object):
+    """This class is used to add support for immediate flash values to an
+    existing instance of :class:`FlashScope`. An immediate flash value is a
+    value that is available to this request, but not to the next.
+    """
+    
+    def __init__(self, delegate):
+        """Returns a new :class:`_ImmediateFlashScopeAdapter` object which
+        delegates certain calls to the given *delegate*.
+        """
+        self.delegate = delegate
+    
+    def __getitem__(self, key):
+        """Retrieves a value. Raises a :exc:`KeyError` if *key* does
+        not exists.
+        """
+        return self.delegate[key]
+    
+    def __contains__(self, key):
+        """Returns ``True`` if there's a value under the given *key*.
+        """
+        return key in self.delegate
+    
+    def __setitem__(self, key, value):
+        """Puts a *value* that *won't* be available to the next request, only to
+        the current.
+        """
+        self.delegate.put_immediate(key, value)
+    
+    def __call__(self, **kwargs):
+        """Puts values that *won't* be available to the next request, only to
+        the current.
+        """
+        for key, value in kwargs.items():
+            self[key] = value

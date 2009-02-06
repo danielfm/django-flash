@@ -16,14 +16,14 @@ class FlashScopeTestCase(TestCase):
         self.scope = FlashScope()
     
     def test_contains(self):
-        """"'key' in flash" syntax should be supported.
+        """"key in flash" syntax should be supported.
         """
         self.assertFalse('message' in self.scope)
         self.scope['message'] = 'Message'
         self.assertTrue('message' in self.scope)
     
     def test_get_item(self):
-        """"flash['key']" syntax should be supported.
+        """"flash[key]" syntax should be supported.
         """
         get_item = lambda: self.scope['message']
         self.assertRaises(KeyError, get_item);
@@ -32,13 +32,13 @@ class FlashScopeTestCase(TestCase):
         
     
     def test_set_item(self):
-        """"flash['key'] = 'value'" syntax should be supported.
+        """"flash[key] = value" syntax should be supported.
         """
         self.scope['message'] = 'Message'
         self.assertEqual('Message', self.scope['message']);
     
     def test_del_item(self):
-        """"del flash['key']" syntax should be supported.
+        """"del flash[key]" syntax should be supported.
         """
         self.scope['message'] = 'Message'
         del self.scope['message']
@@ -156,3 +156,32 @@ class FlashScopeTestCase(TestCase):
         self.scope.keep()
         self.scope.update()
         self.assertEqual('Message', self.scope['message'])
+    
+    def test_alternative_now(self):
+        """Immediate values (flash.now) should be supported.
+        """
+        self.scope.now(message='Message')
+        self.assertEqual('Message', self.scope['message'])
+        self.scope.update()
+        self.assertFalse('message' in self.scope)
+    
+    def test_now(self):
+        """"flash.now[key] = value" syntax should be supported.
+        """
+        self.scope.now['message'] = 'Message'
+        self.assertEqual('Message', self.scope['message'])
+        self.scope.update()
+        self.assertFalse('message' in self.scope)
+    
+    def test_now_get_item(self):
+        """"flash.now[key]" syntax should be supported.
+        """
+        self.scope.now['message'] = 'Message'
+        self.assertEqual('Message', self.scope.now['message'])
+    
+    def test_now_contains(self):
+        """"key in flash.now" syntax should be supported.
+        """
+        self.assertFalse('message' in self.scope.now)
+        self.scope.now['message'] = 'Message'
+        self.assertTrue('message' in self.scope.now)

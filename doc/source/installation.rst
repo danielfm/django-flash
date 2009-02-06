@@ -8,7 +8,7 @@ There are several ways to download and install Django-flash:
   Execute the following command line to download and install the latest
   stable version from CheeseShop_::
 
-      $ easy_install django-flash
+      $ easy_install -U django-flash
 
   Follow `these <http://pypi.python.org/pypi/setuptools>`_ instructions to
   install EasyInstall_ if you don't have it already.

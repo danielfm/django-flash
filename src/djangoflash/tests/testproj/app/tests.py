@@ -69,7 +69,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
     
     def test_now_lifecycle(self):
-        """A ``now`` value shouldn't survive to the next request.
+        """An immediate value shouldn't survive the next request.
         """
         self.response = self.client.get(reverse(views.set_now_var))
         self.assertEqual('Message', self._flash()['message'])

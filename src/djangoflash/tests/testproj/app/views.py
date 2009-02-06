@@ -19,7 +19,7 @@ def set_another_flash_var(request):
     return render_template(request)
 
 def set_now_var(request):
-    request.flash.now(message='Message')
+    request.flash.now['message'] = 'Message'
     return render_template(request)
 
 def keep_var(request):
