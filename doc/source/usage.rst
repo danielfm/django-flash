@@ -135,6 +135,10 @@ This can be done by using the :meth:`FlashScope.now` method::
     def first_view(request):
         request.flash.now(message='My message')
         print request.flash['message'] # Output: My message
+        return HttpRedirectResponse(reverse(second_view))
+    
+    def second_view(request):
+        print 'message' in request.flash # Output: False
 
 
 Accessing flash-scoped objects from view templates
