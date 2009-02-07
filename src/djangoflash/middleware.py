@@ -14,8 +14,7 @@ In order to plug Django-flash to your project, open your project's
 
 
 You need to add the :class:`SessionMiddleware` because Django-flash relies on
-the user's session to store the contents of the flash scope, you need to
-declare those two middleware classes.
+user's session to store the contents of the flash scope.
 
 .. warning::
 
@@ -32,7 +31,7 @@ SESSION_KEY = '_djflash_app'
 
 class FlashMiddleware(object):
     """This middleware puts/gets a :class:`djangoflash.models.FlashScope`
-    object to/from the user's session, and activates the expiration of old
+    object to/from the user's session, and triggers the expiration of old
     flash-scoped objects.
     
     .. note::
