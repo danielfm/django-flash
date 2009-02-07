@@ -13,7 +13,7 @@ Here you can see the project progress:
 
 **Version 1.4:**
 
-* **Notice:** *breaks backward compatibility;*
+* **Notice:** *breaks backwards compatibility;*
 * Now Django-flash works pretty much like the original `Ruby on Rails`_' flash;
 * Several code optmizations;
 * Several improvements on the test suite;
@@ -47,7 +47,7 @@ Here you can see the project progress:
 
 **Version 1.3:**
 
-* **Notice:** *breaks backward compatibility;*
+* **Notice:** *breaks backwards compatibility;*
 * Django-flash now controls the expiration of flash-scoped values
   individually, which means that only expired values are removed from the
   session (and not the whole flash context);
@@ -60,7 +60,7 @@ Here you can see the project progress:
 
 **Version 1.2:**
 
-* **Notice:** *breaks backward compatibility;*
+* **Notice:** *breaks backwards compatibility;*
 * Improvements on the test comments;
 * Now the flash scope works pretty much like a :class:`dict`, although
   still there's no value-based expiration (the whole flash scope expires at
