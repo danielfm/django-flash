@@ -26,7 +26,10 @@ from djangoflash.models import FlashScope
 from djangoflash.context_processors import CONTEXT_VAR
 
 
-SESSION_KEY = '_djflash_app'
+"""This value is used to identify the flash scope object inside the user's
+session.
+"""
+_SESSION_KEY = '_djflash_app'
 
 
 class FlashMiddleware(object):
@@ -60,8 +63,8 @@ class FlashMiddleware(object):
         returns a brand new :class:`FlashScope` object.
         """ 
         context = FlashScope()
-        if hasattr(request, 'session') and SESSION_KEY in request.session:
-            context = request.session[SESSION_KEY]
+        if hasattr(request, 'session') and _SESSION_KEY in request.session:
+            context = request.session[_SESSION_KEY]
             context.update()
         return context
     
@@ -81,7 +84,7 @@ class FlashMiddleware(object):
         if hasattr(request, 'session'):
             context = FlashMiddleware.get_context_from_request(request)
             if len(context) > 0:
-                request.session[SESSION_KEY] = context
-            elif SESSION_KEY in request.session:
-                del request.session[SESSION_KEY]
+                request.session[_SESSION_KEY] = context
+            elif _SESSION_KEY in request.session:
+                del request.session[_SESSION_KEY]
         return response
