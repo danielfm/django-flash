@@ -9,7 +9,7 @@ from django.test import TestCase
 from testproj.app import views
 
 from djangoflash.context_processors import CONTEXT_VAR
-from djangoflash.middleware import SESSION_KEY, FlashScope
+from djangoflash.middleware import _SESSION_KEY, FlashScope
 
 
 class IntegrationTestCase(TestCase):
@@ -25,18 +25,18 @@ class IntegrationTestCase(TestCase):
         """Flash scope shouldn't be stored in the session if there's no flash.
         """
         self.response = self.client.get(reverse(views.render_template))
-        self.assertFalse(SESSION_KEY in self.client.session)
+        self.assertFalse(_SESSION_KEY in self.client.session)
     
     def test_session_state_for_used_flash(self):
         """Flash scope should be removed from the session if there's no flash.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.response = self.client.get(reverse(views.render_template))
-        self.assertTrue(SESSION_KEY in self.client.session)
+        self.assertTrue(_SESSION_KEY in self.client.session)
         
         # Flash scope should be removed from the session
         self.response = self.client.get(reverse(views.render_template))
-        self.assertFalse(SESSION_KEY in self.client.session)
+        self.assertFalse(_SESSION_KEY in self.client.session)
     
     def test_default_lifecycle(self):
         """A value should be automatically removed from the flash scope.
