@@ -95,7 +95,7 @@ this default behavior might not be enough in some situations.
 Preventing flash-scoped objects from being removed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We can prevent a flash-scoped object from being removed by using the
+We can prevent flash-scoped objects from being removed by using the
 :meth:`FlashScope.keep` method::
 
     def first_view(request):

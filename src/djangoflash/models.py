@@ -185,8 +185,8 @@ class FlashScope(object):
         self._update_status(*keys)
     
     def keep(self, *keys):
-        """Prevents the entire current flash or a specific value from being removed
-        on the next request.
+        """Prevents specific values from being removed on the next request.
+        If this method is called with no args, the entire flash is preserved.
         """
         if not keys:
             self._update_status(is_used=False)
