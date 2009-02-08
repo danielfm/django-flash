@@ -109,7 +109,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('anotherMessage' in self._flash())
     
     def test_replace_flash_scope(self):
-        """
+        """The flash scope should be an instance of FlashScope.
         """
         request = lambda: self.client.get(reverse(views.replace_flash))
         self.assertRaises(TypeError, request)
