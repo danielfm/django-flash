@@ -9,3 +9,5 @@ doc/build/*
 # Egg info directory
 *.egg-info
 
+# Test coverage file
+.coverage
