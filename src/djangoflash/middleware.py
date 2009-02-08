@@ -44,7 +44,7 @@ class FlashMiddleware(object):
     
     @staticmethod
     def get_context_from_request(request):
-        """Gets the :class:`FlashScope` object from the request and returns
+        """Gets the :class:`FlashScope` object from the *request* and returns
         it. If it couldn't be found, the method returns a brand new
         :class:`FlashScope` object.
         """
