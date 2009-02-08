@@ -107,3 +107,9 @@ class IntegrationTestCase(TestCase):
         self.response = self.client.get(reverse(views.render_template))
         self.assertFalse('message' in self._flash())
         self.assertFalse('anotherMessage' in self._flash())
+    
+    def test_replace_flash_scope(self):
+        """
+        """
+        request = lambda: self.client.get(reverse(views.replace_flash))
+        self.assertRaises(TypeError, request)

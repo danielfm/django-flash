@@ -116,6 +116,14 @@ class FlashScopeTestCase(TestCase):
         self.assertEqual('Message', self.scope.pop('message'))
         self.assertFalse('message' in self.scope)
     
+    def test_pop_used_value(self):
+        """Should pop an used item from the flash scope.
+        """
+        self.scope['message'] = 'Message'
+        self.scope.update()
+        self.assertEqual('Message', self.scope.pop('message'))
+        self.assertFalse('message' in self.scope)
+    
     def test_has_key(self):
         """Should check if there's a value related with the given key.
         """

@@ -31,3 +31,7 @@ def discard_var(request):
     request.flash['message'] = 'Message'
     request.flash.discard('message')
     return render_template(request)
+
+def replace_flash(request):
+    request.flash = "Replacing the flash with a string"
+    return render_template(request)
