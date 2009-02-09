@@ -48,7 +48,7 @@ class FlashScope(object):
     
     .. describe:: f.now(**items)
     
-       Puts the given *items* into *f*.
+       Puts the given *items* into *f* and marks them as *used*.
     """
     
     def __init__(self):
