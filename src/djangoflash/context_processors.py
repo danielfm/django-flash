@@ -4,8 +4,8 @@
 This module provides the context processors that exposes the
 :class:`djangoflash.models.FlashScope` object to view's templates.
 
-In order to plug Django-flash to your project, open your project's
-``settings.py`` file and do the following changes::
+To plug this context processor to your Django project, add the following
+snippet to the ``settings.py`` file::
 
     TEMPLATE_CONTEXT_PROCESSORS = (
         'djangoflash.context_processors.flash',
@@ -30,14 +30,16 @@ CONTEXT_VAR = 'flash'
 
 def flash(request):
     """This context processor gets the :class:`FlashScope` object from the
-    current *request* and adds it to the template context::
+    current *request* and adds it to the template context:
     
-        <html>
-            <head></head>
-            <body>
-                request.flash['message'] = {{ flash.message }}
-            </body>
-        </html>
+    .. code-block:: html+django
+    
+       <html>
+           <head></head>
+           <body>
+               request.flash['message'] = {{ flash.message }}
+           </body>
+       </html>
     
     """
     return {CONTEXT_VAR:request.flash}

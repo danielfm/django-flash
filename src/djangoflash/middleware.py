@@ -4,8 +4,8 @@
 This module provides the :class:`FlashMiddleware` class, which manages the
 flash context whenever a HTTP requests hits the server.
 
-In order to plug Django-flash to your project, open your project's
-``settings.py`` file and do the following change::
+To plug this middleware to your Django project, add the following snippet to
+the ``settings.py`` file::
 
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
