@@ -16,7 +16,6 @@ Doing this your view templates will be able to access the flash scope
 contents using the ``flash`` context variable.
 
 .. warning::
-
    Your views should use the :class:`RequestContext` class to render the view
    templates, otherwise the ``flash`` variable (along with *all* other
    variables provided by other context processors) won't be available to you.

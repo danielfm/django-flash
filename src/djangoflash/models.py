@@ -17,29 +17,29 @@ class FlashScope(object):
     The following operations are supported by :class:`FlashScope` instances:
 
     .. describe:: len(f)
-
+    
        Returns the number of items in the flash scope *f*.
 
     .. describe:: f[key]
-
+    
        Returns the item of *f* with key *key*.  Raises a :exc:`KeyError` if
        *key* is not in the flash scope.
 
     .. describe:: f[key] = value
-
+    
        Sets ``f[key]`` to *value*.
 
     .. describe:: del f[key]
-
+    
        Removes ``f[key]`` from *f*.  Raises a :exc:`KeyError` if *key* is not
        in the map.
 
     .. describe:: key in f
-
+    
        Returns ``True`` if *f* has a key *key*, else ``False``.
 
     .. describe:: key not in f
-
+    
        Equivalent to ``not key in f``.
     
     .. describe:: f.now[key] = value
@@ -156,6 +156,9 @@ class FlashScope(object):
     
     def has_key(self, key):
         """Returns ``True`` if there's a value under the given *key*.
+        
+        .. deprecated:: 1.4.2
+           :meth:`has_key()` is deprecated in favor of ``key in f``.
         """
         return self._session.has_key(key)
     
@@ -198,7 +201,6 @@ class FlashScope(object):
         """Mark for removal entries that were kept, and delete unkept ones.
         
         .. note::
-        
            This method is called automatically by
            :class:`djangoflash.middleware.FlashMiddleware` when a HTTP
            request hits the server, so never call this method yourself,

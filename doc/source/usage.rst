@@ -192,6 +192,5 @@ It's also possible to iterate over all flash-scoped objects using the
 
 
 .. seealso::
-
    :mod:`djangoflash.context_processors` module.
 

@@ -17,9 +17,8 @@ You need to add the :class:`SessionMiddleware` because Django-flash relies on
 user's session to store the contents of the flash scope.
 
 .. warning::
-
-  The :class:`FlashMiddleware` class must be declared after the
-  :class:`SessionMiddleware` class.
+   The :class:`FlashMiddleware` class must be declared after the
+   :class:`SessionMiddleware` class.
 """
 
 from djangoflash.models import FlashScope
@@ -38,7 +37,6 @@ class FlashMiddleware(object):
     flash-scoped objects.
     
     .. note::
-    
        This class is designed to be used by the Django framework itself.
     """
     
