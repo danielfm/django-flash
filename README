@@ -23,19 +23,6 @@ stable version from CheeseShop:
 
     $ sudo easy_install django-flash
 
-If you use git and want to get the latest development version:
-
-    $ git clone git://github.com/danielfm/django-flash.git
-    $ cd django-flash
-    $ sudo python setup.py install
-
-Or get the latest development version as a tarball:
-
-    $ wget http://github.com/danielfm/django-flash/tarball/master
-    $ tar zxf danielfm-django-flash-XXXXXXXXXXXXXXXX.tar.gz
-    $ cd danielfm-django-flash-XXXXXXXXXXXXXXXX
-    $ sudo python setup.py install
-
 
 Configuring your Django project
 -------------------------------
@@ -53,8 +40,6 @@ this, open your project’s settings.py file and do the following changes:
         
         'djangoflash.middleware.FlashMiddleware',
     )
-
-That’s all the required configuration.
 
 
 Using django-flash
@@ -84,10 +69,6 @@ Here goes some examples on how to manipulate this scope:
 
         # Removes an object from the flash scope
         del request.flash['key']
-
-
-Although we are using plain string values, you are free to use any pickleable
-object.
 
 
 That's just the tip of the iceberg!
