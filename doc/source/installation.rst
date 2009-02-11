@@ -16,8 +16,10 @@ There are several ways to download and install Django-flash:
 
 **Via GitHub**
 
-  If you are a git_ user and want to take a closer look at the project's
-  source code, you would rather clone our public repository instead::
+  If you are a Git_ user and want to take a closer look at the project's
+  source code, you would rather clone our
+  `public repository <http://github.com/danielfm/django-flash/tree/master>`_
+  instead::
 
       $ git clone git://github.com/danielfm/django-flash.git
       $ cd django-flash
@@ -26,22 +28,15 @@ There are several ways to download and install Django-flash:
 
 **Zip file/tarball**
 
-  Another option is to download the latest version as a Zip file... ::
-
-      $ wget http://github.com/danielfm/django-flash/zipball/master
-      $ unzip danielfm-django-flash-XXXXXXXXXXXXXXXX.zip
-      $ cd danielfm-django-flash-XXXXXXXXXXXXXXXX
+  Django-flash is also available for download as
+  `compressed archives <http://github.com/danielfm/django-flash/downloads>`_
+  (either ``zip`` and ``tgz``). After unzip/untar the archive, execute the
+  following command to install Django-flash::
+  
       $ python setup.py install
 
-  ...or a tarball::
-
-      $ wget http://github.com/danielfm/django-flash/tarball/master
-      $ tar zxf danielfm-django-flash-XXXXXXXXXXXXXXXX.tar.gz
-      $ cd danielfm-django-flash-XXXXXXXXXXXXXXXX
-      $ python setup.py install
 
 .. _EasyInstall: http://peak.telecommunity.com/DevCenter/EasyInstall
 .. _CheeseShop: http://pypi.python.org/pypi
-.. _Github: http://github.com/danielfm/django-flash/tree/master
-.. _git: http://git-scm.com/
+.. _Git: http://git-scm.com/
 
