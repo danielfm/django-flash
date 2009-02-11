@@ -1,7 +1,7 @@
 django-flash
 ------------
 
-    http://github.com/danielfm/django-flash/tree
+    http://djangoflash.destaquenet.com/
 
 Django-flash is a simple extension to the Django framework which enables the
 use of the so called flash scope, first introduced by Ruby on Rails a few
