@@ -4,6 +4,11 @@ Changelog
 Like any other piece of software, Django-flash is evolving at each release.
 Here you can see the project progress:
 
+**Version 1.4.2:**
+
+* Deprecating method ``flash.has_key(key)``;
+* Documentation improvements;
+
 **Version 1.4.1:**
 
 * Immediate values (``flash.now``) can be manipulated using a dict-like
