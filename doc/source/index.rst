@@ -10,8 +10,9 @@ This is an open source project licenced under the terms of the
 `Destaquenet Technology Solutions`_, a brazilian software development and
 consultancy startup.
 
-
-  :Author: Daniel Fernandes Martins <daniel@destaquenet.com>
+  .. seealso::
+     `PDF version <http://djangoflash.destaquenet.com/django-flash.pdf>`_ of
+     this documentation.
 
 
 Documentation contents
@@ -33,6 +34,14 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Contact information
+-------------------
+
+  :Author: Daniel Fernandes Martins <daniel@destaquenet.com>
+  :Company: `Destaquenet Technology Solutions`_
+
 
 .. _Lesser General Public License v3.0: http://www.gnu.org/licenses/lgpl-3.0.html
 .. _Django: http://www.djangoproject.org/

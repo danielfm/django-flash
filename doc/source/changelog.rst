@@ -8,6 +8,7 @@ Here you can see the project progress:
 
 * Deprecating method ``flash.has_key(key)``;
 * Documentation improvements;
+* Internals refactoring;
 
 **Version 1.4.1:**
 
