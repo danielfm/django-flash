@@ -3,6 +3,7 @@ django-flash
 
     http://djangoflash.destaquenet.com/
 
+
 Django-flash is a simple extension to the Django framework which enables the
 use of the so called flash scope, first introduced by Ruby on Rails a few
 years ago.
@@ -21,7 +22,7 @@ instructions to install EasyInstall if you don’t have it already.
 Then, execute the following command line to download and install the latest
 stable version from CheeseShop:
 
-    $ sudo easy_install django-flash
+    $ easy_install -U django-flash
 
 
 Configuring your Django project
@@ -82,6 +83,7 @@ documentation at:
 
 Credits
 -------
+
     Author:  Daniel Fernandes Martins <daniel@destaquenet.com>
     Company: Destaquenet Technology Solutions <http://www.destaquenet.com/>
 
