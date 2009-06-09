@@ -35,3 +35,8 @@ def discard_var(request):
 def replace_flash(request):
     request.flash = "Replacing the flash with a string"
     return render_template(request)
+
+def remove_flash(request):
+    # I've seen this happen, I'm not kidding... :)
+    del request.flash
+    return render_template(request)

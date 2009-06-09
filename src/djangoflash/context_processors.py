@@ -1,30 +1,36 @@
 # -*- coding: utf-8 -*-
 
 """
-This module provides the context processors that exposes the
-:class:`djangoflash.models.FlashScope` object to view's templates.
+This module provides a context processor that exposes the
+:class:`djangoflash.models.FlashScope` object to view templates.
 
-To plug this context processor to your Django project, add the following
-snippet to the ``settings.py`` file::
+To plug this context processor to your Django project, edit your project's
+``settings.py`` file as follows::
 
     TEMPLATE_CONTEXT_PROCESSORS = (
         'djangoflash.context_processors.flash',
     )
 
 
-Doing this your view templates will be able to access the flash scope
-contents using the ``flash`` context variable.
+Doing this, the view templates will be able to access the flash scope contents
+using the ``flash`` context variable.
 
 .. warning::
-   Your views should use the :class:`RequestContext` class to render the view
-   templates, otherwise the ``flash`` variable (along with *all* other
-   variables provided by other context processors) won't be available to you.
+   The views methods should use the :class:`RequestContext` class to render the
+   view templates, otherwise the ``flash`` variable (along with *all* other
+   variables provided by other context processors) won't be available to them.
    Please read the
-   `Django documentation <http://docs.djangoproject.com/en/dev/ref/templates/api/>`_
+   `Django docs <http://docs.djangoproject.com/en/dev/ref/templates/api/>`_
    for further instructions.
 
 """
 
+from djangoflash.models import FlashScope
+
+
+"""Name of the variable used to keep :class:`FlashScope` objects both as an
+attribute of :class:`HttpRequest` and the template context.
+"""
 CONTEXT_VAR = 'flash'
 
 def flash(request):
@@ -41,4 +47,10 @@ def flash(request):
        </html>
     
     """
-    return {CONTEXT_VAR:request.flash}
+    flash_scope = None
+    try:
+        flash_scope = getattr(request, CONTEXT_VAR)
+    except AttributeError:
+        # Someone messed up the flash scope!
+        flash_scope = FlashScope()
+    return {CONTEXT_VAR: flash_scope}

@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 
 from testproj.app import views
 
+
 urlpatterns = patterns('',
     (r'^default/$', views.render_template),
     (r'^set_flash_var/$', views.set_flash_var),
@@ -10,4 +11,5 @@ urlpatterns = patterns('',
     (r'^keep_var/$', views.keep_var),
     (r'^discard_var/$', views.discard_var),
     (r'^replace_flash/$', views.replace_flash),
+    (r'^remove_flash/$', views.remove_flash),
 )

@@ -7,6 +7,7 @@ from unittest import TestCase
 
 from djangoflash.middleware import FlashScope
 
+
 class FlashScopeTestCase(TestCase):
     """Test the FlashScope object.
     """

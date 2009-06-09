@@ -4,6 +4,10 @@ Changelog
 Like any other piece of software, Django-flash is evolving at each release.
 Here you can see the project progress:
 
+**Version 1.4.3:**
+
+* Added a few more sanity checks;
+
 **Version 1.4.2:**
 
 * Deprecating method ``flash.has_key(key)``;
