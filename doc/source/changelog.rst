@@ -4,6 +4,10 @@ Changelog
 Like any other piece of software, Django-flash is evolving at each release.
 Here you can see the project progress:
 
+**Version 1.4.4:**
+
+* Fixed a critical bug in the middleware;
+
 **Version 1.4.3:**
 
 * Added a few more sanity checks;

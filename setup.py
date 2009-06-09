@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'django-flash',
-    version = '1.4.3',
+    version = '1.4.4',
     author = 'Daniel Fernandes Martins',
     author_email = 'daniel.tritone@gmail.com',
     description = 'Rails-like flash support for Django.',

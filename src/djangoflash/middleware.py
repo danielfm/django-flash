@@ -77,8 +77,11 @@ insert  'django.contrib.sessions.middleware.SessionMiddleware'."""
         sent back to the user.
         """
         context = self._get_context_from_request(request)
-        if context:
-            request.session[FlashMiddleware._SESSION_KEY] = context
-        elif FlashMiddleware._SESSION_KEY in request.session:
-            del request.session[FlashMiddleware._SESSION_KEY]
+
+        # The session attribute might not be set if CommonMiddleware steps in
+        if hasattr(request, 'session'):
+            if context:
+                request.session[FlashMiddleware._SESSION_KEY] = context
+            elif FlashMiddleware._SESSION_KEY in request.session:
+                del request.session[FlashMiddleware._SESSION_KEY]
         return response
