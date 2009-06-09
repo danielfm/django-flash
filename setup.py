@@ -11,7 +11,7 @@ setup(
     version = '1.4.3',
     author = 'Daniel Fernandes Martins',
     author_email = 'daniel.tritone@gmail.com',
-    description = 'Rails-like flash scope support for Django.',
+    description = 'Rails-like flash support for Django.',
     license = 'LGPL',
     platforms = ['Any'],
     keywords = ['django', 'flash', 'session', 'scope', 'context', 'contrib'],
