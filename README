@@ -13,67 +13,8 @@ Public License v3.0 and sponsored by Destaquenet Technology Solutions, a
 brazilian software development and consultancy startup.
 
 
-Installation
-------------
-
-The easiest way to install django-flash is via EasyInstall. Follow these
-instructions to install EasyInstall if you don’t have it already.
-
-Then, execute the following command line to download and install the latest
-stable version from CheeseShop:
-
-    $ easy_install -U django-flash
-
-
-Configuring your Django project
--------------------------------
-
-The first thing to do is plug django-flash to your Django project. To do
-this, open your project’s settings.py file and do the following changes:
-
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        'djangoflash.context_processors.flash',
-    )
-
-    MIDDLEWARE_CLASSES = (
-        # django-flash depends on the SessionMiddleware
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        
-        'djangoflash.middleware.FlashMiddleware',
-    )
-
-
-Using django-flash
-------------------
-
-Once plugged to your project, django-flash automatically adds a flash property
-to the HttpRequest objects received by your view methods. This property points
-to an instance of djangoflash.models.FlashScope.
-
-Here goes some examples on how to manipulate this scope:
-
-    def my_view(request):
-        # Puts a string to the flash scope
-        request.flash['key'] = 'value'
-
-        # Same as above
-        request.flash.put(key='value')
-
-        # Checks if the object is available at the flash scope
-        'key' in request.flash
-
-        # Gets an object from the flash scope
-        request.flash['key']
-
-        # Same as above, but returns a default value if the key doesn't exists
-        request.flash.get('key', 'default value')
-
-        # Removes an object from the flash scope
-        del request.flash['key']
-
-
-That's just the tip of the iceberg!
------------------------------------
+Installation and Usage
+----------------------
 
 To learn everything about django-flash, take a look at the the complete
 documentation at:
