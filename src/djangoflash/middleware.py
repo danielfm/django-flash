@@ -2,7 +2,7 @@
 
 """
 This module provides the :class:`FlashMiddleware` class, which manages the
-flash context whenever a HTTP request hits the server.
+*flash* whenever a HTTP request hits the server.
 
 To plug this middleware to your Django project, edit your project's
 ``settings.py`` file as follows::
@@ -14,7 +14,7 @@ To plug this middleware to your Django project, edit your project's
 
 
 You need to add the :class:`SessionMiddleware` because Django-flash relies on
-user's session to store the contents of the flash scope.
+user's session to store the contents of the *flash*.
 
 .. warning::
    The :class:`FlashMiddleware` class must be declared after the
@@ -34,8 +34,7 @@ class FlashMiddleware(object):
        This class is designed to be used by the Django framework itself.
     """
 
-    """This value is used to identify the flash scope object inside the user's
-    session.
+    """This value is used to identify the flash inside the user's session.
     """
     _SESSION_KEY = '_djflash_app'
 

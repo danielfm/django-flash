@@ -4,7 +4,8 @@ Using Django-flash
 Once plugged to your project, Django-flash automatically adds a ``flash``
 attribute to the :class:`django.http.HttpRequest` objects received by your
 views. This property points to a :class:`djangoflash.models.FlashScope`
-instance.
+instance, which supports most if not all operations provided by a simple Python
+``dict``.
 
 Here goes some examples on how to manipulate this scope from a view::
 
@@ -25,11 +26,13 @@ Here goes some examples on how to manipulate this scope from a view::
         del request.flash['key']
 
 
-Although we are using just *string* values, you are free to use any *pickleable*
-object.
-
 To see the list of all methods available to you, take a look at the
 :class:`djangoflash.models.FlashScope` documentation.
+
+Although this example uses only *string* values, you are free to use, both as
+keys and values, any object that can be *pickled*. See the
+`pickle module <http://docs.python.org/library/pickle.html>`_ for more details
+on this subject.
 
 
 .. _flash-default-lifecycle:
@@ -38,7 +41,7 @@ Flash-scoped objects: the default lifecycle
 ```````````````````````````````````````````
 
 First let's see a basic example of how Django-flash controls the
-flash-scoped objects lifecycle. Consider the following views::
+lifecycle of flash-scoped objects. Consider the following views::
 
     # URL: http://server/app/first
     def first_view(request):
@@ -54,7 +57,7 @@ flash-scoped objects lifecycle. Consider the following views::
     # URL: http://server/app/third
     def third_view(request):
         print request.flash['another_message'] # Output: Something
-        print 'message' in request.flash # output: False
+        print 'message' in request.flash # Output: False
         return HttpResponseRedirect(reverse(fourth_view))
     
     # URL: http://server/app/fourth
@@ -63,21 +66,22 @@ flash-scoped objects lifecycle. Consider the following views::
 
 
 Let's say that we have opened our web browser and issued a request to
-http://server/app/first\. When the :meth:`first_view` method executes, it
-first sets a flash-scoped object under the ``message`` key. The last line
-returns a HTTP Redirect, which causes our browser to issue a ``GET`` request
-to http://server/app/second\.
+http://server/app/first\. When :meth:`first_view` executes, it stores an object
+inside the *flash* under the key ``message``. The last line returns a HTTP
+Redirect, which makes our web browser fire a ``GET`` request to
+http://server/app/second\.
 
-When the :meth:`second_view` method executes, it first prints the content of
-the flash-scoped object under the ``message`` key, which is still available.
-The next line of code sets another flash-scoped object under the
-``another_message`` key. Again, the last line returns a HTTP Redirect, which
-causes our browser to issue a ``GET`` request to http://server/app/third\.
+When :meth:`second_view` executes, it prints the content of the flash-scoped
+object under the key ``message``, which was stored in the previous request by
+:meth:`first_view`. The next line of code stores another object inside the
+*flash* under the key ``another_message``. Again, the last line returns a HTTP
+Redirect, which makes our web browser fire a ``GET`` request to
+http://server/app/third\.
 
-When the :meth:`third_view` method executes, the flash-scoped object under
-the ``another_message`` key is now available, which is not a surprise. But,
-at the same time, the flash-scoped object added by :meth:`first_view` was
-automatically removed.
+When :meth:`third_view` executes, the flash-scoped object under the key
+``another_message``, which was stored in the previous request by
+:meth:`second_view`, is available for use. But, at the same time, the
+flash-scoped object added by :meth:`first_view` was automatically removed.
 
 
 .. seealso::
@@ -87,9 +91,9 @@ automatically removed.
 Lifecycle management
 ````````````````````
 
-By default, all objects stored inside the flash context survives until the
-*very next* request, being automatically removed after that. Unfortunately,
-this default behavior might not be enough in some situations.
+By default, all objects stored inside the *flash* survives until the *very next*
+request, being automatically removed after that. Unfortunately, this default
+behavior might not be enough in some situations.
 
 
 Preventing flash-scoped objects from being removed
@@ -127,8 +131,8 @@ method with no arguments::
 Adding an immediate flash-scoped object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It's sometimes convenient to add an object to the flash scope and use it
-on the *current* request only.
+It's sometimes convenient to store an object inside the *flash* and use it on
+the *current* request only.
 
 This can be done by using the :attr:`FlashScope.now` attribute::
 
@@ -145,10 +149,10 @@ This can be done by using the :attr:`FlashScope.now` attribute::
 Accessing flash-scoped objects from view templates
 ``````````````````````````````````````````````````
 
-We already know how to access the flash scope from a views. But what about
-the view templates?
+We already know how to access the *flash* from a views. But what about the view
+templates?
 
-Well, it's just as easy:
+It's just as easy:
 
 .. code-block:: html+django
 

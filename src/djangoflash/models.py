@@ -5,25 +5,26 @@ way to pass temporary objects between views.
 """
 
 class FlashScope(object):
-    """The purpose of this class is to implement the *flash* scope, which is
-    a storage context that is a middle ground between the request context and
-    the session context. More specifically, the *flash* scope provides a simple
-    way to pass temporary objects from a view method to another (or to a view
-    template).
+    """The purpose of this class is to implement the *flash*, which is a
+    temporary storage mechanism -- kept in the user's session -- that looks like
+    a Python dictionary, so you can store values associated with keys and later
+    retrieve them.
     
-    Anything you place in this scope will survive for the next request only,
-    being automatically removed.
-
+    It has one special property: by default, values stored into the *flash*
+    during the processing of a request will be available during the processing
+    of the immediately following request. Once that second request has been
+    processed, those values are removed automatically from the *flash*.
+    
     The following operations are supported by :class:`FlashScope` instances:
 
     .. describe:: len(f)
 
-       Returns the number of items in the flash scope *f*.
+       Returns the number of items in the flash *f*.
 
     .. describe:: f[key]
 
        Returns the item of *f* with key *key*.  Raises a :exc:`KeyError` if
-       *key* is not in the flash scope.
+       *key* is not in the flash *f*.
 
     .. describe:: f[key] = value
 
@@ -69,7 +70,7 @@ class FlashScope(object):
         return self._session[key]
 
     def __setitem__(self, key, value):
-        """Puts a *value* into this flash scope under the given *key*.
+        """Puts a *value* into this flash under the given *key*.
         """
         self._session[key] = value
         self._update_status(key, is_used=False)
@@ -83,7 +84,7 @@ class FlashScope(object):
             del self._used[key]
 
     def __len__(self):
-        """Returns the number of values inside this flash scope.
+        """Returns the number of values inside this flash.
         """
         return len(self._session)
 
@@ -93,7 +94,7 @@ class FlashScope(object):
         as *used* (should be discarded) or *unused* (should be kept).
 
         If a *used* value is being marked as *used* again, it is automatically
-        removed from this flash scope.
+        removed from this flash.
         """
         if not key:
             for existing_key in self.keys():
@@ -162,19 +163,19 @@ class FlashScope(object):
         return self._session.has_key(key)
 
     def put(self, **kwargs):
-        """Puts one or more values into this flash scope.
+        """Puts one or more values into this flash.
         """
         for key, value in kwargs.items():
             self[key] = value
 
     def clear(self):
-        """Removes all items from this flash scope.
+        """Removes all items from this flash.
         """
         self._session.clear()
         self._used.clear()
 
     def put_immediate(self, key, value):
-        """Puts a value inside this flash scope and marks it as *used*.
+        """Puts a value inside this flash and marks it as *used*.
         """
         self._session[key] = value
         self._update_status(key)
@@ -182,7 +183,7 @@ class FlashScope(object):
     def discard(self, *keys):
         """Marks the entire current flash or a single value as *used*, so when
         the next request hit the server, those values will be automatically
-        removed from this flash scope by :class:`FlashMiddleware`.
+        removed from this flash by :class:`FlashMiddleware`.
         """
         self._update_status(*keys)
 

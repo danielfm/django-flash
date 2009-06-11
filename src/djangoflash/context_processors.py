@@ -12,7 +12,7 @@ To plug this context processor to your Django project, edit your project's
     )
 
 
-Doing this, the view templates will be able to access the flash scope contents
+Doing this, the view templates will be able to access the *flash* contents
 using the ``flash`` context variable.
 
 .. warning::
