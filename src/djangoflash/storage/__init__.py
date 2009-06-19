@@ -4,9 +4,7 @@
 project in order to persist the flash messages across requests.
 """
 
-from cgi import parse_qsl
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 
 # Alias for use in settings file --> name of module in "storage" directory.
