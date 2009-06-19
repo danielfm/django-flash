@@ -5,8 +5,8 @@
    :synopsis: Django-flash model
 
 
-:class:`FlashScope` Objects
-```````````````````````````
+:class:`FlashScope` Class
+`````````````````````````
 
 .. autoclass:: FlashScope
    :show-inheritance:

@@ -1,8 +1,17 @@
+.. _changelog:
+
 Changelog
 =========
 
 Like any other piece of software, Django-flash is evolving at each release.
-Here you can see the project progress:
+Here you can track our progress:
+
+**Version 1.5:**
+
+* Added support for custom flash storage backends;
+* Added a cookie-based flash storage;
+* Default session-based storage was factored out to an independent class;
+* Added a few more sanity checks;
 
 **Version 1.4.4:**
 

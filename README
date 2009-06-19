@@ -5,8 +5,8 @@ django-flash
 
 
 Django-flash is a simple extension to the Django framework which enables the
-use of the so called flash scope, first introduced by Ruby on Rails a few
-years ago.
+use of the so called flash scope, first introduced by Ruby on Rails a few years
+ago.
 
 This is an open source project licenced under the terms of the Lesser General
 Public License v3.0 and sponsored by Destaquenet Technology Solutions, a

@@ -2,7 +2,6 @@ from django.conf.urls.defaults import *
 
 from testproj.app import views
 
-
 urlpatterns = patterns('',
     (r'^default/$', views.render_template),
     (r'^set_flash_var/$', views.set_flash_var),

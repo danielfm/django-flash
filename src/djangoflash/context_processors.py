@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-This module provides a context processor that exposes the
-:class:`djangoflash.models.FlashScope` object to view templates.
+This module provides the context processor that exposes
+:class:`djangoflash.models.FlashScope` objects to view templates.
 
 To plug this context processor to your Django project, edit your project's
 ``settings.py`` file as follows::

@@ -8,4 +8,8 @@ Django-flash's modules
    models
    middleware
    context_processors
+   storage
+   storage_base
+   storage_session
+   storage_cookie
 

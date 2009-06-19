@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+
+"""This package provides some flash storage backends you can use in your
+project in order to persist the flash messages across requests.
+"""
+
+from cgi import parse_qsl
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+
+
+# Alias for use in settings file --> name of module in "storage" directory.
+# Any storage that is not in this dictionary is treated as a Python import
+# path to a custom storage.
+STORAGES = {
+    'session': 'session',
+    'cookie': 'cookie',
+}
+
+def get_storage(module):
+    """Creates and returns the flash storage backend defined in the given
+    module path (ex: ``"myapp.mypackage.mymodule"``). The argument can also
+    be an alias to a built-in storage backend, such as ``"session"`` or
+    ``"cookie"``.
+    """
+    if module in STORAGES:
+        mod = __import__('djangoflash.storage.%s' % STORAGES[module], \
+            {}, {}, [''])
+    else:
+        mod = __import__(module, {}, {}, [''])
+    return getattr(mod, 'FlashStorageClass')()
+
+# Get the flash storage specified in the project's settings. Use the session
+# storage by default (for both security and backward compatibility reasons).
+storage = get_storage(getattr(settings, 'FLASH_STORAGE', 'session'))
