@@ -32,8 +32,8 @@ class StorageTestCase(TestCase):
     def test_get_storage_by_module_name(self):
         """djangoflash.storage.cookie' should resolve to cookie flash storage.
         """
-        self.assertTrue(isinstance(flash_storage.get_storage('djangoflash.storage.cookie'),
-            cookie_storage.FlashStorageClass))
+        self.assertTrue(isinstance(flash_storage.get_storage('djangoflash.tests.storage'),
+            FlashStorageClass))
 
 
 class SessionFlashStorageTestCase(TestCase):
@@ -77,7 +77,7 @@ class SessionFlashStorageTestCase(TestCase):
         """
         self.flash['message'] = 'Message'
         self.storage.set(self.flash, self.request, self.response)
-        self.assertEqual(1, len(self.storage.get(self.request)))
+        self.assertEqual('Message', self.storage.get(self.request)['message'])
 
 
 class CookieFlashStorageTestCase(TestCase):
@@ -129,4 +129,19 @@ class CookieFlashStorageTestCase(TestCase):
         self.assertEqual(None, self.storage.get(self.request))
 
         self._transfer_cookies_from_response_to_request()
-        self.assertEqual(1, len(self.storage.get(self.request)))
+        self.assertEqual('Message', self.storage.get(self.request)['message'])
+
+
+class FlashStorageClass(object):
+    """Dummy flash storage backend.
+    """
+
+    def set(self, flash, request, response):
+        """Stores the given :class:`FlashScope` object.
+        """
+        pass
+
+    def get(self, request):
+        """Returns the stored :class:`FlashScope` object.
+        """
+        pass
