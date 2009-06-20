@@ -105,7 +105,6 @@ class FlashScopeTestCase(TestCase):
         self.assertEqual('Message', self.flash.pop('message'))
         self.assertFalse('message' in self.flash)
 
-    # TODO Check this test!!!
     def test_pop_used_value(self):
         """Should pop an used item from the flash scope.
         """
