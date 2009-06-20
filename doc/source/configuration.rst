@@ -37,8 +37,8 @@ By default, Django-flash provides two backends:
 Using the session-based storage
 '''''''''''''''''''''''''''''''
 
-Django-flash uses the session-based storage by default, so you don't need
-to do anything else to use it.
+Django-flash uses the :ref:`session-based storage <storage_session>` by default,
+so you don't need to do anything else to use it.
 
 *Although you are not required to do so*, you can add the following setting to
 your project's ``settings.py`` file to make it clear about what flash storage
@@ -50,8 +50,8 @@ backend is being used::
 Using the cookie-based storage
 ''''''''''''''''''''''''''''''
 
-If you want to use the cookie-based flash storage instead the default one, then
-add the following setting to the ``settings.py`` file::
+If you want to use the :ref:`cookie-based storage <storage_cookie>` instead the
+default one, then add the following setting to the ``settings.py`` file::
 
     FLASH_STORAGE = 'cookie'
 

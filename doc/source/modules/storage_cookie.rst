@@ -1,3 +1,5 @@
+.. _storage_cookie:
+
 :mod:`djangoflash.storage.cookie` --- Cookie-based flash storage
 ================================================================
 

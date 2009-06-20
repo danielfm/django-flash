@@ -6,7 +6,13 @@
    The actual :class:`FlashScope` object is sent back to the user. Although some
    encryption is performed to help spot when the flash data is modified by
    third-parties, this backend should be avoided when sensitive information is
-   stored inside the flash.
+   stored inside the *flash*.
+
+.. warning::
+   Although in general user agents' cookie support should have no fixed limits,
+   according to `RFC-2965 <http://www.ietf.org/rfc/rfc2965.txt>`_, section 5.3,
+   all implementations must support at least 4096 bytes per cookie. So be
+   careful about the amount of data you store inside the *flash*.
 """
 
 from djangoflash.storage.base import BaseFlashStorage

@@ -1,3 +1,5 @@
+.. _storage_session:
+
 :mod:`djangoflash.storage.session` --- Session-based flash storage
 ==================================================================
 
