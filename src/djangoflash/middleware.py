@@ -12,10 +12,11 @@ To plug this middleware to your Django project, edit your project's
     )
 """
 
-from djangoflash.storage import storage
+from django.core.exceptions import SuspiciousOperation
 
 from djangoflash.context_processors import CONTEXT_VAR
 from djangoflash.models import FlashScope
+from djangoflash.storage import storage
 
 
 class FlashMiddleware(object):
@@ -41,7 +42,7 @@ class FlashMiddleware(object):
         if hasattr(request, CONTEXT_VAR):
             flash = getattr(request, CONTEXT_VAR)
             if not isinstance(flash, FlashScope):
-                raise TypeError('Invalid flash scope object: %s' % repr(flash))
+                raise SuspiciousOperation('Invalid flash: %s' % repr(flash))
         return flash
 
     def process_request(self, request):
