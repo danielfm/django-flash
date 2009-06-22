@@ -48,6 +48,11 @@ class SessionFlashStorageTestCase(TestCase):
         self.flash = FlashScope()
         self.storage = session_storage.FlashStorageClass()
 
+    def _get_flash(self):
+        """Returns the flash contents from the session.
+        """
+        return self.request.session[self.storage._key]
+
     def test_set_null_object(self):
         """Session-based storage should not store null values.
         """
@@ -59,6 +64,18 @@ class SessionFlashStorageTestCase(TestCase):
         """
         self.storage.set(self.flash, self.request, self.response)
         self.assertEqual(0, len(self.request.session))
+
+    def test_clear_storage(self):
+        """Session-based storage should remove flash contents from the session.
+        """
+        self.flash['message'] = 'Message'
+        self.storage.set(self.flash, self.request, self.response)
+        self.assertEqual('Message', self._get_flash()['message'])
+
+        # The flash should be completely removed from the session
+        del self.flash['message']
+        self.storage.set(self.flash, self.request, self.response)
+        self.assertRaises(KeyError, self._get_flash)
 
     def test_set_object(self):
         """Session-based storage should store valid objects.
@@ -97,6 +114,11 @@ class CookieFlashStorageTestCase(TestCase):
         for key, cookie in self.response.cookies.items():
             self.request.COOKIES[key] = cookie.value
 
+    def _get_cookie(self):
+        """Returns the cookie used to store the flash contents.
+        """
+        return self.response.cookies[self.storage._key]
+
     def test_set_null_object(self):
         """Cookie-based storage should not store null values.
         """
@@ -108,6 +130,21 @@ class CookieFlashStorageTestCase(TestCase):
         """
         self.storage.set(self.flash, self.request, self.response)
         self.assertEqual(0, len(self.response.cookies))
+
+    def test_clear_storage(self):
+        """Cookie-based storage should set an empty/expired cookie.
+        """
+        self.flash['message'] = 'Message'
+        self.storage.set(self.flash, self.request, self.response)
+
+        # Simulates a request-response cycle
+        self._transfer_cookies_from_response_to_request()
+        del self.flash['message']
+
+        # Cookie should be empty/expired
+        self.storage.set(self.flash, self.request, self.response)
+        self.assertEqual(0, self._get_cookie()['max-age'])
+        self.assert_(not self._get_cookie().value)
 
     def test_set_object(self):
         """Cookie-based storage should store valid objects.
@@ -128,6 +165,7 @@ class CookieFlashStorageTestCase(TestCase):
         self.storage.set(self.flash, self.request, self.response)
         self.assertEqual(None, self.storage.get(self.request))
 
+        # Simulates a request-response cycle
         self._transfer_cookies_from_response_to_request()
         self.assertEqual('Message', self.storage.get(self.request)['message'])
 
