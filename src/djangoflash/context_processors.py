@@ -25,11 +25,12 @@ using the ``flash`` context variable.
 
 """
 
+from django.core.exceptions import SuspiciousOperation
 from djangoflash.models import FlashScope
 
 
 """Name of the variable used to keep :class:`FlashScope` objects both as an
-attribute of :class:`HttpRequest` and the template context.
+attribute of :class:`django.http.HttpRequest` and the template context.
 """
 CONTEXT_VAR = 'flash'
 
@@ -50,7 +51,9 @@ def flash(request):
     flash_scope = None
     try:
         flash_scope = getattr(request, CONTEXT_VAR)
+        if not isinstance(flash_scope, FlashScope):
+            raise SuspiciousOperation('Invalid flash: %s' % repr(flash_scope))
     except AttributeError:
-        # Someone messed up the flash scope!
+        # Exposes a new flash when none is available
         flash_scope = FlashScope()
     return {CONTEXT_VAR: flash_scope}
