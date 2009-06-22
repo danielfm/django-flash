@@ -3,6 +3,7 @@
 """Integration test cases.
 """
 
+from django.core.exceptions import SuspiciousOperation
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -17,12 +18,12 @@ class IntegrationTestCase(TestCase):
     Django application.
     """
     def _flash(self):
-        """Shortcut to get the flash scope from the view context.
+        """Shortcut to get the flash from the view context.
         """
         return self.response.context[CONTEXT_VAR]
 
     def test_default_lifecycle(self):
-        """A value should be automatically removed from the flash scope.
+        """A value should be automatically removed from the flash.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -35,7 +36,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_keep_lifecycle(self):
-        """A value shouldn't be removed from the flash scope when it is kept.
+        """A value shouldn't be removed from the flash when it is kept.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -72,7 +73,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_multiple_variables_lifecycle(self):
-        """The flash scope should control several values independently.
+        """The flash should control several values independently.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -91,14 +92,13 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
         self.assertFalse('anotherMessage' in self._flash())
 
-    def test_replace_flash_scope(self):
-        """The flash scope should be an instance of FlashScope.
-        """
-        request = lambda: self.client.get(reverse(views.replace_flash))
-        self.assertRaises(TypeError, request)
-
-    def test_remove_flash_scope(self):
-        """The application should handle inexistent flash scope properly.
+    def test_remove_flash(self):
+        """An empty flash should be provided when none is available.
         """
         self.response = self.client.get(reverse(views.remove_flash))
-        self.assert_(self._flash() != None)
+        self.assertTrue(isinstance(self._flash(), FlashScope))
+
+    def test_replace_flash_with_invalid_object(self):
+        """An exception should be raised when exposing an invalid object as being the flash.
+        """
+        self.assertRaises(SuspiciousOperation, self.client.get, reverse(views.replace_flash))

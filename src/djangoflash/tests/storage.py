@@ -137,11 +137,7 @@ class FlashStorageClass(object):
     """
 
     def set(self, flash, request, response):
-        """Stores the given :class:`FlashScope` object.
-        """
         pass
 
     def get(self, request):
-        """Returns the stored :class:`FlashScope` object.
-        """
         pass

@@ -12,7 +12,8 @@
    Although in general user agents' cookie support should have no fixed limits,
    according to `RFC-2965 <http://www.ietf.org/rfc/rfc2965.txt>`_, section 5.3,
    all implementations must support at least 4096 bytes per cookie. So be
-   careful about the amount of data you store inside the *flash*.
+   careful about the amount of data you store inside the *flash* when using
+   this storage backend.
 """
 
 from djangoflash.storage.base import BaseFlashStorage
