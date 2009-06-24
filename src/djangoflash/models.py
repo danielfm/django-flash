@@ -6,9 +6,8 @@ way to pass temporary objects between views.
 
 class FlashScope(object):
     """The purpose of this class is to implement the *flash*, which is a
-    temporary storage mechanism -- kept in the user's session -- that looks like
-    a Python dictionary, so you can store values associated with keys and later
-    retrieve them.
+    temporary storage mechanism that looks like a Python dictionary, so you
+    can store values associated with keys and later retrieve them.
     
     It has one special property: by default, values stored into the *flash*
     during the processing of a request will be available during the processing

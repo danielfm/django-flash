@@ -3,10 +3,10 @@
 """This module provides a cookie-based flash storage backend.
 
 .. warning::
-   The actual :class:`FlashScope` object is sent back to the user. Although some
-   encryption is performed to help spot when the flash data is modified by
-   third-parties, this backend should be avoided when sensitive information is
-   stored inside the *flash*.
+   The actual :class:`FlashScope` object is sent back to the user inside a
+   cookie. Although some encryption is performed to help spot when the flash
+   data is modified by third-parties, this backend should be avoided when
+   sensitive information is stored inside the *flash*.
 
 .. warning::
    Although in general user agents' cookie support should have no fixed limits,

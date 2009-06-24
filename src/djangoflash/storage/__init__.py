@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-"""This package provides some flash storage backends you can use in your
-project in order to persist the flash messages across requests.
+"""This package provides some built-in flash storage backends used to persist
+the *flash* contents across requests.
 """
 
 from django.conf import settings

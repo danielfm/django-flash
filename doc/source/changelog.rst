@@ -8,6 +8,7 @@ Here you can track our progress:
 
 **Version 1.5:**
 
+* License changed from LGPL to BSD to give uses more freedom;
 * Added support for custom flash storage backends;
 * Added a cookie-based flash storage;
 * Default session-based storage was factored out to an independent class;

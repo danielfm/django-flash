@@ -28,7 +28,7 @@ Flash storage backends
 Since :ref:`version 1.5<changelog>`, Django-flash supports custom flash
 storage backends.
 
-By default, Django-flash provides two backends:
+By default, Django-flash provides two built-in storage backends:
 
 * :mod:`djangoflash.storage.session` -- Session-based storage (default);
 * :mod:`djangoflash.storage.cookie` -- Cookie-based storage;
@@ -55,15 +55,15 @@ default one, then add the following setting to the ``settings.py`` file::
 
     FLASH_STORAGE = 'cookie'
 
-Since cookies will be used to store the contents of the flash scope, you don't
-need to add the :class:`SessionMiddleware` class to the ``MIDDLEWARE_CLASSES``
-section of your project's settings anymore.
+Since cookies will be used to store the contents of the flash scope,
+Django-flash doesn't require you to add the :class:`SessionMiddleware` class
+to the ``MIDDLEWARE_CLASSES`` section of your project's settings anymore.
 
 
 Using a third-party storage
 '''''''''''''''''''''''''''
 
-To use a third-party flash storage, just set the module path to the
+To use a third-party flash storage backend, just set the module path to the
 ``FLASH_STORAGE`` setting in your project's ``settings.py`` file::
 
     FLASH_STORAGE = 'custom.storage.module.here'
