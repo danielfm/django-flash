@@ -4,7 +4,8 @@
     Django-flash
     ~~~~~~~~~~~~
 
-    Rails-like flash scope support for Django.
+    Rails-like *flash* messages support for Django.
+
 
     :copyright: 2008-2009, Destaquenet Technology Solutions.
     :license: BSD.
