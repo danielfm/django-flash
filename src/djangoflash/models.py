@@ -167,6 +167,14 @@ class FlashScope(object):
         for key, value in kwargs.items():
             self[key] = value
 
+    def add(self, key, value):
+        """Appends a value to a key in this flash.
+        """
+        if key in self:
+            self[key].append(value)
+        else:
+            self[key] = [value]
+
     def clear(self):
         """Removes all items from this flash.
         """
