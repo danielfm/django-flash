@@ -22,7 +22,7 @@ config.versions = ('-py2.4', '-py2.5', '')
 
 
 def setup(command, version=''):
-     """Executes a setup command with a virtual Python installation.
+     """Executes the given setup command with a virtual Python installation.
      """
      local('%s/%s%s/bin/python setup.py %s' % (config.virtualenv_dir, config.project, version, command))
 
@@ -33,13 +33,13 @@ def test():
         setup('test', version)
 
 def clean():
-    """Removes the build directory
+    """Removes the build directory.
     """
     local('rm -fR build')
 
 @depends(clean)
 def build_docs():
-    """Builds the documentation, both in PDF and HTML.
+    """Builds the documentation in PDF and HTML.
     """
     setup('build_sphinx')
     setup('build_sphinx -b latex')
