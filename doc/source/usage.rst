@@ -37,8 +37,8 @@ on this subject.
 
 .. _flash-manipulation:
 
-Manipulating the *flash*  contents
-``````````````````````````````````
+Manipulating the flash  contents
+````````````````````````````````
 
 You can use the *flash* the same way you use a plain ``dict`` since their
 interface are very similar::
