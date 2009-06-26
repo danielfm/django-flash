@@ -17,11 +17,8 @@ config.doc_output    = 'djangoflash'
 config.fab_hosts  = ['destaquenet.com']
 config.doc_folder = '/home/destaquenet/public_html'
 
-# TODO Add version 2.4 to the list below!
-# TODO To make it work, I should install pysqlite2
-
 # Supported Python versions
-config.versions = ('-py2.5', '')
+config.versions = ('-py2.4', '-py2.5', '')
 
 
 def setup(command, version=''):
@@ -33,14 +30,14 @@ def test():
     """Runs all tests in different Python versions.
     """
     for version in config.versions:
-        python('test', version)
+        setup('test', version)
 
-def clear_sphinx():
-    """Removes the Sphinx build directory.
+def clean():
+    """Removes the build directory
     """
-    local('rm -R ' + config.sphinx_output)
+    local('rm -fR build')
 
-@depends(clear_sphinx)
+@depends(clean)
 def build_docs():
     """Builds the documentation, both in PDF and HTML.
     """
@@ -50,12 +47,12 @@ def build_docs():
 
 @depends(build_docs)
 def zip_docs():
-    """Creates a zip file with the whole documentation.
+    """Creates a zip file with the complete documentation.
     """
     # Compile the Latex-based documentation to a PDF file
     local('cp %s/%s.pdf %s' % (config.sphinx_latex, config.project, config.sphinx_html))
 
-    # Create a zip file with the complete documentation
+    # Create the zip file
     local('cd %s; mv html %s; zip -r9 %s.zip %s' % ((config.sphinx_output,) + (config.doc_output,)*3))
 
 def register_pypi():
@@ -76,19 +73,19 @@ def deploy_eggs():
 
 @depends(register_pypi, deploy_src, deploy_eggs)
 def deploy_pypi():
-    """Deploy Django-flash to PyPI.
+    """Deploys all artifacts to PyPI.
     """
     pass
 
 @depends(zip_docs)
 def deploy_website():
-    """Deploy Django-flash website.
+    """Deploys the documentation website.
     """
     put('%s/%s.zip' % (config.sphinx_output, config.doc_output), config.doc_folder)
     run('cd %s; rm -R %s; unzip %s.zip; rm %s.zip' % ((config.doc_folder,) + (config.doc_output,)*3))
 
 @depends(deploy_pypi, deploy_website)
 def deploy():
-    """Perform the complete Django-flash deploy.
+    """Deploys the application to PyPI and updates the documentation website.
     """
     pass
