@@ -35,7 +35,7 @@ keys and values, any object that can be *pickled*. See the
 on this subject.
 
 
-.. _flash-adding-values:
+.. _flash-manipulation:
 
 Manipulating the *flash*  contents
 ``````````````````````````````````
