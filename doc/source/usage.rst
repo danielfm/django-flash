@@ -35,6 +35,39 @@ keys and values, any object that can be *pickled*. See the
 on this subject.
 
 
+.. _flash-adding-values:
+
+Manipulating the *flash*  contents
+``````````````````````````````````
+
+You can use the *flash* the same way you use a plain ``dict`` since their
+interface are very similar::
+
+    def my_view(request):
+        # Store a value
+        request.flash['key'] = 'value'
+
+        # Replace a value
+        request.flash['key'] = 'another value'
+
+        # Remove a value
+        del request.flash['key']
+
+        # And so on...
+        for key, value in request.flash.items():
+            print '%s - %s' % (key, value)
+
+
+The *flash* also allows you to easily store several values under the same key.
+To do this just use the :meth:`djangoflash.models.FlashScope.add` method::
+
+    def my_view(request):
+        # add() handles multiple values under the same key automatically
+        request.flash.add('key', 'value')
+        request.flash.add('key', 'another value')
+        print request.flash['key'] # Output: ['value', 'another value']
+
+
 .. _flash-default-lifecycle:
 
 Flash-scoped objects: the default lifecycle
@@ -100,7 +133,7 @@ Preventing flash-scoped objects from being removed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We can prevent flash-scoped objects from being removed by using the
-:meth:`FlashScope.keep` method::
+:meth:`djangoflash.models.FlashScope.keep` method::
 
     def first_view(request):
         request.flash['message'] = 'Operation succeeded!'
@@ -120,8 +153,8 @@ We can prevent flash-scoped objects from being removed by using the
         return HttpResponse(...)
 
 
-If you want to keep *all* flash-scoped objects, just call the :meth:`keep`
-method with no arguments::
+If you want to keep *all* flash-scoped objects, just call the
+:meth:`djangoflash.models.FlashScope.keep` method with no arguments::
 
     def second_view(request):
         request.flash.keep()
@@ -134,7 +167,8 @@ Adding an immediate flash-scoped object
 It's sometimes convenient to store an object inside the *flash* and use it on
 the *current* request only.
 
-This can be done by using the :attr:`FlashScope.now` attribute::
+This can be done by using the :attr:`djangoflash.models.FlashScope.now`
+attribute::
 
     def first_view(request):
         request.flash.now['message'] = 'My message'
