@@ -6,6 +6,11 @@ Changelog
 Like any other piece of software, Django-flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.5.1:**
+
+* Added a method :meth:`djangoflash.models.FlashScope.add` that simplifies the
+  storage of multiple values under the same key;
+
 **Version 1.5:**
 
 * License changed from LGPL to BSD to give uses more freedom;
@@ -24,13 +29,13 @@ Here you can track our progress:
 
 **Version 1.4.2:**
 
-* Deprecating method ``flash.has_key(key)``;
+* Deprecating method :meth:`djangoflash.models.FlashScope.has_key`;
 * Documentation improvements;
 * Internals refactoring;
 
 **Version 1.4.1:**
 
-* Immediate values (``flash.now``) can be manipulated using a dict-like
+* Immediate values (:attr:`djangoflash.models.FlashScope.now`) can be manipulated using a dict-like
   syntax;
 * Unit test improvements;
 * Documentation improvements;
