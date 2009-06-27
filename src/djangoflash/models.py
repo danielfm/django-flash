@@ -175,7 +175,7 @@ class FlashScope(object):
             if not isinstance(current_value, list):
                 self[key] = [current_value, value]
             else:
-                self[key].append(value)
+                current_value.append(value)
         else:
             self[key] = [value]
 

@@ -21,19 +21,19 @@ class FlashContextProcessorTestCase(TestCase):
         setattr(self.request, CONTEXT_VAR, self.scope);
 
     def test_expose_flash(self):
-        """Context processor should expose the flash to view templates.
+        """FlashContextProcessor: should expose the flash to view templates.
         """
         self.assertEqual(flash(self.request), {CONTEXT_VAR:self.scope})
 
     def test_expose_inexistent_flash(self):
-        """Context processor should fail when there's no flash available.
+        """FlashContextProcessor: should fail when there's no flash available.
         """
         delattr(self.request, CONTEXT_VAR)
         self.assertTrue(isinstance(flash(self.request)[CONTEXT_VAR], \
             FlashScope))
 
     def test_expose_invalid_flash(self):
-        """Context processor should fail when exposing an invalid object as being the flash.
+        """FlashContextProcessor: should fail when exposing an invalid object as being the flash.
         """
         self.request.flash = 'Invalid object'
         self.assertRaises(SuspiciousOperation, flash, self.request)

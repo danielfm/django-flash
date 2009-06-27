@@ -23,7 +23,7 @@ class IntegrationTestCase(TestCase):
         return self.response.context[CONTEXT_VAR]
 
     def test_default_lifecycle(self):
-        """A value should be automatically removed from the flash.
+        """Integration: a value should be automatically removed from the flash.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -36,7 +36,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_keep_lifecycle(self):
-        """A value shouldn't be removed from the flash when it is kept.
+        """Integration: a value shouldn't be removed from the flash when it is kept.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -53,7 +53,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_now_lifecycle(self):
-        """An immediate value shouldn't survive the next request.
+        """Integration: an immediate value shouldn't survive the next request.
         """
         self.response = self.client.get(reverse(views.set_now_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -63,7 +63,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_discard_lifecycle(self):
-        """A discarded value shouldn't survive to the next request.
+        """Integration: a discarded value shouldn't survive to the next request.
         """
         self.response = self.client.get(reverse(views.discard_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -73,7 +73,7 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('message' in self._flash())
 
     def test_multiple_variables_lifecycle(self):
-        """The flash should control several values independently.
+        """Integration: the flash should control several values independently.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
@@ -93,12 +93,12 @@ class IntegrationTestCase(TestCase):
         self.assertFalse('anotherMessage' in self._flash())
 
     def test_remove_flash(self):
-        """An empty flash should be provided when none is available.
+        """Integration: an empty flash should be provided when none is available.
         """
         self.response = self.client.get(reverse(views.remove_flash))
         self.assertTrue(isinstance(self._flash(), FlashScope))
 
     def test_replace_flash_with_invalid_object(self):
-        """An exception should be raised when exposing an invalid object as being the flash.
+        """Integration: an exception should be raised when exposing an invalid object as being the flash.
         """
         self.assertRaises(SuspiciousOperation, self.client.get, reverse(views.replace_flash))
