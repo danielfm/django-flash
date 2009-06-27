@@ -171,7 +171,11 @@ class FlashScope(object):
         """Appends a value to a key in this flash.
         """
         if key in self:
-            self[key].append(value)
+            current_value = self[key]
+            if not isinstance(current_value, list):
+                self[key] = [current_value, value]
+            else:
+                self[key].append(value)
         else:
             self[key] = [value]
 

@@ -91,6 +91,25 @@ class FlashScopeTestCase(TestCase):
         self.assertEqual(('message', 'Message'), iterator.next())
         self.assertRaises(StopIteration, iterator.next)
 
+    def test_add_with_existing_non_list_value(self):
+        """Should add values to a key even if the current value is not a list.
+        """
+        self.flash.add('message', 'Another Message')
+        self.assertEqual(['Message', 'Another Message'], self.flash['message'])
+
+    def test_add_with_existing_list_value(self):
+        """Should add a new value if the current value is a list.
+        """
+        self.flash['another_message'] = ['Message 1']
+        self.flash.add('another_message', 'Message 2')
+        self.assertEqual(['Message 1', 'Message 2'], self.flash['another_message'])
+
+    def test_add_with_no_existing_value(self):
+        """Should add a value even if the given key doesn't exists.
+        """
+        self.flash.add('another_message', 'Another Message')
+        self.assertEqual(['Another Message'], self.flash['another_message'])
+
     def test_get(self):
         """Should return a default value if the given key doesn' exists.
         """
