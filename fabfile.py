@@ -1,6 +1,32 @@
 # -*- coding: utf-8 -*-
 
-"""Build script.
+"""Build script used to test, build and deploy django-flash in several
+Python versions.
+
+In order to test and build django-flash in different environments,
+this script demands you to have different virtualenvs, each one targeted
+to a specific Python version:
+
+    * django-flash-py2.6 - for Python 2.6
+    * django-flash-py2.5 - for Python 2.5
+    * django-flash-py2.4 - for Python 2.4
+
+Each one of these virtualenvs must, in turn, have the following packages
+installed:
+    
+    * Django (version 1.0.2+)
+    * Pysqlite (version recommended by the current Django version)
+
+Finally, to use this script, you must install the packages below to your
+default Python installation:
+
+    * Fabric 0.1.1+
+
+You can see all available targets provided by this build script by running
+the command line below:
+
+    $ cd /path/to/django-flash
+    $ fab
 """
 
 # Environment info
@@ -18,13 +44,13 @@ config.fab_hosts  = ['destaquenet.com']
 config.doc_folder = '/home/destaquenet/public_html'
 
 # Supported Python versions
-config.versions = ('-py2.4', '-py2.5', '')
+config.versions = ('2.4', '2.5', '2.6')
 
 
 def setup(command, version=''):
      """Executes the given setup command with a virtual Python installation.
      """
-     local('%s/%s%s/bin/python setup.py %s' % (config.virtualenv_dir, config.project, version, command))
+     local('%s/%s-py%s/bin/python setup.py %s' % (config.virtualenv_dir, config.project, version, command))
 
 def test():
     """Runs all tests in different Python versions.
@@ -71,7 +97,7 @@ def deploy_eggs():
     for version in config.versions:
         setup('bdist_egg upload', version)
 
-@depends(register_pypi, deploy_src, deploy_eggs)
+@depends(test, register_pypi, deploy_src, deploy_eggs)
 def deploy_pypi():
     """Deploys all artifacts to PyPI.
     """
