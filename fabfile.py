@@ -3,7 +3,7 @@
 """Build script used to test, build and deploy django-flash in several
 Python versions.
 
-In order to test and build django-flash in different environments,
+In order to test and build django-flash in these different environments,
 this script demands you to have different virtualenvs, each one targeted
 to a specific Python version:
 
@@ -11,7 +11,7 @@ to a specific Python version:
     * django-flash-py2.5 - for Python 2.5
     * django-flash-py2.4 - for Python 2.4
 
-Each one of these virtualenvs must, in turn, have the following packages
+Also, each one of these virtualenvs must have the following packages
 installed:
     
     * Django (version 1.0.2+)
@@ -22,11 +22,12 @@ default Python installation:
 
     * Fabric 0.1.1+
 
-You can see all available targets provided by this build script by running
-the command line below:
+That's it. You can now see all available targets provided by this build
+script by running the command line below:
 
     $ cd /path/to/django-flash
     $ fab
+
 """
 
 # Environment info
