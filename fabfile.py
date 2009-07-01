@@ -27,7 +27,6 @@ script by running the command line below:
 
     $ cd /path/to/django-flash
     $ fab
-
 """
 
 # Environment info
@@ -46,9 +45,10 @@ config.doc_folder = '/home/destaquenet/public_html'
 
 # Supported Python versions
 config.versions = ('2.4', '2.5', '2.6')
+config.default_version = '2.6'
 
 
-def setup(command, version=''):
+def setup(command, version=config.default_version):
      """Executes the given setup command with a virtual Python installation.
      """
      local('%s/%s-py%s/bin/python setup.py %s' % (config.virtualenv_dir, config.project, version, command))
