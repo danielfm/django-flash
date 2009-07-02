@@ -14,7 +14,7 @@ to a specific Python version:
 Also, each one of these virtualenvs must have the following packages
 installed:
     
-    * Django (version 1.0.2+)
+    * Django (version 1.0+)
     * Pysqlite (version recommended by the current Django version)
 
 Finally, to use this script, you must install the packages below to your
