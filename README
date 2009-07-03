@@ -3,14 +3,19 @@ django-flash
 
     http://djangoflash.destaquenet.com/
 
+Django-flash is a simple Django extension that provides support for Rails-like
+flash messages.
 
-Django-flash is a simple extension to the Django framework which enables the
-use of the so called flash scope, first introduced by Ruby on Rails a few years
-ago.
+The flash is a temporary storage mechanism that looks like a Python dictionary,
+so you can store values associated with keys and later retrieve them.  It has
+one special property: by default, values stored into the flash during the
+processing of a request will be available during the processing of the
+immediately following request. Once that second request has been processed,
+those values are removed automatically from the flash.
 
-This is an open source project licenced under the terms of the Lesser General
-Public License v3.0 and sponsored by Destaquenet Technology Solutions, a
-brazilian software development and consultancy startup.
+This is an open source project licenced under the terms of the BSD License and
+sponsored by Destaquenet Technology Solutions, a brazilian software development
+and consultancy startup.
 
 
 Installation and Usage
