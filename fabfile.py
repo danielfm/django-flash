@@ -76,10 +76,7 @@ def build_docs():
 def zip_docs():
     """Creates a zip file with the complete documentation.
     """
-    # Compile the Latex-based documentation to a PDF file
     local('cp %s/%s.pdf %s' % (config.sphinx_latex, config.project, config.sphinx_html))
-
-    # Create the zip file
     local('cd %s; mv html %s; zip -r9 %s.zip %s' % ((config.sphinx_output,) + (config.doc_output,)*3))
 
 def register_pypi():
