@@ -52,6 +52,23 @@ class IntegrationTestCase(TestCase):
         self.response = self.client.get(reverse(views.render_template))
         self.assertFalse('message' in self._flash())
 
+    def test_keep_decorator(self):
+        """Integration: keep_messages decorator should behave exactly like keep.
+        """
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
+
+        self.response = self.client.get(reverse(views.keep_var_decorator))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Flash value won't be removed now because it was explicitely kept
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertFalse('message' in self._flash())
+
     def test_now_lifecycle(self):
         """Integration: an immediate value shouldn't survive the next request.
         """

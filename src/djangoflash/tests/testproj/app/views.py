@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from djangoflash.decorators import keep_messages
+
 
 def render_template(request):
     return render_to_response('simple.html', {}, \
@@ -24,6 +26,10 @@ def set_now_var(request):
 
 def keep_var(request):
     request.flash.keep('message')
+    return render_template(request)
+
+@keep_messages('message')
+def keep_var_decorator(request):
     return render_template(request)
 
 def discard_var(request):

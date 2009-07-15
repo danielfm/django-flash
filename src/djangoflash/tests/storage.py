@@ -13,6 +13,10 @@ import djangoflash.storage.session as session_storage
 import djangoflash.storage.cookie as cookie_storage
 
 
+# Only exports test cases
+__all__ = ['StorageTestCase', 'SessionFlashStorageTestCase', 'CookieFlashStorageTestCase']
+
+
 class StorageTestCase(TestCase):
     """Tests methods used to parse flash storage URIs and create flash storage
     objects.

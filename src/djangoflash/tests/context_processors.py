@@ -12,6 +12,10 @@ from djangoflash.context_processors import CONTEXT_VAR, flash
 from djangoflash.models import FlashScope
 
 
+# Only exports test cases
+__all__ = ['FlashContextProcessorTestCase']
+
+
 class FlashContextProcessorTestCase(TestCase):
     """Tests the context processor used to expose the flash to view templates.
     """

@@ -8,6 +8,10 @@ from unittest import TestCase
 from djangoflash.models import FlashScope
 
 
+# Only exports test cases
+__all__ = ['FlashScopeTestCase']
+
+
 class FlashScopeTestCase(TestCase):
     """Tests the FlashScope object.
     """
@@ -152,7 +156,7 @@ class FlashScopeTestCase(TestCase):
         self.assertFalse('message' in self.flash)
 
     def test_keep(self):
-        """FlashScope: Should mark all flash-scoped value for removal.
+        """FlashScope: Should avoid the removal of specific flash-scoped values.
         """
         self.flash.update()
         self.flash.keep('message')

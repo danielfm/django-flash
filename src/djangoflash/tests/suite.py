@@ -18,6 +18,7 @@ connection.creation.create_test_db()
 
 # Imports unit tests
 from context_processors import *
+from decorators import *
 from models import *
 from storage import *
 

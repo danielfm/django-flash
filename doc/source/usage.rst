@@ -1,7 +1,7 @@
-Using Django-flash
+Using Django-Flash
 ------------------
 
-Once plugged to your project, Django-flash automatically adds a ``flash``
+Once plugged to your project, Django-Flash automatically adds a ``flash``
 attribute to the :class:`django.http.HttpRequest` objects received by your
 views. This property points to a :class:`djangoflash.models.FlashScope`
 instance, which supports most if not all operations provided by a simple Python
@@ -73,7 +73,7 @@ To do this just use the :meth:`djangoflash.models.FlashScope.add` method::
 Flash-scoped objects: the default lifecycle
 ```````````````````````````````````````````
 
-First let's see a basic example of how Django-flash controls the
+First let's see a basic example of how Django-Flash controls the
 lifecycle of flash-scoped objects. Consider the following views::
 
     # URL: http://server/app/first
@@ -158,6 +158,22 @@ If you want to keep *all* flash-scoped objects, just call the
 
     def second_view(request):
         request.flash.keep()
+        return HttpRedirectResponse(reverse(third_view))
+
+
+A more declarative way to keep values is also supported through the
+:meth:`djangoflash.decorators.keep_messages` decorator::
+
+    from djangoflash.decorators import keep_messages
+
+    # Keeps the entire flash...
+    @keep_messages
+    def second_view(request):
+        return HttpRedirectResponse(reverse(third_view))
+
+    # ...or specific messages
+    @keep_messages('message', 'another_message')
+    def second_view(request):
         return HttpRedirectResponse(reverse(third_view))
 
 
