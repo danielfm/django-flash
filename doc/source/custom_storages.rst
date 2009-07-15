@@ -3,7 +3,7 @@
 Creating a custom flash storage backend
 ---------------------------------------
 
-Since :ref:`version 1.5<changelog>`, Django-flash supports custom flash
+Since :ref:`version 1.5<changelog>`, Django-Flash supports custom flash
 storage backends.
 
 By default, Django-flash provides two built-in storage backends:

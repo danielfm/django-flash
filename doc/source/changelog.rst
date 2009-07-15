@@ -3,8 +3,14 @@
 Changelog
 =========
 
-Like any other piece of software, Django-flash is evolving at each release.
+Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
+
+**Version 1.5.2:**
+
+* Added a :meth:`djangoflash.decorators.keep_messages` decorator for keeping
+  flash messages;
+* New ``AUTHORS`` file;
 
 **Version 1.5.1:**
 
@@ -43,7 +49,7 @@ Here you can track our progress:
 **Version 1.4:**
 
 * **Notice:** *breaks backwards compatibility;*
-* Now Django-flash works pretty much like the original `Ruby on Rails`_' flash;
+* Now Django-Flash works pretty much like the original `Ruby on Rails`_' flash;
 * Several code optmizations;
 * Several improvements on the test suite;
 
@@ -57,12 +63,12 @@ Here you can track our progress:
 * Added Sphinx_-based documentation;
 * Source code changed to improve the Pylint_ score;
 * :mod:`djangoflash` module now have a ``__version__`` property, which is
-  very useful when you need to know what version of the Django-flash is
+  very useful when you need to know what version of the Django-Flash is
   installed in your machine;
 
 **Version 1.3.3:**
 
-* *Critical Bug Fixed*: Django-flash creates several useless session
+* *Critical Bug Fixed*: Django-Flash creates several useless session
   entries when the cookie support in user's browser is disabled;
 * Small improvements on unit tests; 
 
@@ -77,14 +83,14 @@ Here you can track our progress:
 **Version 1.3:**
 
 * **Notice:** *breaks backwards compatibility;*
-* Django-flash now controls the expiration of flash-scoped values
+* Django-Flash now controls the expiration of flash-scoped values
   individually, which means that only expired values are removed from the
   session (and not the whole flash context);
 * Unit testing code was completely rewritten and now a real Django
   application is used in integration tests;
 * Huge source code review to make it easier to read and to assure the use
   of Python conventions;
-* Project renamed to **django-flash** (it was previously called
+* Project renamed to **Django-Flash** (it was previously called
   **djangoflash**, without the hyphen);
 
 **Version 1.2:**

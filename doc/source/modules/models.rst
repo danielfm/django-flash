@@ -1,4 +1,4 @@
-:mod:`djangoflash.models` --- Django-flash model
+:mod:`djangoflash.models` --- Django-Flash model
 ================================================
 
 .. automodule:: djangoflash.models

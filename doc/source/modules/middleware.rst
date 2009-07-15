@@ -1,4 +1,4 @@
-:mod:`djangoflash.middleware` --- Django-flash middleware
+:mod:`djangoflash.middleware` --- Django-Flash middleware
 =========================================================
 
 .. automodule:: djangoflash.middleware

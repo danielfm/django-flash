@@ -1,7 +1,7 @@
 Installation
 ============
 
-There are several ways to download and install Django-flash:
+There are several ways to download and install Django-Flash:
 
 **Via PyPI**
 
@@ -28,10 +28,10 @@ There are several ways to download and install Django-flash:
 
 **Zip file/tarball**
 
-  Django-flash is also available for download as
+  Django-Flash is also available for download as
   `compressed archives <http://github.com/danielfm/django-flash/downloads>`_
   (either ``zip`` and ``tgz``). After unzip/untar the archive, execute the
-  following command to install Django-flash::
+  following command to install Django-Flash::
   
       $ python setup.py install
 

@@ -1,9 +1,7 @@
-django-flash
+Django-Flash
 ------------
 
-    http://djangoflash.destaquenet.com/
-
-Django-flash is a simple Django extension that provides support for Rails-like
+Django-Flash is a simple Django extension that provides support for Rails-like
 flash messages.
 
 The flash is a temporary storage mechanism that looks like a Python dictionary,
@@ -21,7 +19,7 @@ and consultancy startup.
 Installation and Usage
 ----------------------
 
-To learn everything about django-flash, take a look at the the complete
+To learn everything about Django-Flash, take a look at the the complete
 documentation at:
 
     http://djangoflash.destaquenet.com/

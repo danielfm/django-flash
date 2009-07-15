@@ -3,7 +3,7 @@
 Configuration
 -------------
 
-In order to plug Django-flash to your project, open your project's
+In order to plug Django-Flash to your project, open your project's
 ``settings.py`` file and do the following changes::
 
     TEMPLATE_CONTEXT_PROCESSORS = (
@@ -25,10 +25,10 @@ That's all the required configuration.
 Flash storage backends
 ``````````````````````
 
-Since :ref:`version 1.5<changelog>`, Django-flash supports custom flash
+Since :ref:`version 1.5<changelog>`, Django-Flash supports custom flash
 storage backends.
 
-By default, Django-flash provides two built-in storage backends:
+By default, Django-Flash provides two built-in storage backends:
 
 * :mod:`djangoflash.storage.session` -- Session-based storage (default);
 * :mod:`djangoflash.storage.cookie` -- Cookie-based storage;
@@ -37,7 +37,7 @@ By default, Django-flash provides two built-in storage backends:
 Using the session-based storage
 '''''''''''''''''''''''''''''''
 
-Django-flash uses the :ref:`session-based storage <storage_session>` by default,
+Django-Flash uses the :ref:`session-based storage <storage_session>` by default,
 so you don't need to do anything else to use it.
 
 *Although you are not required to do so*, you can add the following setting to
@@ -56,7 +56,7 @@ default one, then add the following setting to the ``settings.py`` file::
     FLASH_STORAGE = 'cookie'
 
 Since cookies will be used to store the contents of the flash scope,
-Django-flash doesn't require you to add the :class:`SessionMiddleware` class
+Django-Flash doesn't require you to add the :class:`SessionMiddleware` class
 to the ``MIDDLEWARE_CLASSES`` section of your project's settings anymore.
 
 

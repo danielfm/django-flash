@@ -1,4 +1,4 @@
-:mod:`djangoflash.context_processors` --- Django-flash context processors
+:mod:`djangoflash.context_processors` --- Django-Flash context processors
 =========================================================================
 
 .. automodule:: djangoflash.context_processors

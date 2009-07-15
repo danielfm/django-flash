@@ -1,7 +1,7 @@
-Django-flash --- Rails-like *flash* messages support for Django
+Django-Flash --- Rails-like *flash* messages support for Django
 ===============================================================
 
-Django-flash is a simple Django extension that provides support for Rails_-like
+Django-Flash is a simple Django extension that provides support for Rails_-like
 *flash* messages.
 
 The *flash* is a temporary storage mechanism that looks like a Python
