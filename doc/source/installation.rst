@@ -10,8 +10,8 @@ There are several ways to download and install Django-Flash:
 
       $ easy_install -U django-flash
 
-  Follow `these <http://pypi.python.org/pypi/setuptools>`_ instructions to
-  install EasyInstall_ if you don't have it already.
+  Follow `these instructions <http://pypi.python.org/pypi/setuptools>`_ to
+  install SetupTools if you don't have it already.
 
 
 **Via GitHub**
@@ -36,7 +36,6 @@ There are several ways to download and install Django-Flash:
       $ python setup.py install
 
 
-.. _EasyInstall: http://peak.telecommunity.com/DevCenter/EasyInstall
 .. _CheeseShop: http://pypi.python.org/pypi
 .. _Git: http://git-scm.com/
 
