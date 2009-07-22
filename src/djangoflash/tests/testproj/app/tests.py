@@ -3,6 +3,7 @@
 """Integration test cases.
 """
 
+from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -119,3 +120,20 @@ class IntegrationTestCase(TestCase):
         """Integration: an exception should be raised when exposing an invalid object as being the flash.
         """
         self.assertRaises(SuspiciousOperation, self.client.get, reverse(views.replace_flash))
+
+    def test_request_to_serve_view(self):
+        """Integration: request to the built-in 'serve' view should not trigger the flash update.
+        """
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Requests that resolve to 'django.views.static.serve' view should not trigger the flash update
+        self.response = self.client.get(settings.MEDIA_URL + 'test.css')
+        self.assertEqual(200, self.response.status_code)
+
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertFalse('message' in self._flash())

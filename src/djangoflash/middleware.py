@@ -13,6 +13,8 @@ To plug this middleware to your Django project, edit your project's
 """
 
 from django.core.exceptions import SuspiciousOperation
+from django.core.urlresolvers import resolve
+from django.views.static import serve
 
 from djangoflash.context_processors import CONTEXT_VAR
 from djangoflash.models import FlashScope
@@ -50,8 +52,11 @@ class FlashMiddleware(object):
         the server.
         """
         flash = storage.get(request) or FlashScope()
-        flash.update()
         setattr(request, CONTEXT_VAR, flash)
+
+        # Ignores requests that resolves to 'django.views.static.serve' view
+        if not resolve(request.path_info)[0] == serve:
+            flash.update()
 
     def process_response(self, request, response):
         """This method is called by the Django framework when a *response* is
