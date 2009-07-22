@@ -12,9 +12,10 @@ To plug this middleware to your Django project, edit your project's
     )
 """
 
+from urlparse import urlparse
+
+from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
-from django.core.urlresolvers import resolve
-from django.views.static import serve
 
 from djangoflash.context_processors import CONTEXT_VAR
 from djangoflash.models import FlashScope
@@ -47,15 +48,20 @@ class FlashMiddleware(object):
                 raise SuspiciousOperation('Invalid flash: %s' % repr(flash))
         return flash
 
+    def _is_request_to_static_content(self, request):
+        """Returns whether the given request points to a static resource.
+        """
+        media_path = urlparse(settings.MEDIA_URL)[2]
+        request_path = urlparse(request.path_info)[2]
+        return request_path.startswith(media_path)
+
     def process_request(self, request):
         """This method is called by the Django framework when a *request* hits
         the server.
         """
         flash = storage.get(request) or FlashScope()
         setattr(request, CONTEXT_VAR, flash)
-
-        # Ignores requests that resolve to 'django.views.static.serve' view
-        if not resolve(request.path_info)[0] == serve:
+        if not self._is_request_to_static_content(request):
             flash.update()
 
     def process_response(self, request, response):
