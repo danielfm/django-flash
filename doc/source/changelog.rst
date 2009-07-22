@@ -6,6 +6,11 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.5.3:**
+
+* Fixed a bug in the middleware which causes flash data to be dicarded after
+  requests to static files;
+
 **Version 1.5.2:**
 
 * Added a :meth:`djangoflash.decorators.keep_messages` decorator for keeping
