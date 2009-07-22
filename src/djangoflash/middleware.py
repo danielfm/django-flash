@@ -54,7 +54,7 @@ class FlashMiddleware(object):
         flash = storage.get(request) or FlashScope()
         setattr(request, CONTEXT_VAR, flash)
 
-        # Ignores requests that resolves to 'django.views.static.serve' view
+        # Ignores requests that resolve to 'django.views.static.serve' view
         if not resolve(request.path_info)[0] == serve:
             flash.update()
 
