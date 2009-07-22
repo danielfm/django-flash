@@ -34,8 +34,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 ROOT_URLCONF = 'testproj.urls'
 
-import os
-
 TEMPLATE_DIRS = (
     os.path.normpath(os.path.dirname(__file__) + '/templates'),
 )
