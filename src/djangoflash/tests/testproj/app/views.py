@@ -9,7 +9,7 @@ from djangoflash.decorators import keep_messages
 
 
 def render_template(request):
-    return render_to_response('simple.html', {}, \
+    return render_to_response('simple.html', \
         context_instance=RequestContext(request))
 
 def set_flash_var(request):
