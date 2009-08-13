@@ -51,6 +51,10 @@ class FlashMiddleware(object):
     def _is_request_to_static_content(self, request):
         """Returns whether the given request points to a static resource.
         """
+        if not getattr(settings, 'FLASH_IGNORE_MEDIA', False):
+            return False
+
+        # Only checks the request URL if the project was configured to do so
         media_path = urlparse(settings.MEDIA_URL)[2]
         request_path = urlparse(request.path_info)[2]
         return request_path.startswith(media_path)

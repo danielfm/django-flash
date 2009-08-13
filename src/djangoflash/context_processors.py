@@ -54,6 +54,6 @@ def flash(request):
         if not isinstance(flash_scope, FlashScope):
             raise SuspiciousOperation('Invalid flash: %s' % repr(flash_scope))
     except AttributeError:
-        # Exposes a new flash when none is available
+        # Exposes empty flash when none is available
         flash_scope = FlashScope()
     return {CONTEXT_VAR: flash_scope}

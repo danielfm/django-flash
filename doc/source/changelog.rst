@@ -6,6 +6,11 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.6:**
+
+* Added the ``FLASH_IGNORE_MEDIA`` setting to let the user choose whether
+  requests to static files should be ignored;
+
 **Version 1.5.3:**
 
 * Fixed a bug in the middleware which causes flash data to be dicarded after

@@ -1,3 +1,5 @@
+.. _middleware:
+
 :mod:`djangoflash.middleware` --- Django-Flash middleware
 =========================================================
 

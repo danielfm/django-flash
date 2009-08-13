@@ -121,13 +121,31 @@ class IntegrationTestCase(TestCase):
         """
         self.assertRaises(SuspiciousOperation, self.client.get, reverse(views.replace_flash))
 
-    def test_request_to_serve_view(self):
-        """Integration: request to the built-in 'serve' view should not trigger the flash update.
+    def test_request_to_serve_view_without_ignore(self):
+        """Integration: request to static resources should trigger the flash update.
         """
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
 
-        # Requests that resolve to 'django.views.static.serve' view should not trigger the flash update
+        # Requests to static resources should trigger the flash update
+        settings.FLASH_IGNORE_MEDIA = False
+
+        self.response = self.client.get(settings.MEDIA_URL + 'test.css')
+        self.assertEqual(200, self.response.status_code)
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertFalse('message' in self._flash())
+
+    def test_request_to_serve_view_with_ignore(self):
+        """Integration: request to static resources should not trigger the flash update, if properly configured.
+        """
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Requests to static resources should not trigger the flash update
+        settings.FLASH_IGNORE_MEDIA = True
+        
         self.response = self.client.get(settings.MEDIA_URL + 'test.css')
         self.assertEqual(200, self.response.status_code)
 
