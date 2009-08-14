@@ -8,6 +8,8 @@ Here you can track our progress:
 
 **Version 1.6:**
 
+* Fixed a bug in which messages are prematurely removed from the flash when
+  they are replaced using ``flash.now`` in some circumstances;
 * Added the ``FLASH_IGNORE_MEDIA`` setting to let the user choose whether
   requests to static files should be ignored;
 

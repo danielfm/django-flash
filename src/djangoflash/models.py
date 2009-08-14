@@ -188,7 +188,7 @@ class FlashScope(object):
     def put_immediate(self, key, value):
         """Puts a value inside this flash and marks it as *used*.
         """
-        self._session[key] = value
+        self[key] = value
         self._update_status(key)
 
     def discard(self, *keys):

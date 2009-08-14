@@ -203,3 +203,27 @@ class FlashScopeTestCase(TestCase):
         self.assertFalse('another_message' in self.flash.now)
         self.flash.now['another_message'] = 'Another message'
         self.assertTrue('another_message' in self.flash.now)
+
+    def test_replace_value(self):
+        """FlashScope: Should replace a value properly.
+        """
+        self.flash['message'] = 'Message'
+        self.flash.update()
+        self.assertEqual('Message', self.flash['message'])
+        self.flash['message'] = 'Another Message'
+        self.assertEqual('Another Message', self.flash['message'])
+        self.flash.update()
+        self.assertEqual('Another Message', self.flash['message'])
+        self.flash.update()
+        self.assertFalse('message' in self.flash)
+
+    def test_replace_with_immediage_value(self):
+        """FlashScope: Should replace a value properly by a immediate value.
+        """
+        self.flash['message'] = 'Message'
+        self.flash.update()
+        self.assertEqual('Message', self.flash['message'])
+        self.flash.now['message'] = 'Another Message'
+        self.assertEqual('Another Message', self.flash['message'])
+        self.flash.update()
+        self.assertFalse('message' in self.flash)
