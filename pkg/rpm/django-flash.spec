@@ -15,6 +15,7 @@ BuildArch:      noarch
 BuildRequires:  python-devel python-setuptools
 Requires:       Django
 
+
 %description
 Django-Flash is a simple Django extension that provides support for Rails-like
 flash messages. The flash is a temporary storage that has one special property:
@@ -36,6 +37,7 @@ find -name '._*' -exec rm {} \;
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
