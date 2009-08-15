@@ -13,6 +13,8 @@ As with any open source project, there are several ways you can help:
   the test cases. A great way to learn -- and in turn give value back to the
   community -- is to review someone else's code. So, we invite you to review
   ours;
+* Create and share packages to make it even easier to distribute Django-Flash
+  to other users of your favourite Distribution or Operating System;
 * Write about Django-Flash in your blog or personal web site. Let your friends
   know about this project.
 
