@@ -12,7 +12,7 @@ class FlashScope(object):
     It has one special property: by default, values stored into the *flash*
     during the processing of a request will be available during the processing
     of the immediately following request. Once that second request has been
-    processed, those values are removed automatically from the *flash*.
+    processed, those values are removed automatically from the storage.
     
     The following operations are supported by :class:`FlashScope` instances:
 
