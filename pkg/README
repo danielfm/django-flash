@@ -4,6 +4,22 @@ Distribution Package Scripts
 This folder provides scripts and specification files used to create packages to
 easily distribute Django-Flash in several Distributions or Operating Systems.
 
-Available scripts:
-  * abs - Arch Build System spec file
-  * rpm - RPM Package Manager spec file
+
+ABS (Arch Build System)
+-----------------------
+
+    http://wiki.archlinux.org/index.php/The_Arch_package_making_HOW-TO_-_with_guidelines
+    http://wiki.archlinux.org/index.php/Python_Package_Guidelines
+
+
+DEB (Debian package)
+--------------------
+
+    https://wiki.ubuntu.com/PackagingGuide/Python
+    http://wiki.debian.org/DebianPython/NewPolicy
+
+
+RPM (RPM Package Manager)
+-------------------------
+
+    https://fedoraproject.org/wiki/How_to_create_an_RPM_package

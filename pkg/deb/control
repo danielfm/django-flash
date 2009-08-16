@@ -1,0 +1,23 @@
+Source: python-django-flash
+Section: devel
+Priority: optional
+Maintainer: Daniel Martins <daniel.tritone@gmail.com>
+Build-Depends: cdbs (>= 0.4.49), debhelper (>= 5.0.38), python-central (>= 0.5.6)
+XS-Python-Version: >= 2.4
+Standards-Version: 3.8.0
+Homepage: http://djangoflash.destaquenet.com/
+
+Package: python-django-flash
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends: python-django (>= 1.0), ${python:Depends}
+Description: Rails-like flash messages support for Django
+ Django-Flash is a simple Django extension that provides support for Rails-like
+ flash messages.
+ .
+ The flash is a temporary storage that has one special property: by default,
+ values stored into the flash during the processing of a request will be
+ available during the processing of the immediately following request. Once
+ that second request has been processed, those values are removed automatically
+ from the storage.
+
