@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README doc/*
+%doc AUTHORS LICENSE README doc/source/*.rst
 %{python_sitelib}/*
 
 
