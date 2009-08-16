@@ -1,4 +1,4 @@
-# Contributor: Daniel Martins <daniel at destaquenet dot com>
+# Contributor: Daniel Martins <daniel.tritone at gmail dot com>
 pkgname=django-flash
 pkgver=1.6
 pkgrel=1
