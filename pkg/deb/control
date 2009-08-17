@@ -1,5 +1,5 @@
 Source: python-django-flash
-Section: devel
+Section: python
 Priority: optional
 Maintainer: Daniel Martins <daniel.tritone@gmail.com>
 Build-Depends: cdbs (>= 0.4.49), debhelper (>= 5.0.38), python-central (>= 0.5.6)
