@@ -10,5 +10,5 @@
     :license: BSD.
 """
 
-__version__ = '1.6'
+__version__ = '1.6.1'
 
