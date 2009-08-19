@@ -56,10 +56,10 @@ class FlashMiddleware(object):
         """
         if getattr(settings, 'FLASH_IGNORE_MEDIA', False):
             try:
-                return resolve(request.path_info)[0] == serve
+                return resolve(request.path_info)[0] != serve
             except Http404:
                 pass
-        return False
+        return True
 
     def process_request(self, request):
         """This method is called by the Django framework when a *request* hits
@@ -67,7 +67,7 @@ class FlashMiddleware(object):
         """
         flash = storage.get(request) or FlashScope()
         setattr(request, CONTEXT_VAR, flash)
-        if not self._should_update_flash(request):
+        if self._should_update_flash(request):
             flash.update()
 
     def process_response(self, request, response):

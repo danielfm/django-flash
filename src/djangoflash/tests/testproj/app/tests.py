@@ -124,11 +124,11 @@ class IntegrationTestCase(TestCase):
     def test_request_to_serve_view_without_ignore(self):
         """Integration: request to static resources should trigger the flash update.
         """
-        self.response = self.client.get(reverse(views.set_flash_var))
-        self.assertEqual('Message', self._flash()['message'])
-
         # Requests to static resources should trigger the flash update
         settings.FLASH_IGNORE_MEDIA = False
+
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
 
         self.response = self.client.get(settings.MEDIA_URL + 'test.css')
         self.assertEqual(200, self.response.status_code)
@@ -140,12 +140,12 @@ class IntegrationTestCase(TestCase):
     def test_request_to_serve_view_with_ignore(self):
         """Integration: request to static resources should not trigger the flash update, if properly configured.
         """
+        # Requests to static resources should not trigger the flash update
+        settings.FLASH_IGNORE_MEDIA = True
+
         self.response = self.client.get(reverse(views.set_flash_var))
         self.assertEqual('Message', self._flash()['message'])
 
-        # Requests to static resources should not trigger the flash update
-        settings.FLASH_IGNORE_MEDIA = True
-        
         self.response = self.client.get(settings.MEDIA_URL + 'test.css')
         self.assertEqual(200, self.response.status_code)
 
