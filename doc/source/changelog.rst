@@ -6,6 +6,12 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.6.1:**
+
+* Now the middleware checks if the request resolves to
+  :meth:`django.views.static.serve` instead of relying on the ``MEDIA_URL``
+  setting;
+
 **Version 1.6:**
 
 * Fixed a bug in which messages are prematurely removed from the flash when

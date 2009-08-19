@@ -16,6 +16,9 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
+from django.core.urlresolvers import resolve
+from django.http import Http404
+from django.views.static import serve
 
 from djangoflash.context_processors import CONTEXT_VAR
 from djangoflash.models import FlashScope
@@ -48,16 +51,15 @@ class FlashMiddleware(object):
                 raise SuspiciousOperation('Invalid flash: %s' % repr(flash))
         return flash
 
-    def _is_request_to_static_content(self, request):
-        """Returns whether the given request points to a static resource.
+    def _should_update_flash(self, request):
+        """Returns whether the flash should be updated.
         """
-        if not getattr(settings, 'FLASH_IGNORE_MEDIA', False):
-            return False
-
-        # Only checks the request URL if the project was configured to do so
-        media_path = urlparse(settings.MEDIA_URL)[2]
-        request_path = urlparse(request.path_info)[2]
-        return request_path.startswith(media_path)
+        if getattr(settings, 'FLASH_IGNORE_MEDIA', False):
+            try:
+                return resolve(request.path_info)[0] == serve
+            except Http404:
+                pass
+        return False
 
     def process_request(self, request):
         """This method is called by the Django framework when a *request* hits
@@ -65,7 +67,7 @@ class FlashMiddleware(object):
         """
         flash = storage.get(request) or FlashScope()
         setattr(request, CONTEXT_VAR, flash)
-        if not self._is_request_to_static_content(request):
+        if not self._should_update_flash(request):
             flash.update()
 
     def process_response(self, request, response):
