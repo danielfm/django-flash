@@ -8,9 +8,6 @@ TEMPLATE_DEBUG = DEBUG
 DATABASE_ENGINE = 'sqlite3'
 DATABASE_NAME = 'db'
 
-# FLASH_STORAGE = 'session'
-# FLASH_STORAGE = 'cookie'
-
 SECRET_KEY = 'g9b@q$)=^xd2g@-7pg=j=h3*8+xd#hgn-9je@iq5_m#seg&d1y'
 
 MEDIA_URL = '/media/'
