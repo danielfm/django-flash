@@ -46,12 +46,12 @@ So, if ``FLASH_IGNORE_MEDIA`` is ``True``, Django-Flash won't remove any
 message from the *flash* if the request URL resolves to
 :meth:`django.views.static.serve`.
 
-
 .. note::
    The ``FLASH_IGNORE_MEDIA`` setting should only be used *during development*;
    in production, it should be set to ``False`` or not setted at all.
    Otherwise, there will be a performance penalty due to unnecessary calls to
    Django's URL resolver.
+
 
 Flash storage backends
 ``````````````````````

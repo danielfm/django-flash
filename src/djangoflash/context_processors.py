@@ -16,8 +16,8 @@ Doing this, the view templates will be able to access the *flash* contents
 using the ``flash`` context variable.
 
 .. warning::
-   The views methods should use the :class:`RequestContext` class to render the
-   view templates, otherwise the ``flash`` variable (along with *all* other
+   Your views should use the :class:`RequestContext` class to render the
+   templates, otherwise the ``flash`` variable (along with *all* other
    variables provided by other context processors) won't be available to them.
    Please read the
    `Django docs <http://docs.djangoproject.com/en/dev/ref/templates/api/>`_
