@@ -39,3 +39,6 @@ INSTALLED_APPS = (
     'app',
     'django.contrib.sessions',
 )
+
+# FLASH_STORAGE      = 'session' # or 'cookie'
+# FLASH_IGNORE_MEDIA = True # or False

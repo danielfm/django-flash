@@ -155,3 +155,19 @@ class IntegrationTestCase(TestCase):
         # Flash value will be removed when this request hits the app
         self.response = self.client.get(reverse(views.render_template))
         self.assertFalse('message' in self._flash())
+
+    def test_flash_with_common_middleware_and_missing_trailing_slash(self):
+        """Integration: missing trailing slash in URL should not affect the flash lifecycle when using the CommonMiddleware.
+        """
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # This request should be intercepted by CommonMiddleware and the flash should not be updated
+        self.response = self.client.get('/default')
+
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertFalse('message' in self._flash())

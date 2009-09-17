@@ -30,12 +30,11 @@ class FlashStorageClass(BaseFlashStorage):
     def set(self, flash, request, response):
         """Stores the given :class:`FlashScope` object.
         """
-        assert hasattr(request, 'session'), "The session-based flash storage " \
-            "requires session middleware to be installed."
-        if flash:
-            request.session[self._key] = flash
-        elif self._key in request.session:
-            del request.session[self._key]
+        if hasattr(request, 'session'):
+            if flash:
+                request.session[self._key] = flash
+            elif self._key in request.session:
+                del request.session[self._key]
 
     def get(self, request):
         """Returns the stored :class:`FlashScope` object.
