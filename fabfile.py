@@ -153,11 +153,8 @@ def tag_new_version():
         print 'Aborting...'
         return
 
-    # Commits the changes
-    local('git commit -am "Updated version number."')
-    local('git push')
-
-    # Tags the new release
+    # Commits and tags the new release
     from djangoflash import __version__
+    local('git commit -am "Updated version number.; git push"', fail='ignore')
     local('git tag -am "Tagged version %s." %s' % ((__version__,)*2))
     local('git push --tags')
