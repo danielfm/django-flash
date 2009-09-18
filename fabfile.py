@@ -29,9 +29,28 @@ script by running the command line below:
     $ fab
 """
 
+import os
+import re
+import sys
+
+# Adds the 'src' to the Python path
+sys.path += ['src']
+
+# Supported Python versions
+config.versions = ('2.4', '2.5', '2.6')
+config.default_version = '2.6'
+
 # Environment info
 config.project        = 'django-flash'
 config.virtualenv_dir = '~/.virtualenvs'
+config.default_editor = os.environ['EDITOR'] or 'vi'
+
+# Files that contain version information
+config.new_version_files = (
+    'setup.py',
+    'src/djangoflash/__init__.py',
+    'doc/source/conf.py',
+)
 
 # Information needed to build the documentation
 config.sphinx_output = 'build/sphinx'
@@ -42,10 +61,6 @@ config.doc_output    = 'djangoflash'
 # Host where the documentation website lives
 config.fab_hosts  = ['destaquenet.com']
 config.doc_folder = '/home/destaquenet/public_html'
-
-# Supported Python versions
-config.versions = ('2.4', '2.5', '2.6')
-config.default_version = '2.6'
 
 
 def setup(command, version=config.default_version):
@@ -113,3 +128,35 @@ def deploy():
     """Deploys the application to PyPI and updates the documentation website.
     """
     pass
+
+def tag_new_version():
+    """Asks the user to update the version number, pushing the changes and
+    tagging it afterwards.
+    """
+    # Checks if there are changed or untracked files
+    git_status_file = 'build/git_status'
+    local('git status > %s' % git_status_file, fail='ignore')
+    if re.search(r'(Changed|Untracked)', file(git_status_file, 'r').read()):
+        print 'There are changed or untracked files. Aborting...'
+        return
+
+    # Brings up the text editor with the files to be changed
+    for f in config.new_version_files:
+        local('%s %s' % (config.default_editor, f))
+
+    # Asks for confirmation
+    prompt('tag_proceed', 'You are about to commit and push the version '
+                          'changes. Continue?', default='y')
+
+    if config.tag_proceed.upper() != 'Y':
+        print 'Aborting...'
+        return
+
+    # Commits the changes
+    local('git commit -am "Updated version number."')
+    local('git push')
+
+    # Tags the new release
+    from djangoflash import __version__
+    local('git tag -am "Tagged version %s." %s' % ((__version__,)*2))
+    local('git push --tags')
