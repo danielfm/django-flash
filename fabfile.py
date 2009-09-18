@@ -50,6 +50,7 @@ config.new_version_files = (
     'setup.py',
     'src/djangoflash/__init__.py',
     'doc/source/conf.py',
+    'doc/source/changelog.rst',
 )
 
 # Information needed to build the documentation
