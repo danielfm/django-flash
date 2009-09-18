@@ -46,8 +46,7 @@ class FlashMiddleware(object):
         """This method is called by the Django framework when a *request* hits
         the server.
         """
-        flash = storage.get(request) or FlashScope()
-        setattr(request, CONTEXT_VAR, flash)
+        flash = _get_flash_from_storage(request)
         if _should_update_flash(request):
             flash.update()
 
@@ -55,10 +54,19 @@ class FlashMiddleware(object):
         """This method is called by the Django framework when a *response* is
         sent back to the user.
         """
-        flash = _get_flash_from_request(request)
+        flash = _get_flash_from_request(request) or \
+                _get_flash_from_storage(request)
         storage.set(flash, request, response)
         return response
 
+
+def _get_flash_from_storage(request):
+    """Gets the flash from the storage, adds it to the given request and
+    returns it. A new :class:`FlashScope` is used if the storage is empty.
+    """
+    flash = storage.get(request) or FlashScope()
+    setattr(request, CONTEXT_VAR, flash)
+    return flash
 
 def _get_flash_from_request(request):
     """Returns the :class:`FlashScope` object from the given request. If it
@@ -95,7 +103,7 @@ def _is_trailing_slash_missing(request):
     missing. Returns False otherwise.
     """
     if _COMMON_MIDDLEWARE_CLASS in settings.MIDDLEWARE_CLASSES:
-        path = request.path_info
+        path = request.path
         if getattr(settings, 'APPEND_SLASH', False) and not path.endswith('/'):
             if not _is_valid_path(path) and _is_valid_path('%s/' % path):
                 return True
