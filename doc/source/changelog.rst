@@ -6,6 +6,12 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.6.2:**
+
+* Done some work to avoid the loss of messages when the
+  :class:`CommonMiddleware` returns a :class:`HttpResponseRedirect` due to a
+  missing trailing slash;
+
 **Version 1.6.1:**
 
 * Now the middleware checks if the request resolves to
