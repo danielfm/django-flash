@@ -54,9 +54,12 @@ class FlashMiddleware(object):
         """This method is called by the Django framework when a *response* is
         sent back to the user.
         """
-        flash = _get_flash_from_request(request) or \
-                _get_flash_from_storage(request)
-        storage.set(flash, request, response)
+        flash = _get_flash_from_request(request)
+        if flash:
+            storage.set(flash, request, response)
+        else:
+            _get_flash_from_storage(request)
+
         return response
 
 
