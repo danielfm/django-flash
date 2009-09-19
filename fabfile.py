@@ -67,7 +67,8 @@ config.doc_folder = '/home/destaquenet/public_html'
 def setup(command, version=config.default_version):
      """Executes the given setup command with a virtual Python installation.
      """
-     local('%s/%s-py%s/bin/python setup.py %s' % (config.virtualenv_dir, config.project, version, command))
+     local('%s/%s-py%s/bin/python setup.py %s' %
+             (config.virtualenv_dir, config.project, version, command))
 
 def test():
     """Runs all tests in different Python versions.
@@ -92,8 +93,10 @@ def build_docs():
 def zip_docs():
     """Creates a zip file with the complete documentation.
     """
-    local('cp %s/%s.pdf %s' % (config.sphinx_latex, config.project, config.sphinx_html))
-    local('cd %s; mv html %s; zip -r9 %s.zip %s' % ((config.sphinx_output,) + (config.doc_output,)*3))
+    local('cp %s/%s.pdf %s' %
+            (config.sphinx_latex, config.project, config.sphinx_html))
+    local('cd %s; mv html %s; zip -r9 %s.zip %s' %
+            ((config.sphinx_output,) + (config.doc_output,)*3))
 
 def register_pypi():
     """Register the current version on PyPI.
@@ -121,8 +124,10 @@ def deploy_pypi():
 def deploy_website():
     """Deploys the documentation website.
     """
-    put('%s/%s.zip' % (config.sphinx_output, config.doc_output), config.doc_folder)
-    run('cd %s; rm -R %s; unzip %s.zip; rm %s.zip' % ((config.doc_folder,) + (config.doc_output,)*3))
+    put('%s/%s.zip' %
+            (config.sphinx_output, config.doc_output), config.doc_folder)
+    run('cd %s; rm -R %s; unzip %s.zip; rm %s.zip' %
+            ((config.doc_folder,) + (config.doc_output,)*3))
 
 @depends(deploy_pypi, deploy_website)
 def deploy():
@@ -131,8 +136,7 @@ def deploy():
     pass
 
 def tag_new_version():
-    """Asks the user to update the version number, pushing the changes and
-    tagging it afterwards.
+    """Updates the version number, pushing the changes and tagging afterwards.
     """
     # Checks if there are changed or untracked files
     git_status_file = 'build/git_status'
@@ -156,5 +160,6 @@ def tag_new_version():
     # Commits and tags the new release
     from djangoflash import __version__
     local('git commit -am "Updated version number."; git push', fail='ignore')
-    local('git tag -am "Tagged version %s." %s' % ((__version__,)*2))
+    local('git tag -am "Tagged version %s." %s; git push --tags' %
+            ((__version__,)*2), fail='ignore')
     local('git push --tags')
