@@ -199,7 +199,7 @@ attribute::
 Accessing flash-scoped objects from view templates
 ``````````````````````````````````````````````````
 
-We already know how to access the *flash* from a views. But what about the view
+We already know how to access the *flash* from views. But what about the view
 templates?
 
 It's just as easy:
