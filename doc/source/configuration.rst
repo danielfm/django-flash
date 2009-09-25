@@ -40,17 +40,18 @@ To make Django-Flash work well with the :meth:`django.views.static.serve` view,
 you can add the setting ``FLASH_IGNORE_MEDIA`` to your project's
 ``settings.py`` file::
 
-    FLASH_IGNORE_MEDIA = True
+    FLASH_IGNORE_MEDIA = True # Optional. Default: DEBUG
 
-So, if ``FLASH_IGNORE_MEDIA`` is ``True``, Django-Flash won't remove any
-message from the *flash* if the request URL resolves to
-:meth:`django.views.static.serve`.
+Set the ``FLASH_IGNORE_MEDIA`` setting to ``True``, and Django-Flash won't
+remove any message from the *flash* if the request URL resolves to
+:meth:`django.views.static.serve`.  Otherwise, every request will trigger the
+:class:`djangoflash.middleware.FlashMiddleware` as usual.
 
 .. note::
-   The ``FLASH_IGNORE_MEDIA`` setting should only be used *during development*;
-   in production, it should be set to ``False`` or not setted at all.
-   Otherwise, there will be a performance penalty due to unnecessary calls to
-   Django's URL resolver.
+   This setting is optional; its default value is ``DEBUG``. So, if you adjust
+   the ``DEBUG`` setting according to the environment in which the application
+   runs (as you *should*), you don't have to worry about this setting at all,
+   things will just work.
 
 
 Flash storage backends
@@ -75,7 +76,7 @@ so you don't need to do anything else to use it.
 your project's ``settings.py`` file to make it clear about what flash storage
 backend is being used::
 
-    FLASH_STORAGE = 'session'
+    FLASH_STORAGE = 'session' # Optional
 
 
 Using the cookie-based storage

@@ -92,8 +92,11 @@ def _is_request_to_serve(request):
     """Returns True if the given request resolves to the built-in ``serve``
     view, False othersise.
     """
-    # If setting is False, assume that the request doesn't resolve to 'serve'
-    if getattr(settings, 'FLASH_IGNORE_MEDIA', False):
+    # Are we running in debug mode?
+    debug = getattr(settings, 'DEBUG', False)
+
+    # Uses the value of DEBUG as default value to FLASH_IGNORE_MEDIA
+    if getattr(settings, 'FLASH_IGNORE_MEDIA', debug):
         try:
             return urlresolvers.resolve(request.path_info)[0] == serve
         except urlresolvers.Resolver404:

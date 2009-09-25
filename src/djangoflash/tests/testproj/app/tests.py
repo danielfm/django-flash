@@ -156,6 +156,26 @@ class IntegrationTestCase(TestCase):
         self.response = self.client.get(reverse(views.render_template))
         self.assertFalse('message' in self._flash())
 
+    def test_request_to_serve_view_with_default_value(self):
+        """Integration: request to static resources should not trigger the flash update in debug mode.
+        """
+        # Deletes the setting, let the middleware figure out the default value
+        if hasattr(settings, 'FLASH_IGNORE_MEDIA'):
+            del settings.FLASH_IGNORE_MEDIA
+
+        self.response = self.client.get(reverse(views.set_flash_var))
+        self.assertEqual('Message', self._flash()['message'])
+
+        self.response = self.client.get(settings.MEDIA_URL + 'test.css')
+        self.assertEqual(200, self.response.status_code)
+
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertEqual('Message', self._flash()['message'])
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        self.assertFalse('message' in self._flash())
+
     def test_flash_with_common_middleware_and_missing_trailing_slash(self):
         """Integration: missing trailing slash in URL should not affect the flash lifecycle when using the CommonMiddleware.
         """
