@@ -6,6 +6,10 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.6.3:**
+
+* Using the ``DEBUG`` setting as the default value of ``FLASH_IGNORE_MEDIA``;
+
 **Version 1.6.2:**
 
 * Done some work to avoid the loss of messages when the
@@ -65,8 +69,8 @@ Here you can track our progress:
 
 **Version 1.4.1:**
 
-* Immediate values (:attr:`djangoflash.models.FlashScope.now`) can be manipulated using a dict-like
-  syntax;
+* Immediate values (:attr:`djangoflash.models.FlashScope.now`) can be
+  manipulated using a dict-like syntax;
 * Unit test improvements;
 * Documentation improvements;
 
@@ -123,7 +127,7 @@ Here you can track our progress:
 * Improvements on the test comments;
 * Now the flash scope works pretty much like a :class:`dict`, although
   still there's no value-based expiration (the whole flash scope expires at
-  the end of the request).
+  the end of the request);
 
 **Version 1.1:**
 
