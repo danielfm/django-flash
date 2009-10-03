@@ -16,10 +16,24 @@ from decorators import *
 from models import *
 from storage import *
 
-try:
-    # Required dependency
-    import sqlite3
+has_sqlite = True
 
+# First, tries to import the new "sqlite3" module
+try:
+    import sqlite3
+except ImportError:
+    has_sqlite = False
+
+# If not found, tries to import the deprecated "pysqlite2" module
+if not has_sqlite:
+    try:
+        import pysqlite2
+        has_sqlite = True
+    except ImportError:
+        pass
+
+# Runs the integration tests if at least one module was found
+if has_sqlite:
     # Bootstraps integration environment
     import django.test.utils as test_utils
     from django.db import connection
@@ -28,5 +42,5 @@ try:
 
     # Imports integration tests
     from testproj.app.tests import *
-except ImportError:
-    print >> sys.stderr, 'Integration: module "sqlite3" is required... SKIPPED'
+else:
+    print >> sys.stderr, 'Integration: module "sqlite3" (or "pysqlite2") is required... SKIPPED'
