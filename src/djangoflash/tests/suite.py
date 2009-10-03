@@ -16,16 +16,12 @@ from decorators import *
 from models import *
 from storage import *
 
+# Now, the integration tests, which depends on SQLite
 has_sqlite = True
 
-# First, tries to import the new "sqlite3" module
 try:
     import sqlite3
 except ImportError:
-    has_sqlite = False
-
-# If not found, tries to import the deprecated "pysqlite2" module
-if not has_sqlite:
     try:
         import pysqlite2
         has_sqlite = True
