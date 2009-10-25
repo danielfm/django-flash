@@ -10,3 +10,4 @@ Django-Flash overview
    context_processors
    decorators
    storage/index
+   codec/index

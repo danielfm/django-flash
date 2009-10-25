@@ -30,6 +30,7 @@ Documentation contents
    configuration
    usage
    custom_storages
+   custom_codecs
    modules/index
    getting_involved
    changelog
