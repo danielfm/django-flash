@@ -8,36 +8,31 @@ from unittest import TestCase
 from django.http import HttpRequest, HttpResponse
 
 from djangoflash.models import FlashScope
-import djangoflash.storage as flash_storage
-import djangoflash.storage.session as session_storage
-import djangoflash.storage.cookie as cookie_storage
-
-
-# Only exports test cases
-__all__ = ['StorageTestCase', 'SessionFlashStorageTestCase', 'CookieFlashStorageTestCase']
+from djangoflash import storage
+from djangoflash.storage import session, cookie
 
 
 class StorageTestCase(TestCase):
     """Tests methods used to parse flash storage URIs and create flash storage
     objects.
     """
-    def test_get_session_storage_by_relative_name(self):
+    def test_get_session_storage_by_alias(self):
         """Storage: 'session' should resolve to session flash storage.
         """
-        self.assertTrue(isinstance(flash_storage.get_storage('session'), \
-            session_storage.FlashStorageClass))
+        storage_impl = storage.get_storage('session')
+        self.assertTrue(isinstance(storage_impl, session.FlashStorageClass))
 
-    def test_get_cookie_storage_by_relative_name(self):
+    def test_get_cookie_storage_by_alias(self):
         """Storage: 'cookie' should resolve to cookie flash storage.
         """
-        self.assertTrue(isinstance(flash_storage.get_storage('cookie'), \
-            cookie_storage.FlashStorageClass))
+        storage_impl = storage.get_storage('cookie')
+        self.assertTrue(isinstance(storage_impl, cookie.FlashStorageClass))
 
     def test_get_storage_by_module_name(self):
         """Storage: 'djangoflash.storage.cookie' should resolve to cookie flash storage.
         """
-        self.assertTrue(isinstance(flash_storage.get_storage('djangoflash.tests.storage'),
-            FlashStorageClass))
+        storage_impl = storage.get_storage('djangoflash.storage.cookie')
+        self.assertTrue(isinstance(storage_impl, cookie.FlashStorageClass))
 
 
 class SessionFlashStorageTestCase(TestCase):
@@ -50,7 +45,7 @@ class SessionFlashStorageTestCase(TestCase):
         self.request.session = {}
         self.response = HttpResponse('')
         self.flash = FlashScope()
-        self.storage = session_storage.FlashStorageClass()
+        self.storage = session.FlashStorageClass()
 
     def _get_flash(self):
         """Returns the flash contents from the session.
@@ -110,7 +105,7 @@ class CookieFlashStorageTestCase(TestCase):
         self.request = HttpRequest()
         self.response = HttpResponse('')
         self.flash = FlashScope()
-        self.storage = cookie_storage.FlashStorageClass()
+        self.storage = cookie.FlashStorageClass()
 
     def _transfer_cookies_from_response_to_request(self):
         """Transfers the cookies set in the response to the request.
@@ -172,14 +167,3 @@ class CookieFlashStorageTestCase(TestCase):
         # Simulates a request-response cycle
         self._transfer_cookies_from_response_to_request()
         self.assertEqual('Message', self.storage.get(self.request)['message'])
-
-
-class FlashStorageClass(object):
-    """Dummy flash storage backend.
-    """
-
-    def set(self, flash, request, response):
-        pass
-
-    def get(self, request):
-        pass
