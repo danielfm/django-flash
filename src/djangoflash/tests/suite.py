@@ -15,6 +15,7 @@ from context_processors import *
 from decorators import *
 from models import *
 from storage import *
+from codec import *
 
 # Now, the integration tests, which depends on SQLite
 has_sqlite = True
