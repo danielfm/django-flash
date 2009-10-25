@@ -65,6 +65,9 @@ By default, Django-Flash provides two built-in storage backends:
 * :mod:`djangoflash.storage.session` -- Session-based storage (default);
 * :mod:`djangoflash.storage.cookie` -- Cookie-based storage;
 
+.. seealso::
+   :ref:`custom_storages`
+
 
 Using the session-based storage
 '''''''''''''''''''''''''''''''
@@ -91,14 +94,49 @@ Since cookies will be used to store the contents of the flash scope,
 Django-Flash doesn't require you to add the :class:`SessionMiddleware` class
 to the ``MIDDLEWARE_CLASSES`` section of your project's settings anymore.
 
+Also, this storage backend uses codecs to serialize and de-serialize the
+flash data.
 
-Using a third-party storage
-'''''''''''''''''''''''''''
 
-To use a third-party flash storage backend, just set the module path to the
-``FLASH_STORAGE`` setting in your project's ``settings.py`` file::
+Flash serialization codecs
+``````````````````````````
 
-    FLASH_STORAGE = 'custom.storage.module.here'
+Since :ref:`version 1.7<changelog>`, Django-Flash supports custom flash
+serialization codecs.
+
+By default, Django-Flash provides two built-in codecs:
+
+* :mod:`djangoflash.codec.json_impl` -- JSON-based codec (default);
+* :mod:`djangoflash.codec.pickle_impl` -- Pickle-based codec;
 
 .. seealso::
-   :ref:`custom_storages`
+   :ref:`custom_codecs`
+
+
+Using the JSON-based codec implementation
+'''''''''''''''''''''''''''''''''''''''''
+
+For security reasons, Django-flash uses the 
+:ref:`JSON-based codec implementation <json_codec>` by default, so you don't
+need to do anything else to use it.
+
+*Although you are not required to do so*, you can add the following setting to
+your project's ``settings.py`` file to make it clear about what codec
+implementation is being used::
+
+    FLASH_CODEC = 'json' # Optional
+
+Using the Pickle-based codec implementation
+'''''''''''''''''''''''''''''''''''''''''''
+
+If you want to use the :ref:`Pickle-based codec implementation <pickle_codec>`
+instead the default one, then add the following setting to the ``settings.py``
+file::
+
+    FLASH_CODEC = 'pickle'
+
+.. warning::
+   The use of this codec is not recommended since the
+   `Pickle documentation <http://docs.python.org/library/pickle.html>`_ itself
+   clearly states that it's not intended to be secure against erroneous or
+   maliciously constructed data.
