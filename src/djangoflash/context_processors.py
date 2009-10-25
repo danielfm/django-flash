@@ -29,9 +29,8 @@ from django.core.exceptions import SuspiciousOperation
 from djangoflash.models import FlashScope
 
 
-"""Name of the variable used to keep :class:`FlashScope` objects both as an
-attribute of :class:`django.http.HttpRequest` and the template context.
-"""
+# Name of the variable used to keep FlashScope objects both as an attribute
+# django.http.HttpRequest and the template context.
 CONTEXT_VAR = 'flash'
 
 def flash(request):

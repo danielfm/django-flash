@@ -24,6 +24,7 @@ from djangoflash.models import FlashScope
 from djangoflash.storage import storage
 
 
+# This middleware integrates gracefully with CommonMiddleware
 _COMMON_MIDDLEWARE_CLASS = 'django.middleware.common.CommonMiddleware'
 
 
@@ -36,11 +37,6 @@ class FlashMiddleware(object):
     .. note::
        This class is designed to be used by the Django framework itself.
     """
-
-    def __init__(self):
-        """Initialize this middleware.
-        """
-        pass
 
     def process_request(self, request):
         """This method is called by the Django framework when a *request* hits
@@ -89,8 +85,8 @@ def _should_update_flash(request):
         not _is_request_to_serve(request)
 
 def _is_request_to_serve(request):
-    """Returns True if the given request resolves to the built-in ``serve``
-    view, False othersise.
+    """Returns True if *request* resolves to the built-in ``serve`` view,
+    False othersise.
     """
     # Are we running in debug mode?
     debug = getattr(settings, 'DEBUG', False)
@@ -105,8 +101,8 @@ def _is_request_to_serve(request):
 
 def _is_trailing_slash_missing(request):
     """Returns True if the requested URL are elegible to be intercepted by the
-    CommonMiddleware, which  issues a HttpRedirect when a trailing slash is
-    missing. Returns False otherwise.
+    CommonMiddleware (if it's being used), which  issues a HttpRedirect when a
+    trailing slash is missing. Returns False otherwise.
     """
     if _COMMON_MIDDLEWARE_CLASS in settings.MIDDLEWARE_CLASSES:
         path = request.path
@@ -116,8 +112,8 @@ def _is_trailing_slash_missing(request):
     return False
 
 def _is_valid_path(path):
-    """Returns True if the given path resolves against the default URL
-    resolver, False otherwise.
+    """Returns True if *path* resolves against the default URL resolver,
+    False otherwise.
     """
     try:
         urlresolvers.resolve(path)

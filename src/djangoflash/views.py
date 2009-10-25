@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-"""Create your views here.
+"""Django-Flash doesn't provide any Django views.
 """
