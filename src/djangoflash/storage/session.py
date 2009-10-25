@@ -15,20 +15,16 @@ project's ``settings.py`` file::
   :ref:`configuration`
 """
 
-from djangoflash.storage.base import BaseFlashStorage
-
-
-class FlashStorageClass(BaseFlashStorage):
+class FlashStorageClass(object):
     """Session-based flash storage backend.
     """
     def __init__(self):
         """Returns a new session-based flash storage backend.
         """
-        BaseFlashStorage.__init__(self)
         self._key = '_djflash_session'
 
     def set(self, flash, request, response):
-        """Stores the given :class:`FlashScope` object.
+        """Stores the given :class:`FlashScope` object in the session.
         """
         if hasattr(request, 'session'):
             if flash:
@@ -37,7 +33,7 @@ class FlashStorageClass(BaseFlashStorage):
                 del request.session[self._key]
 
     def get(self, request):
-        """Returns the stored :class:`FlashScope` object.
+        """Returns :class:`FlashScope` object stored in the session.
         """
         if hasattr(request, 'session') and self._key in request.session:
             return request.session[self._key]
