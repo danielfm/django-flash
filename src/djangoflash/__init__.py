@@ -10,7 +10,7 @@
     :license: BSD.
 """
 
-__version__ = '1.6.3'
+__version__ = '1.7'
 
 __author__  = 'Daniel Fernandes Martins'
 __email__   = 'daniel@destaquenet.com'

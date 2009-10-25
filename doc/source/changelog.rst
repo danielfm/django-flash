@@ -6,6 +6,12 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.7:**
+
+* Added support for custom flash serialization codecs;
+* Two built-in codec implementations: JSON and Pickle;
+* Module :mod:`djangoflash.storage.base` removed;
+
 **Version 1.6.3:**
 
 * Using the ``DEBUG`` setting as the default value of ``FLASH_IGNORE_MEDIA``;
