@@ -4,6 +4,12 @@
 way to pass temporary objects between views.
 """
 
+
+# Map keys used when exporting/importing a FlashScope to/from a dict
+_SESSION_KEY = '_session'
+_USED_KEY    = '_used'
+
+
 class FlashScope(object):
     """The purpose of this class is to implement the *flash*, which is a
     temporary storage mechanism that looks like a Python dictionary, so you
@@ -51,12 +57,16 @@ class FlashScope(object):
        Puts the given *items* into *f* and marks them as *used*.
     """
 
-    def __init__(self):
-        """Returns a new :class:`FlashScope` object.
+    def __init__(self, data=None):
+        """Returns a new flash. If *data* is not provided, an empty flash is
+        returned. Otherwise, the given *data* will be used to pre-populate
+        this flash.
         """
-        self._session = {}
-        self._used = {}
         self.now = _ImmediateFlashScopeAdapter(self)
+        if data:
+            self._import_data(data)
+        else:
+            self._session, self._used = {}, {}
 
     def __contains__(self, key):
         """Returns ``True`` if there's a value under the given *key*.
@@ -139,8 +149,8 @@ class FlashScope(object):
         return self._session.iteritems()
 
     def get(self, key, default=None):
-        """Gets the value under the given *key*. If the *key* doesn't exists,
-        the *default* value is returned instead.
+        """Gets the value under the given *key*. If the *key* is not found,
+        *default* is returned instead.
         """
         return self._session.get(key, default)
 
@@ -219,6 +229,30 @@ class FlashScope(object):
         """
         self._update_status()
 
+    def to_dict(self):
+        """Exports this flash to a :class:`dict`.
+        """
+        return {_SESSION_KEY: self._session.copy(),
+                _USED_KEY   : self._used.copy()}
+
+    def _import_data(self, data):
+        """Imports the given :class:`dict` to this flash.
+        """
+        if not isinstance(data, dict):
+            raise TypeError('Expected a dictionary')
+
+        if not _SESSION_KEY in data or not _USED_KEY in data:
+            raise ValueError("Dictionary doesn't contains the expected data")
+
+        if not isinstance(data[_SESSION_KEY], dict):
+            raise ValueError("data['%s'] must be a dict." % _SESSION_KEY)
+
+        if not isinstance(data[_USED_KEY], dict):
+            raise ValueError("data['%s'] must be a dict." % _USED_KEY)
+
+        self._session = data[_SESSION_KEY].copy()
+        self._used    = data[_USED_KEY].copy()
+
 
 class _ImmediateFlashScopeAdapter(object):
     """This class is used to add support for immediate flash values to an
@@ -227,8 +261,8 @@ class _ImmediateFlashScopeAdapter(object):
     """
 
     def __init__(self, delegate):
-        """Returns a new :class:`_ImmediateFlashScopeAdapter` object which
-        delegates certain calls to the given *delegate*.
+        """Returns a new flash wrapper which delegates certain calls to the
+        given *delegate*.
         """
         self.delegate = delegate
 
