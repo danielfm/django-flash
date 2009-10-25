@@ -6,9 +6,10 @@ Creating a custom serialization codec
 Since :ref:`version 1.7 <changelog>`, Django-Flash supports custom flash
 serialization codecs.
 
-By default, Django-flash provides two built-in codecs:
+By default, Django-Flash provides three built-in codecs:
 
 * :mod:`djangoflash.codec.json_impl` -- JSON-based codec (default);
+* :mod:`djangoflash.codec.json_zlib_impl` -- JSON/zlib-based codec;
 * :mod:`djangoflash.codec.pickle_impl` -- Pickle-based codec;
 
 The good news is that you can create your own codec if the existing ones are
