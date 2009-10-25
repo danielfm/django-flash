@@ -202,6 +202,9 @@ Accessing flash-scoped objects from view templates
 We already know how to access the *flash* from views. But what about the view
 templates?
 
+.. seealso::
+   :mod:`djangoflash.context_processors` module.
+
 It's just as easy:
 
 .. code-block:: html+django
@@ -243,8 +246,3 @@ It's also possible to iterate over all flash-scoped objects using the
        {% endif %}
    </body>
    </html>
-
-
-.. seealso::
-   :mod:`djangoflash.context_processors` module.
-

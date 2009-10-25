@@ -17,10 +17,7 @@ create a Python module with a class called :class:`FlashStorageClass`::
 
     # Let's suppose this module is called 'myproj.djangoflash.custom'
     
-    # The class extends BaseFlashStorage, but you are not required to do so
-    from djangoflash.storage.base import BaseFlashStorage
-    
-    class FlashStorageClass(BaseFlashStorage):
+    class FlashStorageClass(object):
         def _is_flash_stored(self, request):
             # This method checks whether the flash is already stored
             pass

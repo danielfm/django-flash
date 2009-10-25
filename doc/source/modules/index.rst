@@ -1,7 +1,7 @@
 .. _modulesindex:
 
-Django-Flash's modules
-======================
+Django-Flash overview
+=====================
 
 .. toctree::
 
@@ -9,8 +9,4 @@ Django-Flash's modules
    middleware
    context_processors
    decorators
-   storage
-   storage_base
-   storage_session
-   storage_cookie
-
+   storage/index
