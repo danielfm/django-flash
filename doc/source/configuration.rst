@@ -126,6 +126,15 @@ implementation is being used::
 
     FLASH_CODEC = 'json' # Optional
 
+There's also an :ref:`alternative version <json_zlib_codec>` of this codec that
+uses the :mod:`zlib` module to reduce the encoded flash footprint. This is
+particularly useful when the flash storage backend in use (such as the 
+:ref:`cookie-based storage <storage_cookie>`) cannot handle the amount of data
+in the *flash*::
+
+    FLASH_CODEC = 'json_zlib'
+
+
 Using the Pickle-based codec implementation
 '''''''''''''''''''''''''''''''''''''''''''
 

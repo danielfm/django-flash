@@ -9,7 +9,7 @@ Here you can track our progress:
 **Version 1.7:**
 
 * Added support for custom flash serialization codecs;
-* Two built-in codec implementations: JSON and Pickle;
+* Three built-in codec implementations: JSON, JSON/zlib and Pickle;
 * Module :mod:`djangoflash.storage.base` removed;
 
 **Version 1.6.3:**

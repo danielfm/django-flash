@@ -21,6 +21,7 @@ Built-in serialization codecs
    :maxdepth: 1
 
    json_impl
+   json_zlib_impl
    pickle_impl
 
 .. seealso::

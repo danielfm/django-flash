@@ -8,7 +8,7 @@ from unittest import TestCase
 from django.core.exceptions import SuspiciousOperation
 
 from djangoflash import codec
-from djangoflash.codec import json_impl, pickle_impl, BaseCodec
+from djangoflash.codec import pickle_impl, json_impl, json_zlib_impl, BaseCodec
 from djangoflash.models import FlashScope
 
 
@@ -16,17 +16,24 @@ class CodecTestCase(TestCase):
     """Tests methods used to parse flash storage URIs and create flash storage
     objects.
     """
+    def test_get_pickle_codec_by_alias(self):
+        """Codec: 'pickle' should resolve to Pickle-based codec.
+        """
+        codec_impl = codec.get_codec('pickle')
+        self.assertTrue(isinstance(codec_impl, pickle_impl.CodecClass))
+
     def test_get_json_codec_by_alias(self):
         """Codec: 'json' should resolve to JSON-based codec.
         """
         codec_impl = codec.get_codec('json')
         self.assertTrue(isinstance(codec_impl, json_impl.CodecClass))
 
-    def test_get_pickle_codec_by_alias(self):
-        """Codec: 'pickle' should resolve to Pickle-based codec.
+    def test_get_json_zlib_codec_by_alias(self):
+        """Codec: 'json_zlib' should resolve to JSON/zlib-based codec.
         """
-        codec_impl = codec.get_codec('pickle')
-        self.assertTrue(isinstance(codec_impl, pickle_impl.CodecClass))
+        codec_impl = codec.get_codec('json_zlib')
+        self.assertTrue(isinstance(codec_impl, json_impl.CodecClass))
+        self.assertTrue(isinstance(codec_impl, json_zlib_impl.CodecClass))
 
     def test_get_codec_by_module_name(self):
         """Codec: 'djangoflash.codec.json_impl' should resolve to JSON-based codec.
@@ -123,6 +130,34 @@ class JSONCodecTestCase(TestCase):
 
     def test_decode(self):
         """Codec: JSON-based codec should restore the flash from a JSON string.
+        """
+        flash = self.codec.decode(self.expected)
+        self.assertEqual('Info', flash['info'])
+        flash.update()
+        self.assertFalse('info' in flash)
+
+
+class JSONZlibCodecTestCase(TestCase):
+    """Tests the JSON/zlib-based serialization codec implementation.
+    """
+    def setUp(self):
+        """Creates a JSON\zlib-based codec and a sample flash.
+        """
+        self.expected = 'x\x9c\xabV\x8a/N-.\xce\xcc\xcfS\xb2R\xa8V\xca\xccK' \
+                        '\xcb\x072\x94<At\xad\x8e\x82R|iqj\n\xb2T^iNNm-\x00' \
+                        '\xf5\xa2\x12\x03'
+        self.codec = json_zlib_impl.CodecClass()
+        self.flash = FlashScope()
+        self.flash['info'] = 'Info'
+        self.flash.update()
+
+    def test_encode(self):
+        """Codec: JSON\zlib-based codec should return a zlib compressed JSON version of the flash.
+        """
+        self.assertEqual(self.expected, self.codec.encode(self.flash))
+
+    def test_decode(self):
+        """Codec: JSON\zlib-based codec should restore the flash from a zlib compressed JSON string.
         """
         flash = self.codec.decode(self.expected)
         self.assertEqual('Info', flash['info'])

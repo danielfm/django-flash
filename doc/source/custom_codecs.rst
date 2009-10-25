@@ -30,7 +30,7 @@ Python module with a class called :class:`CodecClass`::
             pass
 
 Note that custom codecs must extend the :class:`djangoflash.codec.BaseCodec`
-class.
+class direct or indirectly.
 
 Finally, to use your custom codec, add the following setting to your project's
 ``settings.py`` file::

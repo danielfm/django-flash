@@ -56,6 +56,7 @@ class BaseCodec(object):
 # path to a custom codec.
 CODECS = {
     'json': 'json_impl',
+    'json_zlib': 'json_zlib_impl',
     'pickle': 'pickle_impl',
 }
 
