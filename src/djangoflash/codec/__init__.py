@@ -63,7 +63,7 @@ CODECS = {
 def get_codec(module):
     """Creates and returns the codec defined in the given module path
     (ex: ``"myapp.mypackage.mymodule"``). The argument can also be an alias to
-    a built-in codec, such as ``"json"`` or ``"pickle"``.
+    a built-in codec, such as ``"json"``, ``"json_zlib"`` or ``"pickle"``.
     """
     if module in CODECS:
         # The "_codec" suffix is to avoid conflicts with built-in module names

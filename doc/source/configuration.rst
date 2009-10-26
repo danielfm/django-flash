@@ -15,6 +15,7 @@ In order to plug Django-Flash to your project, open your project's
         'djangoflash.middleware.FlashMiddleware',
     )
 
+
 That's all the required configuration.
 
 .. warning::
@@ -82,6 +83,10 @@ backend is being used::
     FLASH_STORAGE = 'session' # Optional
 
 
+This storage backend *doesn't* rely on codecs to serialize and de-serialize the
+flash data; it lets Django handle this.
+
+
 Using the cookie-based storage
 ''''''''''''''''''''''''''''''
 
@@ -90,12 +95,13 @@ default one, then add the following setting to the ``settings.py`` file::
 
     FLASH_STORAGE = 'cookie'
 
+
 Since cookies will be used to store the contents of the flash scope,
 Django-Flash doesn't require you to add the :class:`SessionMiddleware` class
 to the ``MIDDLEWARE_CLASSES`` section of your project's settings anymore.
 
-Also, this storage backend uses codecs to serialize and de-serialize the
-flash data.
+This storage backend relies on codecs to serialize and de-serialize the flash
+data.
 
 
 Flash serialization codecs
@@ -127,6 +133,7 @@ implementation is being used::
 
     FLASH_CODEC = 'json' # Optional
 
+
 There's also an :ref:`alternative version <json_zlib_codec>` of this codec that
 uses the :mod:`zlib` module to reduce the encoded flash footprint. This is
 particularly useful when the flash storage backend in use (such as the 
@@ -145,8 +152,10 @@ file::
 
     FLASH_CODEC = 'pickle'
 
+
 .. warning::
    The use of this codec is not recommended since the
    `Pickle documentation <http://docs.python.org/library/pickle.html>`_ itself
    clearly states that it's not intended to be secure against erroneous or
    maliciously constructed data.
+

@@ -30,6 +30,7 @@ Python module with a class called :class:`CodecClass`::
         def decode(self, encoded_flash):
             pass
 
+
 Note that custom codecs must extend the :class:`djangoflash.codec.BaseCodec`
 class direct or indirectly.
 
@@ -41,3 +42,4 @@ Finally, to use your custom codec, add the following setting to your project's
 
 .. seealso::
    :ref:`configuration`
+
