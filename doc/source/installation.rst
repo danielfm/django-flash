@@ -37,7 +37,7 @@ There are several ways to download and install Django-Flash:
       $ python setup.py install
 
 
-**Manualy**
+**Manually**
 
   To add Django-Flash to your project as a bundled library, just add the
   ``djangoflash`` directory into your project along with the other apps.
