@@ -44,5 +44,5 @@ INSTALLED_APPS = (
 # Settings introduced by Django-Flash:
 
 # FLASH_IGNORE_MEDIA = DEBUG     # True, False
-# FLASH_STORAGE      = 'session' # 'session, 'cookie'
+# FLASH_STORAGE      = 'session' # 'session, 'cookie', 'path.to.module'
 # FLASH_CODEC        = 'json'    # 'json', 'json_zlib', 'pickle', 'path.to.module'
