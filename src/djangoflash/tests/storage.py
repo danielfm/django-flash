@@ -34,6 +34,18 @@ class StorageTestCase(TestCase):
         storage_impl = storage.get_storage('djangoflash.storage.cookie')
         self.assertTrue(isinstance(storage_impl, cookie.FlashStorageClass))
 
+    def test_get_storage_by_invalid_module_name(self):
+        """Storage: Should raise an error when resolving a module name that doesn't exists.
+        """
+        operation = lambda: storage.get_storage('invalid.module.path')
+        self.assertRaises(ImportError, operation)
+
+    def test_get_storage_by_invalid_module(self):
+        """Storage: Should raise an error when module doesn't provide a storage class.
+        """
+        operation = lambda: storage.get_storage('djangoflash.models')
+        self.assertRaises(AttributeError, operation)
+
 
 class SessionFlashStorageTestCase(TestCase):
     """Tests the session-based flash storage class.

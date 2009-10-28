@@ -41,6 +41,18 @@ class CodecTestCase(TestCase):
         codec_impl = codec.get_codec('djangoflash.codec.json_impl')
         self.assertTrue(isinstance(codec_impl, json_impl.CodecClass))
 
+    def test_get_codec_by_invalid_module_name(self):
+        """Codec: Should raise an error when resolving a module name that doesn't exists.
+        """
+        operation = lambda: codec.get_codec('invalid.module.path')
+        self.assertRaises(ImportError, operation)
+
+    def test_get_codec_by_invalid_module(self):
+        """Codec: Should raise an error when module doesn't provide a codec class.
+        """
+        operation = lambda: codec.get_codec('djangoflash.models')
+        self.assertRaises(AttributeError, operation)
+
 
 class BaseCodecTestCase(TestCase):
     """Tests the tampered checks and signing logic.
