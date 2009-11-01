@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-"""Build script used to test, build and deploy django-flash in several
+"""Build script used to test, build and deploy django-flash using several
 Python versions.
 
 In order to test and build django-flash in these different environments,
-this script demands you to have different virtualenvs, each one targeted
-to a specific Python version:
+this script requires different virtualenvs, each one targeted to a specific
+Python version:
 
     * django-flash-py2.6 - for Python 2.6
     * django-flash-py2.5 - for Python 2.5
@@ -14,39 +14,42 @@ to a specific Python version:
 Also, each one of these virtualenvs must have the following packages
 installed:
     
-    * Django (version 1.0+)
+    * Django   (version 1.0+)
     * Pysqlite (version recommended by the current Django version)
 
 Finally, to use this script, you must install the packages below to your
 default Python installation:
 
-    * Fabric 0.1.1+
+    * Fabric 0.9+
 
 That's it. You can now see all available targets provided by this build
 script by running the command line below:
 
     $ cd /path/to/django-flash
-    $ fab
+    $ fab -l
 """
 
 import os
 import re
 import sys
 
+from fabric.api import *
+
+
 # Adds the 'src' to the Python path
-sys.path += ['src']
+sys.path += ('src',)
 
 # Supported Python versions
-config.versions = ('2.4', '2.5', '2.6')
-config.default_version = '2.6'
+env.versions        = ('2.6', '2.5', '2.4')
+env.default_version = env.versions[0]
 
 # Environment info
-config.project        = 'django-flash'
-config.virtualenv_dir = '~/.virtualenvs'
-config.default_editor = os.environ['EDITOR'] or 'vi'
+env.project        = 'django-flash'
+env.virtualenv_dir = os.environ['WORKON_HOME'] or '~/.virtualenvs'
+env.default_editor = os.environ['EDITOR']      or 'vi'
 
 # Files that contain version information
-config.new_version_files = (
+env.new_version_files = (
     'setup.py',
     'src/djangoflash/__init__.py',
     'doc/source/conf.py',
@@ -54,26 +57,26 @@ config.new_version_files = (
 )
 
 # Information needed to build the documentation
-config.sphinx_output = 'build/sphinx'
-config.sphinx_latex  = '%s/latex' % config.sphinx_output
-config.sphinx_html   = '%s/html' % config.sphinx_output
-config.doc_output    = 'djangoflash'
+env.sphinx_output = 'build/sphinx'
+env.sphinx_latex  = '%s/latex' % env.sphinx_output
+env.sphinx_html   = '%s/html' % env.sphinx_output
+env.doc_output    = 'djangoflash'
 
 # Host where the documentation website lives
-config.fab_hosts  = ['destaquenet.com']
-config.doc_folder = '/home/destaquenet/public_html'
+env.hosts  = ('destaquenet.com',)
+env.doc_folder = '/home/destaquenet/public_html'
 
 
-def setup(command, version=config.default_version):
+def setup(command, version=env.default_version):
      """Executes the given setup command with a virtual Python installation.
      """
      local('%s/%s-py%s/bin/python setup.py %s' %
-             (config.virtualenv_dir, config.project, version, command))
+             (env.virtualenv_dir, env.project, version, command))
 
 def test():
     """Runs all tests in different Python versions.
     """
-    for version in config.versions:
+    for version in env.versions:
         setup('test', version)
 
 def clean():
@@ -81,22 +84,22 @@ def clean():
     """
     local('rm -fR build')
 
-@depends(clean)
 def build_docs():
     """Builds the documentation in PDF and HTML.
     """
+    clean()
     setup('build_sphinx')
     setup('build_sphinx -b latex')
-    local('make -C ' + config.sphinx_latex)
+    local('make -C ' + env.sphinx_latex)
 
-@depends(build_docs)
 def zip_docs():
     """Creates a zip file with the complete documentation.
     """
+    build_docs()
     local('cp %s/%s.pdf %s' %
-            (config.sphinx_latex, config.project, config.sphinx_html))
+            (env.sphinx_latex, env.project, env.sphinx_html))
     local('cd %s; mv html %s; zip -r9 %s.zip %s' %
-            ((config.sphinx_output,) + (config.doc_output,)*3))
+            ((env.sphinx_output,) + (env.doc_output,)*3))
 
 def register_pypi():
     """Register the current version on PyPI.
@@ -111,29 +114,31 @@ def deploy_src():
 def deploy_eggs():
     """Upload Python Eggs to PyPI.
     """
-    for version in config.versions:
+    for version in env.versions:
         setup('bdist_egg upload', version)
 
-@depends(test, register_pypi, deploy_src, deploy_eggs)
 def deploy_pypi():
     """Deploys all artifacts to PyPI.
     """
-    pass
+    test()
+    register_pypi()
+    deploy_src()
+    deploy_eggs()
 
-@depends(zip_docs)
 def deploy_website():
     """Deploys the documentation website.
     """
+    zip_docs()
     put('%s/%s.zip' %
-            (config.sphinx_output, config.doc_output), config.doc_folder)
+            (env.sphinx_output, env.doc_output), env.doc_folder)
     run('cd %s; rm -R %s; unzip %s.zip; rm %s.zip' %
-            ((config.doc_folder,) + (config.doc_output,)*3))
+            ((env.doc_folder,) + (env.doc_output,)*3))
 
-@depends(deploy_pypi, deploy_website)
 def deploy():
     """Deploys the application to PyPI and updates the documentation website.
     """
-    pass
+    deploy_pypi()
+    deploy_website()
 
 def tag_new_version():
     """Updates the version number, pushing the changes and tagging afterwards.
@@ -146,14 +151,14 @@ def tag_new_version():
         return
 
     # Brings up the text editor with the files to be changed
-    for f in config.new_version_files:
-        local('%s %s' % (config.default_editor, f))
+    for f in env.new_version_files:
+        local('%s %s' % (env.default_editor, f))
 
     # Asks for confirmation
     prompt('tag_proceed', 'You are about to commit and push the version '
                           'changes. Continue?', default='y')
 
-    if config.tag_proceed.upper() != 'Y':
+    if env.tag_proceed.upper() != 'Y':
         print 'Aborting...'
         return
 
@@ -163,3 +168,4 @@ def tag_new_version():
     local('git tag -am "Tagged version %s." %s; git push --tags' %
             ((__version__,)*2), fail='ignore')
     local('git push --tags')
+

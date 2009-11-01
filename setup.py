@@ -29,7 +29,7 @@ setup(
     install_requires = ['Django>=1.0_final'],
     packages = find_packages('src'),
     package_dir = {'':'src'},
-    include_package_data=True,
+    include_package_data = True,
     zip_safe = False,
     test_suite = 'djangoflash.tests.suite',
 )
