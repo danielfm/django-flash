@@ -63,7 +63,7 @@ env.sphinx_html   = '%s/html' % env.sphinx_output
 env.doc_output    = 'djangoflash'
 
 # Host where the documentation website lives
-env.hosts  = ('destaquenet.com',)
+env.hosts  = ['destaquenet.com']
 env.doc_folder = '/home/destaquenet/public_html'
 
 
