@@ -44,13 +44,6 @@ Indices and tables
 * :ref:`search`
 
 
-Contact information
--------------------
-
-  :Author: Daniel Fernandes Martins <daniel@destaquenet.com>
-  :Company: `Destaquenet Technology Solutions`_
-
-
 .. _BSD License: http://www.opensource.org/licenses/bsd-license.php
 .. _Django: http://www.djangoproject.org/
 .. _Rails: http://www.rubyonrails.org/
