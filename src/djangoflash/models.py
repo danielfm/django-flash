@@ -22,39 +22,43 @@ class FlashScope(object):
     
     The following operations are supported by :class:`FlashScope` instances:
 
-    .. describe:: len(f)
+    .. describe:: len(flash)
 
-       Returns the number of items in the flash *f*.
+       Returns the number of items in the *flash*.
 
-    .. describe:: f[key]
+    .. describe:: flash[key]
 
-       Returns the item of *f* with key *key*.  Raises a :exc:`KeyError` if
-       *key* is not in the flash *f*.
+       Returns the item of *flash* with key *key*.  Raises a :exc:`KeyError` if
+       *key* is not in the *flash*.
 
-    .. describe:: f[key] = value
+    .. describe:: flash[key] = value
 
-       Sets ``f[key]`` to *value*.
+       Sets ``flash[key]`` to *value*.
 
-    .. describe:: del f[key]
+    .. describe:: del flash[key]
 
-       Removes ``f[key]`` from *f*.  Raises a :exc:`KeyError` if *key* is not
-       in the map.
+       Removes ``flash[key]``.  Raises a :exc:`KeyError` if *key* is not in the
+       *flash*.
 
-    .. describe:: key in f
+    .. describe:: key in flash
 
-       Returns ``True`` if *f* has a key *key*, else ``False``.
+       Returns ``True`` if *flash* has a key *key*, else ``False``.
 
-    .. describe:: key not in f
+    .. describe:: key not in flash
 
-       Equivalent to ``not key in f``.
+       Equivalent to ``not key in flash``.
 
-    .. describe:: f.now[key] = value
+    .. describe:: flash.now[key] = value
 
-       Sets ``f[key]`` to *value* and marks it as *used*.
+       Sets ``flash[key]`` to *value* and marks it as *used*.
 
-    .. describe:: f.now(**items)
+    .. describe:: flash.now(**items)
 
-       Puts the given *items* into *f* and marks them as *used*.
+       Puts the given *items* into *flash* and marks them as *used*.
+
+    .. describe:: flash.now.add(key, *values)
+
+       Appends one or more *values* to *key* in the *flash*.
     """
 
     def __init__(self, data=None):
@@ -91,6 +95,12 @@ class FlashScope(object):
             del self._session[key]
         if key in self._used:
             del self._used[key]
+
+    def __call__(self, **kwargs):
+        """Puts one or more values into this flash.
+        """
+        for key, value in kwargs.items():
+            self[key] = value
 
     def __len__(self):
         """Returns the number of values inside this flash.
@@ -163,31 +173,28 @@ class FlashScope(object):
             del self._used[key]
         return value
 
-    def has_key(self, key):
-        """Returns ``True`` if there's a value under the given *key*.
-
-        .. deprecated:: 1.4.2
-           :meth:`has_key()` is deprecated in favor of ``key in f``.
-        """
-        return self._session.has_key(key)
-
     def put(self, **kwargs):
         """Puts one or more values into this flash.
+        
+        .. deprecated :: 1.7.1
+           :meth:`put` is deprecated in favor of ``flash(key=value)``.
         """
         for key, value in kwargs.items():
             self[key] = value
 
-    def add(self, key, value):
-        """Appends a value to a key in this flash.
+    def add(self, key, *values):
+        """Appends one or more *values* to *key* in this flash.
         """
         if key in self:
             current_value = self[key]
             if not isinstance(current_value, list):
-                self[key] = [current_value, value]
+                self[key] = [current_value]
+                self[key].extend(values)
             else:
-                current_value.append(value)
+                current_value.extend(values)
+                self[key] = current_value
         else:
-            self[key] = [value]
+            self[key] = list(values)
 
     def clear(self):
         """Removes all items from this flash.
@@ -197,6 +204,9 @@ class FlashScope(object):
 
     def put_immediate(self, key, value):
         """Puts a value inside this flash and marks it as *used*.
+
+        .. deprecated :: 1.7.1
+           :meth:`put_immediate` is deprecated in favor of ``flash.now[key] = value``.
         """
         self[key] = value
         self._update_status(key)
@@ -278,14 +288,19 @@ class _ImmediateFlashScopeAdapter(object):
         return key in self.delegate
 
     def __setitem__(self, key, value):
-        """Puts a *value* that *won't* be available to the next request, only to
-        the current.
+        """Puts a *value* into this flash under the given *key*.
         """
-        self.delegate.put_immediate(key, value)
+        self.delegate[key] = value
+        self.delegate.discard(key)
 
     def __call__(self, **kwargs):
-        """Puts values that *won't* be available to the next request, only to
-        the current.
+        """Puts one or more values into this flash.
         """
         for key, value in kwargs.items():
             self[key] = value
+
+    def add(self, key, *values):
+        """Appends one or more values to a key in this flash.
+        """
+        self.delegate.add(key, *values)
+        self.delegate.discard(key)
