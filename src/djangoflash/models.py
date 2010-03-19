@@ -24,21 +24,24 @@ class FlashScope(object):
 
     .. describe:: len(flash)
 
-       Returns the number of items in the *flash*.
+       Returns the number of items in *flash*.
 
     .. describe:: flash[key]
 
        Returns the item of *flash* with key *key*.  Raises a :exc:`KeyError` if
-       *key* is not in the *flash*.
+       *key* is not found.
 
     .. describe:: flash[key] = value
 
        Sets ``flash[key]`` to *value*.
 
+    .. describe:: flash(**items)
+
+       Puts *items* into *flash*.
+
     .. describe:: del flash[key]
 
-       Removes ``flash[key]``.  Raises a :exc:`KeyError` if *key* is not in the
-       *flash*.
+       Removes ``flash[key]``. Raises a :exc:`KeyError` if *key* is not found.
 
     .. describe:: key in flash
 
@@ -54,11 +57,11 @@ class FlashScope(object):
 
     .. describe:: flash.now(**items)
 
-       Puts the given *items* into *flash* and marks them as *used*.
+       Puts *items* into *flash* and marks those items  as *used*.
 
     .. describe:: flash.now.add(key, *values)
 
-       Appends one or more *values* to *key* in the *flash*.
+       Appends one or more *values* to *key* in *flash*.
     """
 
     def __init__(self, data=None):
@@ -83,7 +86,7 @@ class FlashScope(object):
         return self._session[key]
 
     def __setitem__(self, key, value):
-        """Puts a *value* into this flash under the given *key*.
+        """Puts a *value* under the given *key*.
         """
         self._session[key] = value
         self._update_status(key, is_used=False)
