@@ -6,7 +6,7 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
-**Version 1.7.1** *(Month, day, year)*
+**Version 1.7.1** *(March 20, 2010)*
 
 * **Notice:** *breaks backwards compatibility;*
 * Removed deprecated (since version 1.4.2) method
