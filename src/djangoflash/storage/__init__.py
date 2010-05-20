@@ -10,6 +10,9 @@ from django.conf import settings
 # Alias for use in settings file --> name of module in "storage" directory.
 # Any storage that is not in this dictionary is treated as a Python import
 # path to a custom storage.
+
+# This config style is deprecated in Django 1.2, but we'll continue to support
+# these alias for some more time.
 STORAGES = {
     'session': 'session',
     'cookie': 'cookie',

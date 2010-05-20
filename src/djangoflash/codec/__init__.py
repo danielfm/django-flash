@@ -54,6 +54,9 @@ class BaseCodec(object):
 # Alias for use in settings file --> name of module in "codec" directory.
 # Any codec that is not in this dictionary is treated as a Python import
 # path to a custom codec.
+
+# This config style is deprecated in Django 1.2, but we'll continue to support
+# these alias for some more time.
 CODECS = {
     'json': 'json_impl',
     'json_zlib': 'json_zlib_impl',
