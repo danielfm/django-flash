@@ -8,8 +8,8 @@ Here you can track our progress:
 
 **Version 1.7.2** *(May 20, 2010)*
 
-* **Notice:** Django 1.2 already provides a built-in `user "messages" framework`_,
-  but **we'll continue to support Django-Flash**;
+* **Notice:** Django 1.2 already provides a built-in user "messages" framework,
+  but `we'll continue to support Django-Flash <http://weblog.destaquenet.com/2010/05/21/django-flash-and-djangos-new-messages-framework/>`_;
 * Updated test code to make it work properly on post-1.2 versions of Django;
 
 **Version 1.7.1** *(March 20, 2010)*
@@ -164,7 +164,6 @@ Here you can track our progress:
 
 * First (very simple) version;
 
-.. _user "messages" framework: http://docs.djangoproject.com/en/dev/ref/contrib/messages/#ref-contrib-messages
 .. _Ruby on Rails: http://www.rubyonrails.org/
 .. _SetupTools: http://pypi.python.org/pypi/setuptools/
 .. _Sphinx: http://sphinx.pocoo.org/
