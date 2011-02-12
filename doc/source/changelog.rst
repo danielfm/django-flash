@@ -6,6 +6,15 @@ Changelog
 Like any other piece of software, Django-Flash is evolving at each release.
 Here you can track our progress:
 
+**Version 1.8** *(Feb 12, 2011)*
+
+* **Notice:** *breaks backwards compatibility;*
+* Removed :meth:`djangoflash.models.FlashScope.__call__` in order to avoid
+  problems in Django 1.3;
+* Removed deprecated (since version 1.7.1) method
+  :meth:`djangoflash.models.FlashScope.put_immediate` in favor of
+  ``flash.put(key=value)``;
+
 **Version 1.7.2** *(May 20, 2010)*
 
 * **Notice:** Django 1.2 already provides a built-in user "messages" framework,

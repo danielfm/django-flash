@@ -35,10 +35,6 @@ class FlashScope(object):
 
        Sets ``flash[key]`` to *value*.
 
-    .. describe:: flash(**items)
-
-       Puts *items* into *flash*.
-
     .. describe:: del flash[key]
 
        Removes ``flash[key]``. Raises a :exc:`KeyError` if *key* is not found.

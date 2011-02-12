@@ -11,7 +11,7 @@ Here goes some examples on how to manipulate this scope from a view::
 
     def my_view(request):
         request.flash['key'] = 'value' # Puts a string to the flash scope
-        request.flash(key='value')     # Alternative syntax that does the same as above
+        request.flash.put(key='value') # Alternative syntax that does the same as above
         'key' in request.flash         # Checks if the object is available at the flash scope
         request.flash['key']           # Gets an object from the flash scope
         del request.flash['key']       # Removes an object from the flash scope
