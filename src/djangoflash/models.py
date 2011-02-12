@@ -99,12 +99,6 @@ class FlashScope(object):
         if key in self._used:
             del self._used[key]
 
-    def __call__(self, **kwargs):
-        """Puts one or more values into this flash.
-        """
-        for key, value in kwargs.items():
-            self[key] = value
-
     def __len__(self):
         """Returns the number of values inside this flash.
         """
@@ -178,9 +172,6 @@ class FlashScope(object):
 
     def put(self, **kwargs):
         """Puts one or more values into this flash.
-        
-        .. deprecated :: 1.7.1
-           :meth:`put` is deprecated in favor of ``flash(key=value)``.
         """
         for key, value in kwargs.items():
             self[key] = value
@@ -204,15 +195,6 @@ class FlashScope(object):
         """
         self._session.clear()
         self._used.clear()
-
-    def put_immediate(self, key, value):
-        """Puts a value inside this flash and marks it as *used*.
-
-        .. deprecated :: 1.7.1
-           :meth:`put_immediate` is deprecated in favor of ``flash.now[key] = value``.
-        """
-        self[key] = value
-        self._update_status(key)
 
     def discard(self, *keys):
         """Marks the entire current flash or a single value as *used*, so when
@@ -296,7 +278,7 @@ class _ImmediateFlashScopeAdapter(object):
         self.delegate[key] = value
         self.delegate.discard(key)
 
-    def __call__(self, **kwargs):
+    def put(self, **kwargs):
         """Puts one or more values into this flash.
         """
         for key, value in kwargs.items():

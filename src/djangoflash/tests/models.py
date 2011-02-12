@@ -195,13 +195,6 @@ class FlashScopeTestCase(TestCase):
         self.assertEqual('Warning', self.flash['warn'])
         self.assertEqual('Error', self.flash['error'])
 
-    def test_new_put(self):
-        """FlashScope: Should put several keys into the flash scope at the same time (new way).
-        """
-        self.flash(warn='Warning', error='Error')
-        self.assertEqual('Warning', self.flash['warn'])
-        self.assertEqual('Error', self.flash['error'])
-
     def test_discard(self):
         """FlashScope: Should mark a value for removal.
         """
@@ -287,7 +280,7 @@ class ImmediateFlashScope(TestCase):
     def test_alternative_now(self):
         """FlashScope.now: Immediate values (flash.now) should be supported.
         """
-        self.flash.now(error='Error')
+        self.flash.now.put(error='Error')
         self.assertEqual('Error', self.flash['error'])
         self.flash.update()
         self.assertFalse('error' in self.flash)

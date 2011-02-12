@@ -36,6 +36,23 @@ class IntegrationTestCase(TestCase):
         self.response = self.client.get(reverse(views.render_template))
         self.assertFalse('message' in self._flash())
 
+    def test_value_in_template(self):
+        """Integration: a value should be accessible by the templating system.
+        """
+        def _assert_content(content, exists=True):
+            matcher = self.assertTrue if exists else self.assertFalse
+            matcher(self.response.content.find(content) > 0)
+
+        self.response = self.client.get(reverse(views.set_flash_var))
+        _assert_content('Flash context: Message', exists=True)
+
+        self.response = self.client.get(reverse(views.render_template))
+        _assert_content('Flash context: Message', exists=True)
+
+        # Flash value will be removed when this request hits the app
+        self.response = self.client.get(reverse(views.render_template))
+        _assert_content('Flash context: Message', exists=False)
+
     def test_keep_lifecycle(self):
         """Integration: a value shouldn't be removed from the flash when it is kept.
         """
