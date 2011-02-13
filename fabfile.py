@@ -7,9 +7,9 @@ In order to test and build django-flash in these different environments,
 this script requires different virtualenvs, each one targeted to a specific
 Python version:
 
+    * django-flash-py2.7 - for Python 2.7
     * django-flash-py2.6 - for Python 2.6
     * django-flash-py2.5 - for Python 2.5
-    * django-flash-py2.4 - for Python 2.4
 
 Also, each one of these virtualenvs must have the following packages
 installed:
@@ -40,7 +40,7 @@ from fabric.api import *
 sys.path += ('src',)
 
 # Supported Python versions
-env.versions        = ('2.6', '2.5', '2.4')
+env.versions        = ('2.7', '2.6', '2.5')
 env.default_version = env.versions[0]
 
 # Environment info
