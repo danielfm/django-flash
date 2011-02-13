@@ -40,7 +40,10 @@ class IntegrationTestCase(TestCase):
         """Integration: a value should be accessible by the templating system.
         """
         def _assert_content(content, exists=True):
-            matcher = self.assertTrue if exists else self.assertFalse
+            if exists:
+                matcher = self.assertTrue
+            else:
+                matcher = self.assertFalse
             matcher(self.response.content.find(content) > 0)
 
         self.response = self.client.get(reverse(views.set_flash_var))
