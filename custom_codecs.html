@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating a custom serialization codec &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="index.html" />
+    <link rel="next" title="Django-Flash overview" href="modules/index.html" />
+    <link rel="prev" title="Creating a custom flash storage backend" href="custom_storages.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules/index.html" title="Django-Flash overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="custom_storages.html" title="Creating a custom flash storage backend"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="creating-a-custom-serialization-codec">
+<span id="custom-codecs"></span><h1>Creating a custom serialization codec<a class="headerlink" href="#creating-a-custom-serialization-codec" title="Permalink to this headline">¶</a></h1>
+<p>Since <a class="reference internal" href="changelog.html#changelog"><em>version 1.7</em></a>, Django-Flash supports custom flash
+serialization codecs.</p>
+<p>By default, Django-Flash provides three built-in codecs:</p>
+<ul class="simple">
+<li><a class="reference internal" href="modules/codec/json_impl.html#module-djangoflash.codec.json_impl" title="djangoflash.codec.json_impl: JSON-based codec implementation"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.codec.json_impl</span></tt></a> &#8211; JSON-based codec (default);</li>
+<li><a class="reference internal" href="modules/codec/json_zlib_impl.html#module-djangoflash.codec.json_zlib_impl" title="djangoflash.codec.json_zlib_impl: JSON/zlib-based codec implementation"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.codec.json_zlib_impl</span></tt></a> &#8211; JSON/zlib-based codec;</li>
+<li><a class="reference internal" href="modules/codec/pickle_impl.html#module-djangoflash.codec.pickle_impl" title="djangoflash.codec.pickle_impl: JSON-based codec implementation"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.codec.pickle_impl</span></tt></a> &#8211; Pickle-based codec;</li>
+</ul>
+<p>The good news is that you can create your own codec if the existing ones are
+getting in your way. To do so, the first thing you need to do is create a
+Python module with a class called <tt class="xref py py-class docutils literal"><span class="pre">CodecClass</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Let&#39;s suppose this module is called &#39;myproj.djangoflash.custom&#39;</span>
+
+<span class="kn">from</span> <span class="nn">djangoflash.codec</span> <span class="kn">import</span> <span class="n">BaseCodec</span>
+
+<span class="k">class</span> <span class="nc">CodecClass</span><span class="p">(</span><span class="n">BaseCodec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">BaseCodec</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flash</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded_flash</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Note that custom codecs must extend the <a class="reference internal" href="modules/codec/index.html#djangoflash.codec.BaseCodec" title="djangoflash.codec.BaseCodec"><tt class="xref py py-class docutils literal"><span class="pre">djangoflash.codec.BaseCodec</span></tt></a>
+class direct or indirectly.</p>
+<p>Finally, to use your custom codec, add the following setting to your project&#8217;s
+<tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FLASH_CODEC</span> <span class="o">=</span> <span class="s">&#39;myproj.djangoflash.custom&#39;</span> <span class="c"># Path to module</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="configuration.html#configuration"><em>Configuration</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="custom_storages.html"
+                        title="previous chapter">Creating a custom flash storage backend</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules/index.html"
+                        title="next chapter">Django-Flash overview</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/custom_codecs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules/index.html" title="Django-Flash overview"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="custom_storages.html" title="Creating a custom flash storage backend"
+             >previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangoflash.storage — Flash storage backends &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="../../index.html" />
+    <link rel="up" title="Django-Flash overview" href="../index.html" />
+    <link rel="next" title="djangoflash.storage.session — Session-based flash storage" href="session.html" />
+    <link rel="prev" title="djangoflash.decorators — Django-Flash decorators" href="../decorators.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="session.html" title="djangoflash.storage.session — Session-based flash storage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../decorators.html" title="djangoflash.decorators — Django-Flash decorators"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangoflash.storage">
+<span id="djangoflash-storage-flash-storage-backends"></span><h1><a class="reference internal" href="#module-djangoflash.storage" title="djangoflash.storage: Django-flash storage backend"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.storage</span></tt></a> &#8212; Flash storage backends<a class="headerlink" href="#module-djangoflash.storage" title="Permalink to this headline">¶</a></h1>
+<p>This package provides some built-in flash storage backends used to persist
+the <em>flash</em> contents across requests.</p>
+<dl class="function">
+<dt id="djangoflash.storage.get_storage">
+<tt class="descclassname">djangoflash.storage.</tt><tt class="descname">get_storage</tt><big>(</big><em>module</em><big>)</big><a class="headerlink" href="#djangoflash.storage.get_storage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns the flash storage backend defined in the given
+module path (ex: <tt class="docutils literal"><span class="pre">&quot;myapp.mypackage.mymodule&quot;</span></tt>). The argument can also
+be an alias to a built-in storage backend, such as <tt class="docutils literal"><span class="pre">&quot;session&quot;</span></tt> or
+<tt class="docutils literal"><span class="pre">&quot;cookie&quot;</span></tt>.</p>
+</dd></dl>
+
+<div class="section" id="built-in-flash-storage-backends">
+<h2>Built-in flash storage backends<a class="headerlink" href="#built-in-flash-storage-backends" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="session.html"><tt class="docutils literal"><span class="pre">djangoflash.storage.session</span></tt> &#8212; Session-based flash storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cookie.html"><tt class="docutils literal"><span class="pre">djangoflash.storage.cookie</span></tt> &#8212; Cookie-based flash storage</a></li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../index.html#modulesindex"><em>Django-Flash overview</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangoflash.storage</span></tt> &#8212; Flash storage backends</a><ul>
+<li><a class="reference internal" href="#built-in-flash-storage-backends">Built-in flash storage backends</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../decorators.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangoflash.decorators</span></tt> &#8212; Django-Flash decorators</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="session.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">djangoflash.storage.session</span></tt> &#8212; Session-based flash storage</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/modules/storage/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="session.html" title="djangoflash.storage.session — Session-based flash storage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../decorators.html" title="djangoflash.decorators — Django-Flash decorators"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

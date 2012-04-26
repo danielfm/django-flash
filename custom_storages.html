@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating a custom flash storage backend &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="index.html" />
+    <link rel="next" title="Creating a custom serialization codec" href="custom_codecs.html" />
+    <link rel="prev" title="Using Django-Flash" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="custom_codecs.html" title="Creating a custom serialization codec"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Using Django-Flash"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="creating-a-custom-flash-storage-backend">
+<span id="custom-storages"></span><h1>Creating a custom flash storage backend<a class="headerlink" href="#creating-a-custom-flash-storage-backend" title="Permalink to this headline">¶</a></h1>
+<p>Since <a class="reference internal" href="changelog.html#changelog"><em>version 1.5</em></a>, Django-Flash supports custom flash
+storage backends.</p>
+<p>By default, Django-flash provides two built-in storage backends:</p>
+<ul class="simple">
+<li><a class="reference internal" href="modules/storage/session.html#module-djangoflash.storage.session" title="djangoflash.storage.session: Session-based flash storage"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.storage.session</span></tt></a> &#8211; Session-based storage (default);</li>
+<li><a class="reference internal" href="modules/storage/cookie.html#module-djangoflash.storage.cookie" title="djangoflash.storage.cookie: Cookie-based flash storage"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.storage.cookie</span></tt></a> &#8211; Cookie-based storage;</li>
+</ul>
+<p>The good news is that you can create your own storage backend if the existing
+ones are getting in your way. To do so, the first thing you need to do is
+create a Python module with a class called <tt class="xref py py-class docutils literal"><span class="pre">FlashStorageClass</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Let&#39;s suppose this module is called &#39;myproj.djangoflash.custom&#39;</span>
+
+<span class="c"># You can use the serialization codec configured by the user</span>
+<span class="kn">from</span> <span class="nn">djangoflash.codec</span> <span class="kn">import</span> <span class="n">codec</span>
+
+<span class="k">class</span> <span class="nc">FlashStorageClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_is_flash_stored</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c"># This method checks whether the flash is already stored</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">flash</span><span class="p">:</span>
+            <span class="c"># Store the flash</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_flash_stored</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+            <span class="c"># Flash is null or empty, so remove the already stored flash</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_flash_stored</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+            <span class="c"># Return the stored flash</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Then, to use your custom flash storage backend, add the following setting
+to your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FLASH_STORAGE</span> <span class="o">=</span> <span class="s">&#39;myproj.djangoflash.custom&#39;</span> <span class="c"># Path to module</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="configuration.html#configuration"><em>Configuration</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Using Django-Flash</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="custom_codecs.html"
+                        title="next chapter">Creating a custom serialization codec</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/custom_storages.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="custom_codecs.html" title="Creating a custom serialization codec"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Using Django-Flash"
+             >previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

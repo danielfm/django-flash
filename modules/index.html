@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django-Flash overview &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="../index.html" />
+    <link rel="next" title="djangoflash.models — Django-Flash model" href="models.html" />
+    <link rel="prev" title="Creating a custom serialization codec" href="../custom_codecs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangoflash.models — Django-Flash model"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../custom_codecs.html" title="Creating a custom serialization codec"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="django-flash-overview">
+<span id="modulesindex"></span><h1>Django-Flash overview<a class="headerlink" href="#django-flash-overview" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models.html"><tt class="docutils literal"><span class="pre">djangoflash.models</span></tt> &#8212; Django-Flash model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#flashscope-class"><tt class="docutils literal"><span class="pre">FlashScope</span></tt> Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="middleware.html"><tt class="docutils literal"><span class="pre">djangoflash.middleware</span></tt> &#8212; Django-Flash middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="middleware.html#flashmiddleware-class"><tt class="docutils literal"><span class="pre">FlashMiddleware</span></tt> Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="context_processors.html"><tt class="docutils literal"><span class="pre">djangoflash.context_processors</span></tt> &#8212; Django-Flash context processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decorators.html"><tt class="docutils literal"><span class="pre">djangoflash.decorators</span></tt> &#8212; Django-Flash decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/index.html"><tt class="docutils literal"><span class="pre">djangoflash.storage</span></tt> &#8212; Flash storage backends</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="storage/index.html#built-in-flash-storage-backends">Built-in flash storage backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="storage/session.html"><tt class="docutils literal"><span class="pre">djangoflash.storage.session</span></tt> &#8212; Session-based flash storage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="storage/session.html#flashstorageclass-class"><tt class="docutils literal"><span class="pre">FlashStorageClass</span></tt> Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="storage/cookie.html"><tt class="docutils literal"><span class="pre">djangoflash.storage.cookie</span></tt> &#8212; Cookie-based flash storage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="storage/cookie.html#flashstorageclass-class"><tt class="docutils literal"><span class="pre">FlashStorageClass</span></tt> Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="codec/index.html"><tt class="docutils literal"><span class="pre">djangoflash.codec</span></tt> &#8212; Flash serialization codecs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="codec/index.html#basecodec-class"><tt class="docutils literal"><span class="pre">BaseCodec</span></tt> Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="codec/index.html#built-in-serialization-codecs">Built-in serialization codecs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="codec/json_impl.html"><tt class="docutils literal"><span class="pre">djangoflash.codec.json_impl</span></tt> &#8212; JSON-based codec implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="codec/json_impl.html#codecclass-class"><tt class="docutils literal"><span class="pre">CodecClass</span></tt> Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="codec/json_zlib_impl.html"><tt class="docutils literal"><span class="pre">djangoflash.codec.json_zlib_impl</span></tt> &#8212; JSON/zlib-based codec implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="codec/json_zlib_impl.html#codecclass-class"><tt class="docutils literal"><span class="pre">CodecClass</span></tt> Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="codec/pickle_impl.html"><tt class="docutils literal"><span class="pre">djangoflash.codec.pickle_impl</span></tt> &#8212; Pickle-based codec implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="codec/pickle_impl.html#codecclass-class"><tt class="docutils literal"><span class="pre">CodecClass</span></tt> Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../custom_codecs.html"
+                        title="previous chapter">Creating a custom serialization codec</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">djangoflash.models</span></tt> &#8212; Django-Flash model</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangoflash.models — Django-Flash model"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../custom_codecs.html" title="Creating a custom serialization codec"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

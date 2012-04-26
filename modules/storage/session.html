@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangoflash.storage.session — Session-based flash storage &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="../../index.html" />
+    <link rel="up" title="djangoflash.storage — Flash storage backends" href="index.html" />
+    <link rel="next" title="djangoflash.storage.cookie — Cookie-based flash storage" href="cookie.html" />
+    <link rel="prev" title="djangoflash.storage — Flash storage backends" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cookie.html" title="djangoflash.storage.cookie — Cookie-based flash storage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangoflash.storage — Flash storage backends"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Django-Flash overview</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangoflash.storage</span></tt> &#8212; Flash storage backends</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangoflash.storage.session">
+<span id="djangoflash-storage-session-session-based-flash-storage"></span><span id="storage-session"></span><h1><a class="reference internal" href="#module-djangoflash.storage.session" title="djangoflash.storage.session: Session-based flash storage"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.storage.session</span></tt></a> &#8212; Session-based flash storage<a class="headerlink" href="#module-djangoflash.storage.session" title="Permalink to this headline">¶</a></h1>
+<p>This module provides a session-based flash storage backend.</p>
+<p>Since this backend relies on the user&#8217;s session, you need to include the
+<tt class="xref py py-class docutils literal"><span class="pre">SessionMiddleware</span></tt> class to the <tt class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></tt> section of your
+project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;djangoflash.middleware.FlashMiddleware&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../../configuration.html#configuration"><em>Configuration</em></a></p>
+</div>
+<div class="section" id="flashstorageclass-class">
+<h2><a class="reference internal" href="#djangoflash.storage.session.FlashStorageClass" title="djangoflash.storage.session.FlashStorageClass"><tt class="xref py py-class docutils literal"><span class="pre">FlashStorageClass</span></tt></a> Class<a class="headerlink" href="#flashstorageclass-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangoflash.storage.session.FlashStorageClass">
+<em class="property">class </em><tt class="descclassname">djangoflash.storage.session.</tt><tt class="descname">FlashStorageClass</tt><a class="headerlink" href="#djangoflash.storage.session.FlashStorageClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Session-based flash storage backend.</p>
+<dl class="method">
+<dt id="djangoflash.storage.session.FlashStorageClass.get">
+<tt class="descname">get</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#djangoflash.storage.session.FlashStorageClass.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="xref py py-class docutils literal"><span class="pre">FlashScope</span></tt> object stored in the session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.storage.session.FlashStorageClass.set">
+<tt class="descname">set</tt><big>(</big><em>flash</em>, <em>request</em>, <em>response</em><big>)</big><a class="headerlink" href="#djangoflash.storage.session.FlashStorageClass.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the given <tt class="xref py py-class docutils literal"><span class="pre">FlashScope</span></tt> object in the session.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../index.html#modulesindex"><em>Django-Flash overview</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangoflash.storage.session</span></tt> &#8212; Session-based flash storage</a><ul>
+<li><a class="reference internal" href="#flashstorageclass-class"><tt class="docutils literal"><span class="pre">FlashStorageClass</span></tt> Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangoflash.storage</span></tt> &#8212; Flash storage backends</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cookie.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangoflash.storage.cookie</span></tt> &#8212; Cookie-based flash storage</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/modules/storage/session.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cookie.html" title="djangoflash.storage.cookie — Cookie-based flash storage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="djangoflash.storage — Flash storage backends"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Django-Flash overview</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">djangoflash.storage</span></tt> &#8212; Flash storage backends</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

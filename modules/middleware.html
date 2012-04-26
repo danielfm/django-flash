@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangoflash.middleware — Django-Flash middleware &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="../index.html" />
+    <link rel="up" title="Django-Flash overview" href="index.html" />
+    <link rel="next" title="djangoflash.context_processors — Django-Flash context processors" href="context_processors.html" />
+    <link rel="prev" title="djangoflash.models — Django-Flash model" href="models.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="context_processors.html" title="djangoflash.context_processors — Django-Flash context processors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangoflash.models — Django-Flash model"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangoflash.middleware">
+<span id="djangoflash-middleware-django-flash-middleware"></span><span id="middleware"></span><h1><a class="reference internal" href="#module-djangoflash.middleware" title="djangoflash.middleware: Django-flash middleware"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.middleware</span></tt></a> &#8212; Django-Flash middleware<a class="headerlink" href="#module-djangoflash.middleware" title="Permalink to this headline">¶</a></h1>
+<p>This module provides the <a class="reference internal" href="#djangoflash.middleware.FlashMiddleware" title="djangoflash.middleware.FlashMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">FlashMiddleware</span></tt></a> class, which manages the
+<em>flash</em> whenever a HTTP request hits the server.</p>
+<p>To plug this middleware to your Django project, edit your project&#8217;s
+<tt class="docutils literal"><span class="pre">settings.py</span></tt> file as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;djangoflash.middleware.FlashMiddleware&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="flashmiddleware-class">
+<h2><a class="reference internal" href="#djangoflash.middleware.FlashMiddleware" title="djangoflash.middleware.FlashMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">FlashMiddleware</span></tt></a> Class<a class="headerlink" href="#flashmiddleware-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangoflash.middleware.FlashMiddleware">
+<em class="property">class </em><tt class="descclassname">djangoflash.middleware.</tt><tt class="descname">FlashMiddleware</tt><a class="headerlink" href="#djangoflash.middleware.FlashMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This middleware uses the flash storage backend specified by the
+project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file in order to store and retrieve
+<a class="reference internal" href="models.html#djangoflash.models.FlashScope" title="djangoflash.models.FlashScope"><tt class="xref py py-class docutils literal"><span class="pre">djangoflash.models.FlashScope</span></tt></a> objects, being also responsible for
+expiring old flash-scoped objects.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This class is designed to be used by the Django framework itself.</p>
+</div>
+<dl class="method">
+<dt id="djangoflash.middleware.FlashMiddleware.process_request">
+<tt class="descname">process_request</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#djangoflash.middleware.FlashMiddleware.process_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the Django framework when a <em>request</em> hits
+the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.middleware.FlashMiddleware.process_response">
+<tt class="descname">process_response</tt><big>(</big><em>request</em>, <em>response</em><big>)</big><a class="headerlink" href="#djangoflash.middleware.FlashMiddleware.process_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the Django framework when a <em>response</em> is
+sent back to the user.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="index.html#modulesindex"><em>Django-Flash overview</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangoflash.middleware</span></tt> &#8212; Django-Flash middleware</a><ul>
+<li><a class="reference internal" href="#flashmiddleware-class"><tt class="docutils literal"><span class="pre">FlashMiddleware</span></tt> Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">djangoflash.models</span></tt> &#8212; Django-Flash model</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="context_processors.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangoflash.context_processors</span></tt> &#8212; Django-Flash context processors</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/middleware.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="context_processors.html" title="djangoflash.context_processors — Django-Flash context processors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="djangoflash.models — Django-Flash model"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

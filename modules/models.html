@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>djangoflash.models — Django-Flash model &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="../index.html" />
+    <link rel="up" title="Django-Flash overview" href="index.html" />
+    <link rel="next" title="djangoflash.middleware — Django-Flash middleware" href="middleware.html" />
+    <link rel="prev" title="Django-Flash overview" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="middleware.html" title="djangoflash.middleware — Django-Flash middleware"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Django-Flash overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-djangoflash.models">
+<span id="djangoflash-models-django-flash-model"></span><h1><a class="reference internal" href="#module-djangoflash.models" title="djangoflash.models: Django-flash model"><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.models</span></tt></a> &#8212; Django-Flash model<a class="headerlink" href="#module-djangoflash.models" title="Permalink to this headline">¶</a></h1>
+<p>This module provides the <a class="reference internal" href="#djangoflash.models.FlashScope" title="djangoflash.models.FlashScope"><tt class="xref py py-class docutils literal"><span class="pre">FlashScope</span></tt></a> class, which provides a simple
+way to pass temporary objects between views.</p>
+<div class="section" id="flashscope-class">
+<h2><a class="reference internal" href="#djangoflash.models.FlashScope" title="djangoflash.models.FlashScope"><tt class="xref py py-class docutils literal"><span class="pre">FlashScope</span></tt></a> Class<a class="headerlink" href="#flashscope-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="djangoflash.models.FlashScope">
+<em class="property">class </em><tt class="descclassname">djangoflash.models.</tt><tt class="descname">FlashScope</tt><big>(</big><em>data=None</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The purpose of this class is to implement the <em>flash</em>, which is a
+temporary storage mechanism that looks like a Python dictionary, so you
+can store values associated with keys and later retrieve them.</p>
+<p>It has one special property: by default, values stored into the <em>flash</em>
+during the processing of a request will be available during the processing
+of the immediately following request. Once that second request has been
+processed, those values are removed automatically from the storage.</p>
+<p>The following operations are supported by <a class="reference internal" href="#djangoflash.models.FlashScope" title="djangoflash.models.FlashScope"><tt class="xref py py-class docutils literal"><span class="pre">FlashScope</span></tt></a> instances:</p>
+<dl class="describe">
+<dt>
+<tt class="descname">len(flash)</tt></dt>
+<dd><p>Returns the number of items in <em>flash</em>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">flash[key]</tt></dt>
+<dd><p>Returns the item of <em>flash</em> with key <em>key</em>.  Raises a <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</span></tt> if
+<em>key</em> is not found.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">flash[key] = value</tt></dt>
+<dd><p>Sets <tt class="docutils literal"><span class="pre">flash[key]</span></tt> to <em>value</em>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del flash[key]</tt></dt>
+<dd><p>Removes <tt class="docutils literal"><span class="pre">flash[key]</span></tt>. Raises a <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not found.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in flash</tt></dt>
+<dd><p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if <em>flash</em> has a key <em>key</em>, else <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in flash</tt></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">flash</span></tt>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">flash.now[key] = value</tt></dt>
+<dd><p>Sets <tt class="docutils literal"><span class="pre">flash[key]</span></tt> to <em>value</em> and marks it as <em>used</em>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">flash.now(**items)</tt></dt>
+<dd><p>Puts <em>items</em> into <em>flash</em> and marks those items  as <em>used</em>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">flash.now.add(key, *values)</tt></dt>
+<dd><p>Appends one or more <em>values</em> to <em>key</em> in <em>flash</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.add">
+<tt class="descname">add</tt><big>(</big><em>key</em>, <em>*values</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends one or more <em>values</em> to <em>key</em> in this flash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all items from this flash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.discard">
+<tt class="descname">discard</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.discard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks the entire current flash or a single value as <em>used</em>, so when
+the next request hit the server, those values will be automatically
+removed from this flash by <tt class="xref py py-class docutils literal"><span class="pre">FlashMiddleware</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.get">
+<tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value under the given <em>key</em>. If the <em>key</em> is not found,
+<em>default</em> is returned instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.items">
+<tt class="descname">items</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of items as tuples <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over the <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over the keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over the values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.keep">
+<tt class="descname">keep</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.keep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prevents specific values from being removed on the next request.
+If this method is called with no args, the entire flash is preserved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.keys">
+<tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.pop">
+<tt class="descname">pop</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the specified <em>key</em> and returns the corresponding value. If
+<em>key</em> is not found, <em>default</em> is returned instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.put">
+<tt class="descname">put</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Puts one or more values into this flash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.to_dict">
+<tt class="descname">to_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports this flash to a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark for removal entries that were kept, and delete unkept ones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="djangoflash.models.FlashScope.values">
+<tt class="descname">values</tt><big>(</big><big>)</big><a class="headerlink" href="#djangoflash.models.FlashScope.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="index.html#modulesindex"><em>Django-Flash overview</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">djangoflash.models</span></tt> &#8212; Django-Flash model</a><ul>
+<li><a class="reference internal" href="#flashscope-class"><tt class="docutils literal"><span class="pre">FlashScope</span></tt> Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Django-Flash overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="middleware.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">djangoflash.middleware</span></tt> &#8212; Django-Flash middleware</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="middleware.html" title="djangoflash.middleware — Django-Flash middleware"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Django-Flash overview"
+             >previous</a> |</li>
+        <li><a href="../index.html">Django-Flash 1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Django-Flash overview</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

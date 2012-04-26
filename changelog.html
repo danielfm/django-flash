@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changelog &mdash; Django-Flash 1.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Django-Flash 1.8 documentation" href="index.html" />
+    <link rel="prev" title="Getting Involved" href="getting_involved.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_involved.html" title="Getting Involved"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="changelog">
+<span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<p>Like any other piece of software, Django-Flash is evolving at each release.
+Here you can track our progress:</p>
+<p><strong>Version 1.8</strong> <em>(Feb 12, 2011)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> <em>breaks backwards compatibility;</em></li>
+<li>Removed <tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.__call__()</span></tt> in order to avoid
+problems in Django 1.3;</li>
+<li>Removed deprecated (since version 1.7.1) method
+<tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.put_immediate()</span></tt> in favor of
+<tt class="docutils literal"><span class="pre">flash.now[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>;</li>
+</ul>
+<p><strong>Version 1.7.2</strong> <em>(May 20, 2010)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> Django 1.2 already provides a built-in user &#8220;messages&#8221; framework,
+but <a class="reference external" href="http://weblog.destaquenet.com/2010/05/21/django-flash-and-djangos-new-messages-framework/">we&#8217;ll continue to support Django-Flash</a>;</li>
+<li>Updated test code to make it work properly on post-1.2 versions of Django;</li>
+</ul>
+<p><strong>Version 1.7.1</strong> <em>(March 20, 2010)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> <em>breaks backwards compatibility;</em></li>
+<li>Removed deprecated (since version 1.4.2) method
+<tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.has_key()</span></tt>;</li>
+<li>Deprecating method <tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.put_immediate()</span></tt> in
+favor of <tt class="docutils literal"><span class="pre">flash.now[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>;</li>
+<li>Deprecating method <a class="reference internal" href="modules/models.html#djangoflash.models.FlashScope.put" title="djangoflash.models.FlashScope.put"><tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.put()</span></tt></a> in favor of
+<tt class="docutils literal"><span class="pre">flash(key=value)</span></tt>;</li>
+<li>Method <a class="reference internal" href="modules/models.html#djangoflash.models.FlashScope.add" title="djangoflash.models.FlashScope.add"><tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.add()</span></tt></a> can now append several values
+to the given key;</li>
+<li>Added a method <tt class="xref py py-meth docutils literal"><span class="pre">add()</span></tt> to <tt class="xref py py-attr docutils literal"><span class="pre">djangoflash.models.FlashScope.now</span></tt> that
+simplifies the storage of multiple immediate values under the same key;</li>
+</ul>
+<p><strong>Version 1.7</strong> <em>(October 25, 2009)</em></p>
+<ul class="simple">
+<li>Added support for custom flash serialization codecs;</li>
+<li>Three built-in codec implementations: JSON, JSON/zlib and Pickle;</li>
+<li>Module <tt class="xref py py-mod docutils literal"><span class="pre">djangoflash.storage.base</span></tt> removed;</li>
+</ul>
+<p><strong>Version 1.6.3</strong> <em>(October 07, 2009)</em></p>
+<ul class="simple">
+<li>Using the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> setting as the default value of <tt class="docutils literal"><span class="pre">FLASH_IGNORE_MEDIA</span></tt>;</li>
+</ul>
+<p><strong>Version 1.6.2</strong> <em>(September 18, 2009)</em></p>
+<ul class="simple">
+<li>Done some work to avoid the loss of messages when the
+<tt class="xref py py-class docutils literal"><span class="pre">CommonMiddleware</span></tt> returns a <tt class="xref py py-class docutils literal"><span class="pre">HttpResponseRedirect</span></tt> due to a
+missing trailing slash;</li>
+</ul>
+<p><strong>Version 1.6.1</strong> <em>(August 19, 2009)</em></p>
+<ul class="simple">
+<li>Now the middleware checks if the request resolves to
+<tt class="xref py py-meth docutils literal"><span class="pre">django.views.static.serve()</span></tt> instead of relying on the <tt class="docutils literal"><span class="pre">MEDIA_URL</span></tt>
+setting;</li>
+</ul>
+<p><strong>Version 1.6</strong> <em>(August 13, 2009)</em></p>
+<ul class="simple">
+<li>Fixed a bug in which messages are prematurely removed from the flash when
+they are replaced using <tt class="docutils literal"><span class="pre">flash.now</span></tt> in some circumstances;</li>
+<li>Added the <tt class="docutils literal"><span class="pre">FLASH_IGNORE_MEDIA</span></tt> setting to let the user choose whether
+requests to static files should be ignored;</li>
+</ul>
+<p><strong>Version 1.5.3</strong> <em>(July 22, 2009)</em></p>
+<ul class="simple">
+<li>Fixed a bug in the middleware which causes flash data to be dicarded after
+requests to static files;</li>
+</ul>
+<p><strong>Version 1.5.2</strong> <em>(July 15, 2009)</em></p>
+<ul class="simple">
+<li>Added a <a class="reference internal" href="modules/decorators.html#djangoflash.decorators.keep_messages" title="djangoflash.decorators.keep_messages"><tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.decorators.keep_messages()</span></tt></a> decorator for keeping
+flash messages;</li>
+<li>New <tt class="docutils literal"><span class="pre">AUTHORS</span></tt> file;</li>
+</ul>
+<p><strong>Version 1.5.1</strong> <em>(June 26, 2009)</em></p>
+<ul class="simple">
+<li>Added a method <a class="reference internal" href="modules/models.html#djangoflash.models.FlashScope.add" title="djangoflash.models.FlashScope.add"><tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.add()</span></tt></a> that simplifies the
+storage of multiple values under the same key;</li>
+</ul>
+<p><strong>Version 1.5</strong> <em>(June 24, 2006)</em></p>
+<ul class="simple">
+<li>License changed from LGPL to BSD to give uses more freedom;</li>
+<li>Added support for custom flash storage backends;</li>
+<li>Added a cookie-based flash storage;</li>
+<li>Default session-based storage was factored out to an independent class;</li>
+<li>Added a few more sanity checks;</li>
+</ul>
+<p><strong>Version 1.4.4</strong> <em>(June 09, 2009)</em></p>
+<ul class="simple">
+<li>Fixed a critical bug in the middleware;</li>
+</ul>
+<p><strong>Version 1.4.3</strong> <em>(June 08, 2009)</em></p>
+<ul class="simple">
+<li>Added a few more sanity checks;</li>
+</ul>
+<p><strong>Version 1.4.2</strong> <em>(February 13, 2009)</em></p>
+<ul class="simple">
+<li>Deprecating method <tt class="xref py py-meth docutils literal"><span class="pre">djangoflash.models.FlashScope.has_key()</span></tt> in favor of
+<tt class="docutils literal"><span class="pre">key</span> <span class="pre">in</span> <span class="pre">flash</span></tt>;</li>
+<li>Documentation improvements;</li>
+<li>Internals refactoring;</li>
+</ul>
+<p><strong>Version 1.4.1</strong> <em>(February 06, 2009)</em></p>
+<ul class="simple">
+<li>Immediate values (<tt class="xref py py-attr docutils literal"><span class="pre">djangoflash.models.FlashScope.now</span></tt>) can be
+manipulated using a dict-like syntax;</li>
+<li>Unit test improvements;</li>
+<li>Documentation improvements;</li>
+</ul>
+<p><strong>Version 1.4</strong> <em>(February 05, 2009)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> <em>breaks backwards compatibility;</em></li>
+<li>Now Django-Flash works pretty much like the original <a class="reference external" href="http://www.rubyonrails.org/">Ruby on Rails</a>&#8216; flash;</li>
+<li>Several code optmizations;</li>
+<li>Several improvements on the test suite;</li>
+</ul>
+<p><strong>Version 1.3.5</strong> <em>(February 03, 2009)</em></p>
+<ul class="simple">
+<li>Several documentation improvements;</li>
+<li>Improvements on source code comments and unit tests;</li>
+</ul>
+<p><strong>Version 1.3.4</strong> <em>(February 01, 2009)</em></p>
+<ul class="simple">
+<li>Added <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>-based documentation;</li>
+<li>Source code changed to improve the <a class="reference external" href="http://www.logilab.org/857">Pylint</a> score;</li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">djangoflash</span></tt> module now have a <tt class="docutils literal"><span class="pre">__version__</span></tt> property, which is
+very useful when you need to know what version of the Django-Flash is
+installed in your machine;</li>
+</ul>
+<p><strong>Version 1.3.3</strong> <em>(January 31, 2009)</em></p>
+<ul class="simple">
+<li><em>Critical Bug Fixed</em>: Django-Flash creates several useless session
+entries when the cookie support in user&#8217;s browser is disabled;</li>
+<li>Small improvements on unit tests;</li>
+</ul>
+<p><strong>Version 1.3.2</strong> <em>(December 07, 2008)</em></p>
+<ul class="simple">
+<li>Small fixes;</li>
+</ul>
+<p><strong>Version 1.3.1</strong> <em>(December 07, 2008)</em></p>
+<ul class="simple">
+<li>Added some sanity checks;</li>
+</ul>
+<p><strong>Version 1.3</strong> <em>(December 07, 2008)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> <em>breaks backwards compatibility;</em></li>
+<li>Django-Flash now controls the expiration of flash-scoped values
+individually, which means that only expired values are removed from the
+session (and not the whole flash context);</li>
+<li>Unit testing code was completely rewritten and now a real Django
+application is used in integration tests;</li>
+<li>Huge source code review to make it easier to read and to assure the use
+of Python conventions;</li>
+<li>Project renamed to <strong>Django-Flash</strong> (it was previously called
+<strong>djangoflash</strong>, without the hyphen);</li>
+</ul>
+<p><strong>Version 1.2</strong> <em>(November 01, 2008)</em></p>
+<ul class="simple">
+<li><strong>Notice:</strong> <em>breaks backwards compatibility;</em></li>
+<li>Improvements on the test comments;</li>
+<li>Now the flash scope works pretty much like a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>, although
+still there&#8217;s no value-based expiration (the whole flash scope expires at
+the end of the request);</li>
+</ul>
+<p><strong>Version 1.1</strong> <em>(November 01, 2008)</em></p>
+<ul class="simple">
+<li>Now using <a class="reference external" href="http://pypi.python.org/pypi/setuptools/">SetupTools</a> to make the project easier to distribute;</li>
+</ul>
+<p><strong>Version 1.0</strong> <em>(October 22, 2008)</em></p>
+<ul class="simple">
+<li>First (very simple) version;</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="getting_involved.html"
+                        title="previous chapter">Getting Involved</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/changelog.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_involved.html" title="Getting Involved"
+             >previous</a> |</li>
+        <li><a href="index.html">Django-Flash 1.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2008-2010, Destaquenet Technology Solutions.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-761701-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>
