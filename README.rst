@@ -12,18 +12,16 @@ the immediately following request. Once that second request has been
 processed, those values are removed automatically from the storage.
 
 This is an open source project licenced under the terms of The
-`BSD License`_ and sponsored by `Destaquenet Technology Solutions`_, a
+`BSD License`_ and sponsored by Destaquenet Technology Solutions, a
 brazilian software development and consultancy startup.
 
 
 Installation and Usage
 ----------------------
 
-Please read the `online documentation <http://djangoflash.destaquenet.com/>`_
+Please read the `online documentation <http://danielfm.github.com/django-flash/>`_
 for further instructions.
 
 
 .. _BSD License: http://www.opensource.org/licenses/bsd-license.php
-.. _Django: http://www.djangoproject.org/
 .. _Rails: http://www.rubyonrails.org/
-.. _Destaquenet Technology Solutions: http://www.destaquenet.com/
